@@ -10,7 +10,7 @@ import Swinject
 
 extension Container {
     
-    func registerDependencies(){
+    func registerDependencies() {
         registerService()
         registerRepository()
         registerUseCase()
@@ -18,7 +18,7 @@ extension Container {
         registerViewController()
     }
     
-    private func registerService(){
+    private func registerService() {
         
     }
     
@@ -30,11 +30,11 @@ extension Container {
        
     }
     
-    private func registerReactor(){
+    private func registerReactor() {
        
     }
     
-    private func registerViewController(){
+    private func registerViewController() {
         
     }
 }

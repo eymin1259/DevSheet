@@ -6,7 +6,7 @@
 - Clean Architecture
 - ReactorKit
 - RxSwift, RxCocoa
-- Moya
+- FireBase
 - Swinject
 - SwiftLint 
 - Quick
@@ -16,4 +16,4 @@
 ## [ Develop Environment ]
 - iOS Deployment Target : 14.1
 - Language : Swift 5.X
-- Xcode : 12.X
+- Xcode : 13.X

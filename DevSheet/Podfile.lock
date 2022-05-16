@@ -1,0 +1,75 @@
+PODS:
+  - Differentiator (5.0.0)
+  - Loaf (0.7.0)
+  - Nimble (9.2.1)
+  - Quick (4.0.0)
+  - ReactorKit (3.2.0):
+    - RxSwift (~> 6.0)
+    - WeakMapTable (~> 1.1)
+  - RxBlocking (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxCocoa (6.5.0):
+    - RxRelay (= 6.5.0)
+    - RxSwift (= 6.5.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxOptional (5.0.2):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.5.0):
+    - RxSwift (= 6.5.0)
+  - RxSwift (6.5.0)
+  - SnapKit (5.0.1)
+  - Swinject (2.8.1)
+  - WeakMapTable (1.2.0)
+
+DEPENDENCIES:
+  - Loaf
+  - Nimble
+  - Quick
+  - ReactorKit
+  - RxBlocking
+  - RxCocoa
+  - RxDataSources
+  - RxOptional
+  - SnapKit
+  - Swinject
+
+SPEC REPOS:
+  trunk:
+    - Differentiator
+    - Loaf
+    - Nimble
+    - Quick
+    - ReactorKit
+    - RxBlocking
+    - RxCocoa
+    - RxDataSources
+    - RxOptional
+    - RxRelay
+    - RxSwift
+    - SnapKit
+    - Swinject
+    - WeakMapTable
+
+SPEC CHECKSUMS:
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
+  ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
+  RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
+  RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxOptional: 3664964c96b69dd20c9cf78bdfe546615e26eca8
+  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
+  WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
+
+PODFILE CHECKSUM: 6cbe7e25c6a6dc9a299cd14507c05ef212c4cad0
+
+COCOAPODS: 1.11.2

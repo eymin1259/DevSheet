@@ -24,6 +24,9 @@ target 'DevSheet' do
   # Dependency Injection
   pod 'Swinject'
 
+  # Lint
+  pod 'SwiftLint'
+
   target 'DevSheetTests' do
     inherit! :search_paths
     # Pods for testing

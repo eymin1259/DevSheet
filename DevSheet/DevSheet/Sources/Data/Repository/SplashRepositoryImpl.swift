@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+import Firebase
 
 final class SplashRepositoryImpl: SplashRepository {
     
@@ -18,7 +20,13 @@ final class SplashRepositoryImpl: SplashRepository {
     }
     
     // MARK: methods
-    func getAppVersion() {
-        //
+    func getVersionCheck() -> Single<Entity.Version> {
+        return firebaseService.request(VersionAPI.getVersionCheck)
+            .map { snapshot in
+                let id = snapshot.documents.first!.documentID
+                let data = snapshot.documents.first!.data()
+                let version = Entity.Version(id: id, dictionary: data)
+                return version
+            }
     }
 }

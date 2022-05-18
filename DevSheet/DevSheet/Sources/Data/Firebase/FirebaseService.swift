@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+protocol FirebaseService {
+    func request()
+}
+
+final class FirebaseServiceImpl: FirebaseService {
+    
+    func request() {
+        //
+    }
+}

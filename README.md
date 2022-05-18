@@ -15,5 +15,5 @@
 
 ## [ Develop Environment ]
 - iOS Deployment Target : 14.1
-- Language : Swift 5.X
+- Swift : 5.X
 - Xcode : 13.X

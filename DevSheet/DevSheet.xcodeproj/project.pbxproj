@@ -10,6 +10,7 @@
 		A1AE5FA9283524C700C71F9B /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FA8283524C700C71F9B /* ServiceAPI.swift */; };
 		A1AE5FAB283524F700C71F9B /* VersionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAA283524F700C71F9B /* VersionAPI.swift */; };
 		A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */; };
+		A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAE2835AB3100C71F9B /* FirebaseError.swift */; };
 		A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F071283270890098DF44 /* AppDelegate.swift */; };
 		A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F073283270890098DF44 /* SceneDelegate.swift */; };
 		A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F075283270890098DF44 /* SplashViewController.swift */; };
@@ -68,6 +69,7 @@
 		A1AE5FA8283524C700C71F9B /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		A1AE5FAA283524F700C71F9B /* VersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAPI.swift; sourceTree = "<group>"; };
 		A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.Version.swift; sourceTree = "<group>"; };
+		A1AE5FAE2835AB3100C71F9B /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		A1B5F06E283270890098DF44 /* DevSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B5F071283270890098DF44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B5F073283270890098DF44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -263,7 +265,6 @@
 			children = (
 				A1B5F0D62833DAC60098DF44 /* Entity */,
 				A1B5F0D52833DABB0098DF44 /* Firebase */,
-				A1B5F0D9283510A10098DF44 /* FirebaseService.swift */,
 				A1B5F0CD2833D9DC0098DF44 /* Repository */,
 			);
 			path = Data;
@@ -298,6 +299,8 @@
 			isa = PBXGroup;
 			children = (
 				A1AE5FA7283524B500C71F9B /* API */,
+				A1B5F0D9283510A10098DF44 /* FirebaseService.swift */,
+				A1AE5FAE2835AB3100C71F9B /* FirebaseError.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				A1B5F0D42833DAA70098DF44 /* SplashRepositoryImpl.swift in Sources */,
 				A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */,
 				A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */,
+				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
 				A1B5F0DC28351B5A0098DF44 /* EntityNameSpace.swift in Sources */,

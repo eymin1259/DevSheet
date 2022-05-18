@@ -10,6 +10,6 @@ import Firebase
 import RxSwift
 
 protocol ServiceAPI {
-    var collectoin: CollectionReference { get }
+    var collection: CollectionReference { get }
     func task() -> Single<QuerySnapshot>
 }

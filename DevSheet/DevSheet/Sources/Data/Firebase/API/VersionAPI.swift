@@ -15,7 +15,7 @@ enum VersionAPI {
 
 extension VersionAPI: ServiceAPI {
     
-    var collectoin : CollectionReference {
+    var collection : CollectionReference {
         return Firestore.firestore().collection("version")
     }
     
@@ -23,7 +23,7 @@ extension VersionAPI: ServiceAPI {
         switch self {
         case .getVersionCheck:
             return Single<QuerySnapshot>.create { single in
-                collectoin.order(by: "timeStamp", descending: true).getDocuments { snapshot, err in
+                collection.order(by: "timeStamp", descending: true).getDocuments { snapshot, err in
                     if let err = err {
                         single(.failure(err))
                     }

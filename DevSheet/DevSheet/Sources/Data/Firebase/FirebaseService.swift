@@ -6,14 +6,16 @@
 //
 
 import Foundation
+import RxSwift
+import  Firebase
 
 protocol FirebaseService {
-    func request()
+    func request(_ api: ServiceAPI) -> Single<QuerySnapshot>
 }
 
 final class FirebaseServiceImpl: FirebaseService {
     
-    func request() {
-        //
+    func request(_ api: ServiceAPI) -> Single<QuerySnapshot> {
+       return api.task()
     }
 }

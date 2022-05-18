@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import  RxSwift
 
 protocol SplashRepository {
-    func getAppVersion()
+    func getVersionCheck() -> Single<Entity.Version>
 }

@@ -33,6 +33,7 @@
 		A1B5F0D42833DAA70098DF44 /* SplashRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D32833DAA70098DF44 /* SplashRepositoryImpl.swift */; };
 		A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */; };
 		A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D9283510A10098DF44 /* FirebaseService.swift */; };
+		A1B5F0DC28351B5A0098DF44 /* EntityNameSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0DB28351B5A0098DF44 /* EntityNameSpace.swift */; };
 		DC349FBF1F19D28271067F49 /* Pods_DevSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8464C150945B55D7526BBD /* Pods_DevSheet.framework */; };
 		DC9ED303FD5BBE58A2930920 /* Pods_DevSheet_DevSheetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */; };
 		EB87334F0F63E2BC3A6BEADB /* Pods_DevSheetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD29BC64A1226723D5AFEC14 /* Pods_DevSheetTests.framework */; };
@@ -81,6 +82,7 @@
 		A1B5F0D32833DAA70098DF44 /* SplashRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRepositoryImpl.swift; sourceTree = "<group>"; };
 		A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; };
 		A1B5F0D9283510A10098DF44 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		A1B5F0DB28351B5A0098DF44 /* EntityNameSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityNameSpace.swift; sourceTree = "<group>"; };
 		C8408F3302BC60984C43F8A7 /* Pods-DevSheet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet.release.xcconfig"; path = "Target Support Files/Pods-DevSheet/Pods-DevSheet.release.xcconfig"; sourceTree = "<group>"; };
 		C8FF06B1091204C654677569 /* Pods-DevSheet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet.debug.xcconfig"; path = "Target Support Files/Pods-DevSheet/Pods-DevSheet.debug.xcconfig"; sourceTree = "<group>"; };
 		D452118333473B498B608307 /* Pods-DevSheet-DevSheetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet-DevSheetUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevSheet-DevSheetUITests/Pods-DevSheet-DevSheetUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		A1B5F0D62833DAC60098DF44 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				A1B5F0DB28351B5A0098DF44 /* EntityNameSpace.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
+				A1B5F0DC28351B5A0098DF44 /* EntityNameSpace.swift in Sources */,
 				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,
 				A1B5F0D22833DA790098DF44 /* SplashUseCase.swift in Sources */,
 				A1B5F0D02833DA630098DF44 /* SplashRepository.swift in Sources */,

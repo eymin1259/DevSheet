@@ -27,10 +27,14 @@ extension VersionAPI: ServiceAPI {
                     if let err = err {
                         single(.failure(err))
                     }
-                    if snapshot == nil {
+                    if let  snapshot = snapshot,
+                       snapshot.isEmpty == false
+                    {
+                        single(.success(snapshot))
+                    }
+                    else{
                         single(.failure(FirebaseError.noData))
                     }
-                    single(.success(snapshot!))
                 }
                 return Disposables.create()
             }

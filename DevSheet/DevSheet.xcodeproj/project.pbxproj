@@ -28,6 +28,11 @@
 		A1B5F0C3283284CD0098DF44 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A1B5F0C2283284CD0098DF44 /* FirebaseFirestoreSwift */; };
 		A1B5F0C5283284CD0098DF44 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A1B5F0C4283284CD0098DF44 /* FirebaseStorage */; };
 		A1B5F0C828328A460098DF44 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = A1B5F0C728328A460098DF44 /* .swiftlint.yml */; };
+		A1B5F0D02833DA630098DF44 /* SplashRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0CF2833DA630098DF44 /* SplashRepository.swift */; };
+		A1B5F0D22833DA790098DF44 /* SplashUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D12833DA790098DF44 /* SplashUseCase.swift */; };
+		A1B5F0D42833DAA70098DF44 /* SplashRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D32833DAA70098DF44 /* SplashRepositoryImpl.swift */; };
+		A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */; };
+		A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D9283510A10098DF44 /* FirebaseService.swift */; };
 		DC349FBF1F19D28271067F49 /* Pods_DevSheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8464C150945B55D7526BBD /* Pods_DevSheet.framework */; };
 		DC9ED303FD5BBE58A2930920 /* Pods_DevSheet_DevSheetUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */; };
 		EB87334F0F63E2BC3A6BEADB /* Pods_DevSheetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD29BC64A1226723D5AFEC14 /* Pods_DevSheetTests.framework */; };
@@ -71,6 +76,11 @@
 		A1B5F0AB28327E850098DF44 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		A1B5F0AF283282DF0098DF44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A1B5F0C728328A460098DF44 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		A1B5F0CF2833DA630098DF44 /* SplashRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRepository.swift; sourceTree = "<group>"; };
+		A1B5F0D12833DA790098DF44 /* SplashUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashUseCase.swift; sourceTree = "<group>"; };
+		A1B5F0D32833DAA70098DF44 /* SplashRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashRepositoryImpl.swift; sourceTree = "<group>"; };
+		A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; };
+		A1B5F0D9283510A10098DF44 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		C8408F3302BC60984C43F8A7 /* Pods-DevSheet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet.release.xcconfig"; path = "Target Support Files/Pods-DevSheet/Pods-DevSheet.release.xcconfig"; sourceTree = "<group>"; };
 		C8FF06B1091204C654677569 /* Pods-DevSheet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet.debug.xcconfig"; path = "Target Support Files/Pods-DevSheet/Pods-DevSheet.debug.xcconfig"; sourceTree = "<group>"; };
 		D452118333473B498B608307 /* Pods-DevSheet-DevSheetUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet-DevSheetUITests.debug.xcconfig"; path = "Target Support Files/Pods-DevSheet-DevSheetUITests/Pods-DevSheet-DevSheetUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +199,8 @@
 			isa = PBXGroup;
 			children = (
 				A1B5F0A928327E4A0098DF44 /* App */,
+				A1B5F0CA2833D9A70098DF44 /* Data */,
+				A1B5F0CB2833D9BF0098DF44 /* Domain */,
 				A1B5F0AD28327F040098DF44 /* Presentation */,
 			);
 			path = Sources;
@@ -224,8 +236,59 @@
 			isa = PBXGroup;
 			children = (
 				A1B5F075283270890098DF44 /* SplashViewController.swift */,
+				A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		A1B5F0CA2833D9A70098DF44 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A1B5F0D62833DAC60098DF44 /* Entity */,
+				A1B5F0D52833DABB0098DF44 /* Firebase */,
+				A1B5F0CD2833D9DC0098DF44 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		A1B5F0CB2833D9BF0098DF44 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				A1B5F0CE2833DA4A0098DF44 /* Splash */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A1B5F0CD2833D9DC0098DF44 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A1B5F0D32833DAA70098DF44 /* SplashRepositoryImpl.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		A1B5F0CE2833DA4A0098DF44 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				A1B5F0CF2833DA630098DF44 /* SplashRepository.swift */,
+				A1B5F0D12833DA790098DF44 /* SplashUseCase.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		A1B5F0D52833DABB0098DF44 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				A1B5F0D9283510A10098DF44 /* FirebaseService.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		A1B5F0D62833DAC60098DF44 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		F99E7A275E2E00021361AFE7 /* Pods */ = {
@@ -552,8 +615,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B5F0D42833DAA70098DF44 /* SplashRepositoryImpl.swift in Sources */,
+				A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
+				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,
+				A1B5F0D22833DA790098DF44 /* SplashUseCase.swift in Sources */,
+				A1B5F0D02833DA630098DF44 /* SplashRepository.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
 				A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */,
 			);

@@ -15,8 +15,8 @@ enum VersionAPI {
 
 extension VersionAPI: ServiceAPI {
     
-    var collection : CollectionReference {
-        return Firestore.firestore().collection("version")
+    var collection: CollectionReference {
+        return Firestore.firestore().collection("versions")
     }
     
     func task() -> Single<QuerySnapshot> {
@@ -28,11 +28,9 @@ extension VersionAPI: ServiceAPI {
                         single(.failure(err))
                     }
                     if let  snapshot = snapshot,
-                       snapshot.isEmpty == false
-                    {
+                       snapshot.isEmpty == false {
                         single(.success(snapshot))
-                    }
-                    else{
+                    } else {
                         single(.failure(FirebaseError.noData))
                     }
                 }

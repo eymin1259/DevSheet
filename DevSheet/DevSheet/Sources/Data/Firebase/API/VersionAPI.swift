@@ -23,17 +23,20 @@ extension VersionAPI: ServiceAPI {
         switch self {
         case .getVersionCheck:
             return Single<QuerySnapshot>.create { single in
-                collection.order(by: "timeStamp", descending: true).getDocuments { snapshot, err in
-                    if let err = err {
-                        single(.failure(err))
+                collection
+                    .order(by: "timeStamp", descending: true)
+                    .limit(to: 1)
+                    .getDocuments { snapshot, err in
+                        if let err = err {
+                            single(.failure(err))
+                        }
+                        if let  snapshot = snapshot,
+                           snapshot.isEmpty == false {
+                            single(.success(snapshot))
+                        } else {
+                            single(.failure(FirebaseError.noData))
+                        }
                     }
-                    if let  snapshot = snapshot,
-                       snapshot.isEmpty == false {
-                        single(.success(snapshot))
-                    } else {
-                        single(.failure(FirebaseError.noData))
-                    }
-                }
                 return Disposables.create()
             }
         }

@@ -11,9 +11,9 @@
 		A1AE5FAB283524F700C71F9B /* VersionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAA283524F700C71F9B /* VersionAPI.swift */; };
 		A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */; };
 		A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAE2835AB3100C71F9B /* FirebaseError.swift */; };
-		A1AE5FB22837BE9000C71F9B /* HomeTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB12837BE9000C71F9B /* HomeTab.swift */; };
-		A1AE5FB42837BEBF00C71F9B /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB32837BEBF00C71F9B /* HomeTabBarController.swift */; };
-		A1AE5FB62837BF2A00C71F9B /* HomeTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB52837BF2A00C71F9B /* HomeTabViewModel.swift */; };
+		A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB12837BE9000C71F9B /* MainTab.swift */; };
+		A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB32837BEBF00C71F9B /* MainTabBarController.swift */; };
+		A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */; };
 		A1AE5FB82837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */; };
 		A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F071283270890098DF44 /* AppDelegate.swift */; };
 		A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F073283270890098DF44 /* SceneDelegate.swift */; };
@@ -74,9 +74,9 @@
 		A1AE5FAA283524F700C71F9B /* VersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAPI.swift; sourceTree = "<group>"; };
 		A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.Version.swift; sourceTree = "<group>"; };
 		A1AE5FAE2835AB3100C71F9B /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
-		A1AE5FB12837BE9000C71F9B /* HomeTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTab.swift; sourceTree = "<group>"; };
-		A1AE5FB32837BEBF00C71F9B /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
-		A1AE5FB52837BF2A00C71F9B /* HomeTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabViewModel.swift; sourceTree = "<group>"; };
+		A1AE5FB12837BE9000C71F9B /* MainTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTab.swift; sourceTree = "<group>"; };
+		A1AE5FB32837BEBF00C71F9B /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNA_11yrs_ttf.ttf; sourceTree = "<group>"; };
 		A1B5F06E283270890098DF44 /* DevSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B5F071283270890098DF44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -162,14 +162,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
-		A1AE5FB02837BE4000C71F9B /* HomeTab */ = {
+		A1AE5FB02837BE4000C71F9B /* MainTab */ = {
 			isa = PBXGroup;
 			children = (
-				A1AE5FB12837BE9000C71F9B /* HomeTab.swift */,
-				A1AE5FB32837BEBF00C71F9B /* HomeTabBarController.swift */,
-				A1AE5FB52837BF2A00C71F9B /* HomeTabViewModel.swift */,
+				A1AE5FB12837BE9000C71F9B /* MainTab.swift */,
+				A1AE5FB32837BEBF00C71F9B /* MainTabBarController.swift */,
+				A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */,
 			);
-			path = HomeTab;
+			path = MainTab;
 			sourceTree = "<group>";
 		};
 		A1B5F065283270890098DF44 = {
@@ -265,7 +265,7 @@
 		A1B5F0AD28327F040098DF44 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				A1AE5FB02837BE4000C71F9B /* HomeTab */,
+				A1AE5FB02837BE4000C71F9B /* MainTab */,
 				A1B5F0AE28327F150098DF44 /* Splash */,
 			);
 			path = Presentation;
@@ -662,8 +662,8 @@
 				A1B5F0D42833DAA70098DF44 /* VersionRepositoryImpl.swift in Sources */,
 				A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */,
 				A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */,
-				A1AE5FB22837BE9000C71F9B /* HomeTab.swift in Sources */,
-				A1AE5FB62837BF2A00C71F9B /* HomeTabViewModel.swift in Sources */,
+				A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */,
+				A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */,
 				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
@@ -674,7 +674,7 @@
 				A1B5F0D22833DA790098DF44 /* VersionUseCase.swift in Sources */,
 				A1B5F0D02833DA630098DF44 /* VersionRepository.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
-				A1AE5FB42837BEBF00C71F9B /* HomeTabBarController.swift in Sources */,
+				A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */,
 				A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

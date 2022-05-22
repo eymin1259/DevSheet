@@ -1,13 +1,13 @@
 //
-//  HomeTab.swift
+//  MainTab.swift
 //  DevSheet
 //
 //  Created by yongmin lee on 5/20/22.
 //
 
-import Foundation
+import UIKit
 
-enum HomeTab: Int, CaseIterable {
+enum MainTab: Int, CaseIterable {
     case cs
     case develop
     case like

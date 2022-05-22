@@ -97,7 +97,7 @@ class SplashViewController: UIViewController, View {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func gotoHomeTab() {
+    private func gotoMainTab() {
         let vc = TestViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
@@ -129,7 +129,7 @@ extension SplashViewController {
                 if result == true {
                     self?.showUpdateAlert()
                 } else {
-                    self?.gotoHomeTab()
+                    self?.gotoMainTab()
                 }
             }).disposed(by: self.disposeBag)
     }

@@ -8,7 +8,8 @@
 import UIKit
 import ReactorKit
 import SnapKit
-import RxCocoa
+import RxViewController
+import RxOptional
 
 class SplashViewController: UIViewController, View {
     
@@ -56,7 +57,7 @@ class SplashViewController: UIViewController, View {
     }
 
     // MARK: methods
-    func setupUI() {
+    private func setupUI() {
         // view
         self.view.backgroundColor = .white
         
@@ -77,11 +78,59 @@ class SplashViewController: UIViewController, View {
             $0.top.equalTo(splashImageView.snp.bottom).offset(10)
         }
     }
+    
+    private func showUpdateAlert() {
+        let title = "업데이트"
+        let message = "새로운 업데이트"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let updateAction = UIAlertAction(title: "update", style: .default) { _ in
+          print("debug : update Action ")
+        }
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { _ in
+            print("debug : cancel Action ")
+            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                exit(0)
+            }
+        }
+        [cancelAction, updateAction].forEach(alert.addAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func gotoHomeTab() {
+        let vc = TestViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.present(vc, animated: true, completion: nil)
+        }
+    }
 }
 
 // MARK: Reactor Bind
 extension SplashViewController {
     func bind(reactor: SplashReactor) {
-        print("Debug  : SplashViewController bind  ")
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
+    }
+    
+    private func bindAction(reactor: SplashReactor) {
+        self.rx.viewDidAppear
+            .map { _ in Reactor.Action.viewDidAppear }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+    }
+    
+    private func bindState(reactor: SplashReactor) {
+        reactor.state
+            .map { $0.shouldUpdate }
+            .filterNil()
+            .subscribe(onNext: { [weak self] result in
+                if result == true {
+                    self?.showUpdateAlert()
+                } else {
+                    self?.gotoHomeTab()
+                }
+            }).disposed(by: self.disposeBag)
     }
 }

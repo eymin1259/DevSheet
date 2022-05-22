@@ -1,5 +1,5 @@
 //
-//  SplashUseCase.swift
+//  VersionUseCase.swift
 //  DevSheet
 //
 //  Created by yongmin lee on 5/17/22.
@@ -8,23 +8,22 @@
 import Foundation
 import RxSwift
 
-protocol SplashUseCase {
+protocol VersionUseCase {
     func checkShouldUpdate() -> Single<Bool>
 }
 
-final class  SplashUseCaseImpl: SplashUseCase {
-    
+final class  VersionUseCaseImpl: VersionUseCase {
     // MARK: properties
-    var repository: SplashRepository
+    var versionRepository: VersionRepository
     
     // MARK: initialize
-    init(repository: SplashRepository) {
-        self.repository = repository
+    init(versionRepository: VersionRepository) {
+        self.versionRepository = versionRepository
     }
     
     // MARK: methods
     func checkShouldUpdate() -> Single<Bool> {
-        return repository.getVersionCheck()
+        return versionRepository.getVersionCheck()
             .map { response in
                 guard let dictionary = Bundle.main.infoDictionary,
                       let versionStr = dictionary["CFBundleShortVersionString"] as? String,

@@ -25,25 +25,25 @@ extension Container {
     }
     
     private func registerRepository() {
-        register(SplashRepository.self) { r in
+        register(VersionRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let repo = SplashRepositoryImpl(firebaseService: firebase)
+            let repo = VersionRepositoryImpl(firebaseService: firebase)
             return repo
         }
     }
     
     private func registerUseCase() {
-        register(SplashUseCase.self) { r in
-            let repo = r.resolve(SplashRepository.self)!
-            let useCase = SplashUseCaseImpl(repository: repo)
+        register(VersionUseCase.self) { r in
+            let repo = r.resolve(VersionRepository.self)!
+            let useCase = VersionUseCaseImpl(versionRepository: repo)
             return useCase
         }
     }
     
     private func registerReactor() {
         register(SplashReactor.self) { r in
-            let useCase = r.resolve(SplashUseCase.self)!
-            let reactor = SplashReactor(splashUseCase: useCase)
+            let useCase = r.resolve(VersionUseCase.self)!
+            let reactor = SplashReactor(versionUseCase: useCase)
             return reactor
         }
     }

@@ -1,5 +1,5 @@
 //
-//  SplashRepositoryImpl.swift
+//  VersionRepositoryImpl.swift
 //  DevSheet
 //
 //  Created by yongmin lee on 5/17/22.
@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import Firebase
 
-final class SplashRepositoryImpl: SplashRepository {
+final class VersionRepositoryImpl: VersionRepository {
     
     // MARK: properties
     var firebaseService: FirebaseService

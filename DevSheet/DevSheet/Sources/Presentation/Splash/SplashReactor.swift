@@ -24,11 +24,11 @@ final class SplashReactor: Reactor {
     }
     
     let initialState: State = .init()
-    var splashUseCase: SplashUseCase
+    var versionUseCase: VersionUseCase
     
     // MARK: initialize
-    init(splashUseCase: SplashUseCase) {
-        self.splashUseCase = splashUseCase
+    init(versionUseCase: VersionUseCase) {
+        self.versionUseCase = versionUseCase
     }
 }
 
@@ -37,7 +37,7 @@ extension SplashReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidAppear:
-            return splashUseCase.checkShouldUpdate()
+            return versionUseCase.checkShouldUpdate()
                 .asObservable()
                 .catchAndReturn(true)
                 .map(Mutation.checkUpdate)

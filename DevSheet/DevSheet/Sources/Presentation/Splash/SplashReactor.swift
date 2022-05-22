@@ -12,17 +12,15 @@ final class SplashReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case loadMore
+        case viewDidAppear
     }
     
     enum Mutation {
-        case setLoading(Bool)
-        case showError(Error)
+        case checkUpdate(Bool)
     }
     
     struct State {
-        var shouldUpdate: Bool = false
-        var isLoading: Bool = false
+        var shouldUpdate: Bool?
     }
     
     let initialState: State = .init()
@@ -31,5 +29,28 @@ final class SplashReactor: Reactor {
     // MARK: initialize
     init(splashUseCase: SplashUseCase) {
         self.splashUseCase = splashUseCase
+    }
+}
+
+extension SplashReactor {
+    // MARK: Mutate
+    func mutate(action: Action) -> Observable<Mutation> {
+        switch action {
+        case .viewDidAppear:
+            return splashUseCase.checkShouldUpdate()
+                .asObservable()
+                .catchAndReturn(true)
+                .map(Mutation.checkUpdate)
+        }
+    }
+    
+    // MARK: Reduce
+    func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
+        switch mutation {
+        case .checkUpdate(let shouldUpdate):
+            newState.shouldUpdate = shouldUpdate
+            return newState
+        }
     }
 }

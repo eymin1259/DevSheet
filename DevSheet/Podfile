@@ -14,7 +14,8 @@ target 'DevSheet' do
   pod 'RxCocoa'
   pod 'RxDataSources'
   pod 'RxOptional'
-
+  pod 'RxViewController'
+  
   # Toast
   pod 'Loaf'
 

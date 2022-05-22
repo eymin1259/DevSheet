@@ -16,6 +16,7 @@ protocol FirebaseService {
 final class FirebaseServiceImpl: FirebaseService {
     
     func request(_ api: ServiceAPI) -> Single<QuerySnapshot> {
-       return api.task()
+        beaverLog.debug("api :", context: api)
+        return api.task()
     }
 }

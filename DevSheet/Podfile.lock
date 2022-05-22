@@ -26,6 +26,7 @@ PODS:
     - RxSwift (~> 6.0)
   - SnapKit (5.0.1)
   - SwiftLint (0.47.1)
+  - SwiftyBeaver (1.9.6)
   - Swinject (2.8.1)
   - WeakMapTable (1.2.0)
 
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - RxViewController
   - SnapKit
   - SwiftLint
+  - SwiftyBeaver
   - Swinject
 
 SPEC REPOS:
@@ -59,6 +61,7 @@ SPEC REPOS:
     - RxViewController
     - SnapKit
     - SwiftLint
+    - SwiftyBeaver
     - Swinject
     - WeakMapTable
 
@@ -77,9 +80,10 @@ SPEC CHECKSUMS:
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
+  SwiftyBeaver: c8241b4745aa269a78ca5a022532c6915e948536
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 38aecda71c75164eddef40798a6a0368421647c6
+PODFILE CHECKSUM: 485d822455993d48449c7523821b7959f8265def
 
 COCOAPODS: 1.11.2

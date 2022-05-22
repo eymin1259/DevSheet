@@ -27,6 +27,9 @@ target 'DevSheet' do
 
   # Lint
   pod 'SwiftLint'
+  
+  # Logging
+  pod 'SwiftyBeaver'
 
   target 'DevSheetTests' do
     inherit! :search_paths

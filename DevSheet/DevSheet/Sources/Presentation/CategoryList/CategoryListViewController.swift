@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import ReactorKit
 
-final class CategoryListViewController: UIViewController {
+final class CategoryListViewController: BaseViewController, View {
+    typealias Reactor = <#type#>
+    
     
     // MARK: life cycle
     override func viewDidLoad() {

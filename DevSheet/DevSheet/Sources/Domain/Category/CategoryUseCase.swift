@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol CategoryUseCase {
-    func fetchCategories(query: String) -> Single<[Category]>
+    func fetchCategories(group: Int) -> Single<[Category]>
 }
 
 final class  CategoryUseCaseImpl: CategoryUseCase {
@@ -23,7 +23,7 @@ final class  CategoryUseCaseImpl: CategoryUseCase {
     }
     
     // MARK: methods
-    func fetchCategories(query: String) -> Single<[Category]> {
-        
+    func fetchCategories(group: Int) -> Single<[Category]> {
+        return categoryRepository.fetchCategories(group: group)
     }
 }

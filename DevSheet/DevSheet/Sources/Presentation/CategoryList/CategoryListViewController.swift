@@ -61,8 +61,10 @@ extension CategoryListViewController {
         reactor.state
             .map { $0.categoryList }
             .filterNil()
+            .distinctUntilChanged()
             .subscribe(onNext: { list in
                 beaverLog.debug("category list -> ", context: list)
             }).disposed(by: self.disposeBag)
+    
     }
 }

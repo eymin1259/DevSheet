@@ -15,6 +15,8 @@
 		A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB32837BEBF00C71F9B /* MainTabBarController.swift */; };
 		A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */; };
 		A1AE5FB82837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */; };
+		A1AE5FC8283B669400C71F9B /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */; };
+		A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */; };
 		A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F071283270890098DF44 /* AppDelegate.swift */; };
 		A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F073283270890098DF44 /* SceneDelegate.swift */; };
 		A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F075283270890098DF44 /* SplashViewController.swift */; };
@@ -78,6 +80,8 @@
 		A1AE5FB32837BEBF00C71F9B /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNA_11yrs_ttf.ttf; sourceTree = "<group>"; };
+		A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
+		A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
 		A1B5F06E283270890098DF44 /* DevSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B5F071283270890098DF44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B5F073283270890098DF44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +174,29 @@
 				A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		A1AE5FC3283B627500C71F9B /* CategoryList */ = {
+			isa = PBXGroup;
+			children = (
+				A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */,
+			);
+			path = CategoryList;
+			sourceTree = "<group>";
+		};
+		A1AE5FC4283B632900C71F9B /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */,
+			);
+			path = Mypage;
+			sourceTree = "<group>";
+		};
+		A1AE5FC6283B635500C71F9B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		A1B5F065283270890098DF44 = {
@@ -265,6 +292,8 @@
 		A1B5F0AD28327F040098DF44 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				A1AE5FC4283B632900C71F9B /* Mypage */,
+				A1AE5FC3283B627500C71F9B /* CategoryList */,
 				A1AE5FB02837BE4000C71F9B /* MainTab */,
 				A1B5F0AE28327F150098DF44 /* Splash */,
 			);
@@ -293,6 +322,7 @@
 		A1B5F0CB2833D9BF0098DF44 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				A1AE5FC6283B635500C71F9B /* Category */,
 				A1B5F0CE2833DA4A0098DF44 /* Version */,
 			);
 			path = Domain;
@@ -674,7 +704,9 @@
 				A1B5F0D22833DA790098DF44 /* VersionUseCase.swift in Sources */,
 				A1B5F0D02833DA630098DF44 /* VersionRepository.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
+				A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */,
 				A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */,
+				A1AE5FC8283B669400C71F9B /* CategoryListViewController.swift in Sources */,
 				A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

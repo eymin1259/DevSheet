@@ -33,8 +33,6 @@ final class MainTabBarController: UITabBarController {
     // MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        beaverLog.debug("MainTabBarController  viewDidLoad")
-        
         setup()
         bind()
     }
@@ -48,12 +46,11 @@ final class MainTabBarController: UITabBarController {
         tabBar.layer.shadowOpacity = 0.25
         tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
         tabBar.layer.shadowRadius = 2.0
-        
     }
 }
 
+// MARK: ViewModel Bind
 extension MainTabBarController {
-    
     func bind() {
         viewModel.tabItems
             .distinctUntilChanged()
@@ -63,7 +60,6 @@ extension MainTabBarController {
                     let viewController = self.viewControllerFactory(tabItem)
                     return viewController
                 }
-                beaverLog.debug("MainTabBarController  setViewControllers", context: tabItems)
                 self.setViewControllers(viewControllers, animated: true)
             })
             .disposed(by: disposeBag)

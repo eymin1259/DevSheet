@@ -43,7 +43,7 @@ extension CategoryListReactor {
             guard !self.currentState.isLoading else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
-            let setCategories = self.categoryUseCase.fetchCategories(group: group.rawValue)
+            let setCategories = self.categoryUseCase.fetchCategories(group: group)
                 .asObservable()
                 .catchAndReturn(CategoryList(items: .init()))
                 .map { categoryList -> Mutation in

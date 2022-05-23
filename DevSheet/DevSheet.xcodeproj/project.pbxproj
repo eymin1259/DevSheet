@@ -17,6 +17,7 @@
 		A1AE5FB82837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */; };
 		A1AE5FC8283B669400C71F9B /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */; };
 		A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */; };
+		A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */; };
 		A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F071283270890098DF44 /* AppDelegate.swift */; };
 		A1B5F074283270890098DF44 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F073283270890098DF44 /* SceneDelegate.swift */; };
 		A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F075283270890098DF44 /* SplashViewController.swift */; };
@@ -82,6 +83,7 @@
 		A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNA_11yrs_ttf.ttf; sourceTree = "<group>"; };
 		A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
 		A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
+		A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A1B5F06E283270890098DF44 /* DevSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1B5F071283270890098DF44 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A1B5F073283270890098DF44 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -199,6 +201,14 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		A1AE5FCB283B766800C71F9B /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		A1B5F065283270890098DF44 = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +306,7 @@
 				A1AE5FC3283B627500C71F9B /* CategoryList */,
 				A1AE5FB02837BE4000C71F9B /* MainTab */,
 				A1B5F0AE28327F150098DF44 /* Splash */,
+				A1AE5FCB283B766800C71F9B /* Base */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -694,6 +705,7 @@
 				A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */,
 				A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */,
 				A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */,
+				A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */,
 				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,

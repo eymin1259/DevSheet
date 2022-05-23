@@ -11,12 +11,10 @@ import SnapKit
 import RxViewController
 import RxOptional
 
-final class SplashViewController: UIViewController, View {
+final class SplashViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = SplashReactor
-    var disposeBag: DisposeBag = .init()
-    private let FONT_BM = "BMHANNA11yrsold"
 
     // MARK: UI
     private let splashImageView: UIImageView = {
@@ -98,8 +96,8 @@ final class SplashViewController: UIViewController, View {
     }
     
     private func gotoMainTab() {
-        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
-        let vc = sceneDelegate.container.resolve(MainTabBarController.self)!
+        guard let DIContainer = self.DIContainer else { return }
+        let vc = DIContainer.resolve(MainTabBarController.self)!
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in

@@ -14,14 +14,13 @@ final class CategoryListViewController: BaseViewController, View {
 
     // MARK: properties
     typealias Reactor = CategoryListReactor
-    private var categoryGroup: MainTab?
+    var categoryGroup: MainTab?
     
     // MARK: UI
     
     // MARK: initialize
-    init(reactor: Reactor, categoryGroup: MainTab) {
+    init(reactor: Reactor) {
         super.init(nibName: nil, bundle: nil)
-        self.categoryGroup = categoryGroup
         self.reactor = reactor
     }
     
@@ -63,7 +62,6 @@ extension CategoryListViewController {
             .map { $0.categoryList }
             .filterNil()
             .subscribe(onNext: { list in
-                
                 beaverLog.debug("category list -> ", context: list)
             }).disposed(by: self.disposeBag)
     }

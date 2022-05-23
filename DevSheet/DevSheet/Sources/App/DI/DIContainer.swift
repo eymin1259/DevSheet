@@ -31,6 +31,12 @@ extension Container {
             let repo = VersionRepositoryImpl(firebaseService: firebase)
             return repo
         }
+        
+        register(CategoryRepository.self) { r in
+            let firebase = r.resolve(FirebaseService.self)!
+            let repo = CategoryRepositoryImpl(firebaseService: firebase)
+            return repo
+        }
     }
     
     private func registerUseCase() {
@@ -39,12 +45,24 @@ extension Container {
             let useCase = VersionUseCaseImpl(versionRepository: repo)
             return useCase
         }
+        
+        register(CategoryUseCase.self) { r in
+            let repo = r.resolve(CategoryRepository.self)!
+            let useCase = CategoryUseCaseImpl(categoryRepository: repo)
+            return useCase
+        }
     }
     
     private func registerReactor() {
         register(SplashReactor.self) { r in
             let useCase = r.resolve(VersionUseCase.self)!
             let reactor = SplashReactor(versionUseCase: useCase)
+            return reactor
+        }
+        
+        register(CategoryListReactor.self) { r in
+            let useCase = r.resolve(CategoryUseCase.self)!
+            let reactor = CategoryListReactor(categoryUseCase: useCase)
             return reactor
         }
     }
@@ -62,8 +80,9 @@ extension Container {
             return vc
         }
         
-        register(CategoryListViewController.self) { _ in
-            let vc = CategoryListViewController()
+        register(CategoryListViewController.self) { r in
+            let reactor = r.resolve(CategoryListReactor.self)!
+            let vc = CategoryListViewController(reactor: reactor)
             return vc
         }.inObjectScope(.transient)
         
@@ -76,19 +95,28 @@ extension Container {
             let viewModel = r.resolve(MainTabViewModel.self)!
             let vc =  MainTabBarController(
                 viewModel: viewModel,
-                viewControllerFactory: { tab in
+                viewControllerFactory: { mainTab in
                     let createdVC: UIViewController
-                    switch tab {
+                    switch mainTab {
                     case .cs:
                         createdVC = r.resolve(CategoryListViewController.self)!
+                        if let createdVC = createdVC as? CategoryListViewController {
+                            createdVC.categoryGroup = mainTab
+                        }
                     case .develop:
                         createdVC = r.resolve(CategoryListViewController.self)!
+                        if let createdVC = createdVC as? CategoryListViewController {
+                            createdVC.categoryGroup = mainTab
+                        }
                     case .favorite:
                         createdVC = r.resolve(CategoryListViewController.self)!
+                        if let createdVC = createdVC as? CategoryListViewController {
+                            createdVC.categoryGroup = mainTab
+                        }
                     case .mypage:
                         createdVC = r.resolve(MypageViewController.self)!
                     }
-                    createdVC.tabBarItem = tab.getTabBarItem()
+                    createdVC.tabBarItem = mainTab.getTabBarItem()
                     return createdVC
                 }
             )

@@ -98,7 +98,8 @@ final class SplashViewController: UIViewController, View {
     }
     
     private func gotoMainTab() {
-        let vc = TestViewController()
+        let sceneDelegate = UIApplication.shared.connectedScenes.first!.delegate as! SceneDelegate
+        let vc = sceneDelegate.container.resolve(MainTabBarController.self)!
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in

@@ -11,15 +11,15 @@ import SnapKit
 import RxViewController
 import RxOptional
 
-class SplashViewController: UIViewController, View {
+final class SplashViewController: UIViewController, View {
     
     // MARK: properties
     typealias Reactor = SplashReactor
     var disposeBag: DisposeBag = .init()
-    let FONT_BM = "BMHANNA11yrsold"
+    private let FONT_BM = "BMHANNA11yrsold"
 
     // MARK: UI
-    let splashImageView: UIImageView = {
+    private let splashImageView: UIImageView = {
        var iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .clear
@@ -31,7 +31,7 @@ class SplashViewController: UIViewController, View {
         return iv
     }()
     
-    lazy var splashLabel: UILabel = {
+    private lazy var splashLabel: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: FONT_BM, size: 40)
         lbl.text = "개발족보"
@@ -75,7 +75,7 @@ class SplashViewController: UIViewController, View {
         self.view.addSubview(splashLabel)
         splashLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(splashImageView.snp.bottom).offset(10)
+            $0.top.equalTo(splashImageView.snp.bottom).offset(20)
         }
     }
     

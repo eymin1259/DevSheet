@@ -10,7 +10,7 @@ import Firebase
 import RxSwift
 
 enum CategoryAPI {
-    case fetchCategories
+    case fetchCategories(group: Int)
 }
 
 extension CategoryAPI: ServiceAPI {
@@ -21,9 +21,22 @@ extension CategoryAPI: ServiceAPI {
     
     func task() -> Single<QuerySnapshot> {
         switch self {
-        case .fetchCategories:
+        case .fetchCategories(let group):
             return Single<QuerySnapshot>.create { single in
-    
+                collection
+                    .whereField("group", isEqualTo: group)
+                    .order(by: "order", descending: false)
+                    .getDocuments { snapshot, err in
+                        if let err = err {
+                            single(.failure(err))
+                        }
+                        if let  snapshot = snapshot,
+                           snapshot.isEmpty == false {
+                            single(.success(snapshot))
+                        } else {
+                            single(.failure(FirebaseError.noData))
+                        }
+                    }
                 return Disposables.create()
             }
         }

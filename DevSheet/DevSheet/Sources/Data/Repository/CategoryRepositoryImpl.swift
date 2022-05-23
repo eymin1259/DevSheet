@@ -20,7 +20,17 @@ final class CategoryRepositoryImpl: CategoryRepository {
     }
     
     // MARK: methods
-    func fetchCategories(query: String) -> Single<[Category]> {
-        <#code#>
+    func fetchCategories(group: Int) -> Single<[Category]> {
+        return firebaseService.request(CategoryAPI.fetchCategories(group: group))
+            .map { snapshot in
+                var ret = [Category]()
+                for doc in snapshot.documents {
+                    let id = doc.documentID
+                    let data = doc.data()
+                    let category = CategoryDTO(id: id, dictionary: data).toDomain()
+                    ret.append(category)
+                }
+                return ret
+            }
     }
 }

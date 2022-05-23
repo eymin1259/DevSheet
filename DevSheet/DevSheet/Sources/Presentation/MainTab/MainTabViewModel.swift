@@ -11,5 +11,4 @@ import RxSwift
 
 struct MainTabViewModel {
     let tabItems = BehaviorRelay<[MainTab]>(value: MainTab.allCases)
-    let currentTab = PublishRelay<MainTab>()
 }

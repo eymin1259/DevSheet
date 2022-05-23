@@ -36,7 +36,7 @@ extension Container {
             let firebase = r.resolve(FirebaseService.self)!
             let repo = CategoryRepositoryImpl(firebaseService: firebase)
             return repo
-        }
+        }.inObjectScope(.transient)
     }
     
     private func registerUseCase() {
@@ -50,7 +50,7 @@ extension Container {
             let repo = r.resolve(CategoryRepository.self)!
             let useCase = CategoryUseCaseImpl(categoryRepository: repo)
             return useCase
-        }
+        }.inObjectScope(.transient)
     }
     
     private func registerReactor() {
@@ -64,7 +64,7 @@ extension Container {
             let useCase = r.resolve(CategoryUseCase.self)!
             let reactor = CategoryListReactor(categoryUseCase: useCase)
             return reactor
-        }
+        }.inObjectScope(.transient)
     }
     
     private func registerViewModel() {

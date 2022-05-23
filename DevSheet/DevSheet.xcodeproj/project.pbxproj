@@ -10,6 +10,9 @@
 		A1634A36283B93E700403498 /* CategoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A35283B93E700403498 /* CategoryAPI.swift */; };
 		A1634A38283B943700403498 /* Entity.Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A37283B943700403498 /* Entity.Category.swift */; };
 		A1634A3A283B9B4000403498 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A39283B9B4000403498 /* Category.swift */; };
+		A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A3C283B9DE100403498 /* VersionDTO.swift */; };
+		A1634A3F283B9DFF00403498 /* CategoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A3E283B9DFF00403498 /* CategoryDTO.swift */; };
+		A1634A41283B9E9400403498 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A40283B9E9400403498 /* Version.swift */; };
 		A1AE5FA9283524C700C71F9B /* ServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FA8283524C700C71F9B /* ServiceAPI.swift */; };
 		A1AE5FAB283524F700C71F9B /* VersionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAA283524F700C71F9B /* VersionAPI.swift */; };
 		A1AE5FAD283539ED00C71F9B /* Entity.Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */; };
@@ -83,6 +86,9 @@
 		A1634A35283B93E700403498 /* CategoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAPI.swift; sourceTree = "<group>"; };
 		A1634A37283B943700403498 /* Entity.Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.Category.swift; sourceTree = "<group>"; };
 		A1634A39283B9B4000403498 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		A1634A3C283B9DE100403498 /* VersionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDTO.swift; sourceTree = "<group>"; };
+		A1634A3E283B9DFF00403498 /* CategoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDTO.swift; sourceTree = "<group>"; };
+		A1634A40283B9E9400403498 /* Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		A1AE5FA8283524C700C71F9B /* ServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAPI.swift; sourceTree = "<group>"; };
 		A1AE5FAA283524F700C71F9B /* VersionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionAPI.swift; sourceTree = "<group>"; };
 		A1AE5FAC283539ED00C71F9B /* Entity.Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.Version.swift; sourceTree = "<group>"; };
@@ -171,6 +177,15 @@
 				FD29BC64A1226723D5AFEC14 /* Pods_DevSheetTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1634A3B283B9DC300403498 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				A1634A3C283B9DE100403498 /* VersionDTO.swift */,
+				A1634A3E283B9DFF00403498 /* CategoryDTO.swift */,
+			);
+			path = DTO;
 			sourceTree = "<group>";
 		};
 		A1AE5FA7283524B500C71F9B /* API */ = {
@@ -342,6 +357,7 @@
 		A1B5F0CA2833D9A70098DF44 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				A1634A3B283B9DC300403498 /* DTO */,
 				A1B5F0D62833DAC60098DF44 /* Entity */,
 				A1B5F0D52833DABB0098DF44 /* Firebase */,
 				A1B5F0CD2833D9DC0098DF44 /* Repository */,
@@ -372,6 +388,7 @@
 			children = (
 				A1B5F0CF2833DA630098DF44 /* VersionRepository.swift */,
 				A1B5F0D12833DA790098DF44 /* VersionUseCase.swift */,
+				A1634A40283B9E9400403498 /* Version.swift */,
 			);
 			path = Version;
 			sourceTree = "<group>";
@@ -737,10 +754,13 @@
 				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,
 				A1AE5FA9283524C700C71F9B /* ServiceAPI.swift in Sources */,
 				A1AE5FAB283524F700C71F9B /* VersionAPI.swift in Sources */,
+				A1634A41283B9E9400403498 /* Version.swift in Sources */,
 				A1B5F0D22833DA790098DF44 /* VersionUseCase.swift in Sources */,
 				A1B5F0D02833DA630098DF44 /* VersionRepository.swift in Sources */,
+				A1634A3F283B9DFF00403498 /* CategoryDTO.swift in Sources */,
 				A1AE5FD3283B858700C71F9B /* CategoryRepository.swift in Sources */,
 				A1AE5FD1283B854B00C71F9B /* CategoryUseCase.swift in Sources */,
+				A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
 				A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */,
 				A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */,

@@ -9,5 +9,5 @@ import Foundation
 import  RxSwift
 
 protocol VersionRepository {
-    func getVersionCheck() -> Single<Entity.Version>
+    func getVersionCheck() -> Single<Version>
 }

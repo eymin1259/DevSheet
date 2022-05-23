@@ -20,12 +20,12 @@ final class VersionRepositoryImpl: VersionRepository {
     }
     
     // MARK: methods
-    func getVersionCheck() -> Single<Entity.Version> {
+    func getVersionCheck() -> Single<Version> {
         return firebaseService.request(VersionAPI.getVersionCheck)
             .map { snapshot in
                 let id = snapshot.documents.first!.documentID
                 let data = snapshot.documents.first!.data()
-                let version = Entity.Version(id: id, dictionary: data)
+                let version = VersionDTO(id: id, dictionary: data).toDomain()
                 return version
             }
     }

@@ -99,20 +99,17 @@ extension Container {
                     let createdVC: UIViewController
                     switch mainTab {
                     case .cs:
-                        createdVC = r.resolve(CategoryListViewController.self)!
-                        if let createdVC = createdVC as? CategoryListViewController {
-                            createdVC.categoryGroup = mainTab
-                        }
+                        let rootVC = r.resolve(CategoryListViewController.self)!
+                        rootVC.categoryGroup = mainTab
+                        createdVC = UINavigationController(rootViewController: rootVC)
                     case .develop:
-                        createdVC = r.resolve(CategoryListViewController.self)!
-                        if let createdVC = createdVC as? CategoryListViewController {
-                            createdVC.categoryGroup = mainTab
-                        }
+                        let rootVC = r.resolve(CategoryListViewController.self)!
+                        rootVC.categoryGroup = mainTab
+                        createdVC = UINavigationController(rootViewController: rootVC)
                     case .favorite:
-                        createdVC = r.resolve(CategoryListViewController.self)!
-                        if let createdVC = createdVC as? CategoryListViewController {
-                            createdVC.categoryGroup = mainTab
-                        }
+                        let rootVC = r.resolve(CategoryListViewController.self)!
+                        rootVC.categoryGroup = mainTab
+                        createdVC = UINavigationController(rootViewController: rootVC)
                     case .mypage:
                         createdVC = r.resolve(MypageViewController.self)!
                     }

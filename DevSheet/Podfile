@@ -30,6 +30,9 @@ target 'DevSheet' do
   
   # Logging
   pod 'SwiftyBeaver'
+  
+  # HUD
+  pod 'ProgressHUD'
 
   target 'DevSheetTests' do
     inherit! :search_paths

@@ -2,6 +2,7 @@ PODS:
   - Differentiator (5.0.0)
   - Loaf (0.7.0)
   - Nimble (9.2.1)
+  - ProgressHUD (13.6)
   - Quick (4.0.0)
   - ReactorKit (3.2.0):
     - RxSwift (~> 6.0)
@@ -33,6 +34,7 @@ PODS:
 DEPENDENCIES:
   - Loaf
   - Nimble
+  - ProgressHUD
   - Quick
   - ReactorKit
   - RxBlocking
@@ -50,6 +52,7 @@ SPEC REPOS:
     - Differentiator
     - Loaf
     - Nimble
+    - ProgressHUD
     - Quick
     - ReactorKit
     - RxBlocking
@@ -69,6 +72,7 @@ SPEC CHECKSUMS:
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Nimble: e7e615c0335ee4bf5b0d786685451e62746117d5
+  ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
   RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
@@ -84,6 +88,6 @@ SPEC CHECKSUMS:
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: 485d822455993d48449c7523821b7959f8265def
+PODFILE CHECKSUM: 2e1089a459758a4a7544310e8ff72207bdf665f6
 
 COCOAPODS: 1.11.2

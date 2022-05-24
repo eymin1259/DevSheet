@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
 		A1634A36283B93E700403498 /* CategoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A35283B93E700403498 /* CategoryAPI.swift */; };
 		A1634A3A283B9B4000403498 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A39283B9B4000403498 /* Category.swift */; };
 		A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A3C283B9DE100403498 /* VersionDTO.swift */; };
@@ -82,6 +83,7 @@
 		778AAA77B9C7472AAEC3F477 /* Pods-DevSheet-DevSheetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet-DevSheetUITests.release.xcconfig"; path = "Target Support Files/Pods-DevSheet-DevSheetUITests/Pods-DevSheet-DevSheetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8C681EB0F81107A551EA4192 /* Pods-DevSheetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheetTests.release.xcconfig"; path = "Target Support Files/Pods-DevSheetTests/Pods-DevSheetTests.release.xcconfig"; sourceTree = "<group>"; };
 		9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSheet_DevSheetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
 		A1634A35283B93E700403498 /* CategoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAPI.swift; sourceTree = "<group>"; };
 		A1634A39283B9B4000403498 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A1634A3C283B9DE100403498 /* VersionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDTO.swift; sourceTree = "<group>"; };
@@ -177,6 +179,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A151BEB6283D187C002780F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1634A40283B9E9400403498 /* Version.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A151BEB7283D1888002780F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A1634A42283BB8ED00403498 /* CategoryList.swift */,
+				A1634A39283B9B4000403498 /* Category.swift */,
+				A151BEB4283D1877002780F5 /* CategoryListSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A1634A3B283B9DC300403498 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,8 +264,7 @@
 			children = (
 				A1AE5FD2283B858700C71F9B /* CategoryRepository.swift */,
 				A1AE5FD0283B854B00C71F9B /* CategoryUseCase.swift */,
-				A1634A42283BB8ED00403498 /* CategoryList.swift */,
-				A1634A39283B9B4000403498 /* Category.swift */,
+				A151BEB7283D1888002780F5 /* Model */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -403,7 +422,7 @@
 			children = (
 				A1B5F0CF2833DA630098DF44 /* VersionRepository.swift */,
 				A1B5F0D12833DA790098DF44 /* VersionUseCase.swift */,
-				A1634A40283B9E9400403498 /* Version.swift */,
+				A151BEB6283D187C002780F5 /* Model */,
 			);
 			path = Version;
 			sourceTree = "<group>";
@@ -748,6 +767,7 @@
 				A1634A36283B93E700403498 /* CategoryAPI.swift in Sources */,
 				A1634A43283BB8ED00403498 /* CategoryList.swift in Sources */,
 				A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */,
+				A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */,
 				A1634A47283D035D00403498 /* CALayer+.swift in Sources */,
 				A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */,
 				A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */,

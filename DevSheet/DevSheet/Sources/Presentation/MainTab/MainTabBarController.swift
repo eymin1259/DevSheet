@@ -41,11 +41,8 @@ final class MainTabBarController: UITabBarController {
     func setup() {
         view.backgroundColor = .white
         tabBar.tintColor = .black
-        tabBar.backgroundColor = .systemGray6
-        tabBar.layer.shadowColor = UIColor.black.cgColor
-        tabBar.layer.shadowOpacity = 0.25
-        tabBar.layer.shadowOffset = CGSize(width: 0, height: 0)
-        tabBar.layer.shadowRadius = 2.0
+        tabBar.backgroundColor = .white
+        tabBar.layer.makeShadow()
     }
 }
 

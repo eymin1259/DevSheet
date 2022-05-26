@@ -91,33 +91,36 @@ extension Container {
             return vc
         }
         
-        register(MainTabBarController.self) { r in
+        register(MainTabBarController.self) { [unowned self] r in
             let viewModel = r.resolve(MainTabViewModel.self)!
             let vc =  MainTabBarController(
                 viewModel: viewModel,
-                viewControllerFactory: { mainTab in
-                    let createdVC: UIViewController
-                    switch mainTab {
-                    case .cs:
-                        let rootVC = r.resolve(CategoryListViewController.self)!
-                        rootVC.categoryGroup = mainTab
-                        createdVC = UINavigationController(rootViewController: rootVC)
-                    case .develop:
-                        let rootVC = r.resolve(CategoryListViewController.self)!
-                        rootVC.categoryGroup = mainTab
-                        createdVC = UINavigationController(rootViewController: rootVC)
-                    case .favorite:
-                        let rootVC = r.resolve(CategoryListViewController.self)!
-                        rootVC.categoryGroup = mainTab
-                        createdVC = UINavigationController(rootViewController: rootVC)
-                    case .mypage:
-                        createdVC = r.resolve(MypageViewController.self)!
-                    }
-                    createdVC.tabBarItem = mainTab.getTabBarItem()
-                    return createdVC
-                }
+                viewControllerFactory: self.mainTabBarControllerFactory(mainTab:)
             )
             return vc
         }
+    }
+    
+    // MARK: factories
+    private func  mainTabBarControllerFactory(mainTab: MainTab) -> UIViewController {
+        let createdVC: UIViewController
+        switch mainTab {
+        case .cs:
+            let rootVC = resolve(CategoryListViewController.self)!
+            rootVC.categoryGroup = mainTab
+            createdVC = UINavigationController(rootViewController: rootVC)
+        case .develop:
+            let rootVC = resolve(CategoryListViewController.self)!
+            rootVC.categoryGroup = mainTab
+            createdVC = UINavigationController(rootViewController: rootVC)
+        case .favorite:
+            let rootVC = resolve(CategoryListViewController.self)!
+            rootVC.categoryGroup = mainTab
+            createdVC = UINavigationController(rootViewController: rootVC)
+        case .mypage:
+            createdVC = resolve(MypageViewController.self)!
+        }
+        createdVC.tabBarItem = mainTab.getTabBarItem()
+        return createdVC
     }
 }

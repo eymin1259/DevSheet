@@ -8,12 +8,11 @@
 import Foundation
 import RxDataSources
 
-
 struct CategoryListSection {
     var categoryList: [Category]
 }
 
-extension CategoryListSection : SectionModelType {
+extension CategoryListSection: SectionModelType {
     
     var items: [Category] {
         return self.categoryList

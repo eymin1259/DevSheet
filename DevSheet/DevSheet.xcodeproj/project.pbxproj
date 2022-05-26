@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
+		A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB8283D1C14002780F5 /* CategoryListCell.swift */; };
 		A1634A36283B93E700403498 /* CategoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A35283B93E700403498 /* CategoryAPI.swift */; };
 		A1634A3A283B9B4000403498 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A39283B9B4000403498 /* Category.swift */; };
 		A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1634A3C283B9DE100403498 /* VersionDTO.swift */; };
@@ -84,6 +85,7 @@
 		8C681EB0F81107A551EA4192 /* Pods-DevSheetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheetTests.release.xcconfig"; path = "Target Support Files/Pods-DevSheetTests/Pods-DevSheetTests.release.xcconfig"; sourceTree = "<group>"; };
 		9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSheet_DevSheetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
+		A151BEB8283D1C14002780F5 /* CategoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
 		A1634A35283B93E700403498 /* CategoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAPI.swift; sourceTree = "<group>"; };
 		A1634A39283B9B4000403498 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		A1634A3C283B9DE100403498 /* VersionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionDTO.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */,
 				A1AE5FCE283B852000C71F9B /* CategoryListReactor.swift */,
+				A151BEB8283D1C14002780F5 /* CategoryListCell.swift */,
 			);
 			path = CategoryList;
 			sourceTree = "<group>";
@@ -773,6 +776,7 @@
 				A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */,
 				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1AE5FD5283B859A00C71F9B /* CategoryRepositoryImpl.swift in Sources */,
+				A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
 				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,

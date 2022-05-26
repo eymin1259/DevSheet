@@ -12,7 +12,7 @@ final class CategoryListReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidAppear(MainTab?)
+        case viewDidAppear(MainTab)
     }
     
     enum Mutation {
@@ -39,7 +39,6 @@ extension CategoryListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidAppear(let group):
-            guard let group = group else { return .empty() }
             guard !self.currentState.isLoading else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))

@@ -80,9 +80,9 @@ extension Container {
             return vc
         }
         
-        register(CategoryListViewController.self) { r in
+        register(CategoryListViewController.self) { (r: Resolver, mainTab: MainTab) in
             let reactor = r.resolve(CategoryListReactor.self)!
-            let vc = CategoryListViewController(reactor: reactor)
+            let vc = CategoryListViewController(reactor: reactor, mainTab: mainTab)
             return vc
         }.inObjectScope(.transient)
         
@@ -106,16 +106,13 @@ extension Container {
         let createdVC: UIViewController
         switch mainTab {
         case .cs:
-            let rootVC = resolve(CategoryListViewController.self)!
-            rootVC.categoryGroup = mainTab
+            let rootVC = resolve(CategoryListViewController.self, argument: mainTab)!
             createdVC = UINavigationController(rootViewController: rootVC)
         case .develop:
-            let rootVC = resolve(CategoryListViewController.self)!
-            rootVC.categoryGroup = mainTab
+            let rootVC = resolve(CategoryListViewController.self, argument: mainTab)!
             createdVC = UINavigationController(rootViewController: rootVC)
         case .favorite:
-            let rootVC = resolve(CategoryListViewController.self)!
-            rootVC.categoryGroup = mainTab
+            let rootVC = resolve(CategoryListViewController.self, argument: mainTab)!
             createdVC = UINavigationController(rootViewController: rootVC)
         case .mypage:
             createdVC = resolve(MypageViewController.self)!

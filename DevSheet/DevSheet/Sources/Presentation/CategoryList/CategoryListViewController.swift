@@ -16,7 +16,7 @@ final class CategoryListViewController: BaseViewController, View {
 
     // MARK: properties
     typealias Reactor = CategoryListReactor
-    var categoryGroup: MainTab?
+    private var categoryGroup: MainTab
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<CategoryListSection>
     
     // MARK: UI
@@ -43,8 +43,9 @@ final class CategoryListViewController: BaseViewController, View {
     let refreshControl = UIRefreshControl()
     
     // MARK: initialize
-    init(reactor: Reactor) {
+    init(reactor: Reactor, mainTab group: MainTab ) {
         tableViewDataSource = Self.dataSourceFactory()
+        self.categoryGroup = group
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -64,7 +65,7 @@ final class CategoryListViewController: BaseViewController, View {
         
         // ViewController
         self.view.backgroundColor = .systemGray6
-        self.navigationItem.title = self.categoryGroup?.description ?? "카테고리"
+        self.navigationItem.title = self.categoryGroup.description
         self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.isTranslucent = false
@@ -116,8 +117,8 @@ extension CategoryListViewController {
     
     private func bindAction(reactor: CategoryListReactor) {
         self.rx.viewDidAppear
-            .map { [weak self] _ in
-                return Reactor.Action.viewDidAppear(self?.categoryGroup)
+            .map { [unowned self] _ in
+                Reactor.Action.viewDidAppear(self.categoryGroup)
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

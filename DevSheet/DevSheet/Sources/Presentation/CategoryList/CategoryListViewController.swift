@@ -40,8 +40,6 @@ final class CategoryListViewController: BaseViewController, View {
         return tableView
     }()
     
-    let refreshControl = UIRefreshControl()
-    
     // MARK: initialize
     init(reactor: Reactor, mainTab group: MainTab ) {
         tableViewDataSource = Self.dataSourceFactory()
@@ -67,7 +65,7 @@ final class CategoryListViewController: BaseViewController, View {
         self.view.backgroundColor = .systemGray6
         self.navigationItem.title = self.categoryGroup.description
         self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = .black
         
@@ -88,7 +86,6 @@ final class CategoryListViewController: BaseViewController, View {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
         }
-        
     }
     
     // MARK: Factories
@@ -100,7 +97,7 @@ final class CategoryListViewController: BaseViewController, View {
                 for: index
             )
             if let categoryListCell = cell as? CategoryListCell {
-                categoryListCell.configure(with: item)
+                categoryListCell.bind(with: item)
             }
             return cell
         }

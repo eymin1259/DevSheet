@@ -16,12 +16,12 @@ final class CategoryListReactor: Reactor {
     }
     
     enum Mutation {
-        case setCategories(CategoryList)
+        case setCategories([Category])
         case setLoading(Bool)
     }
     
     struct State {
-        var categoryList: CategoryList?
+        var categorySections: [CategoryListSection] = [.init(categoryList: [])]
         var isLoading: Bool = false
     }
     
@@ -45,7 +45,7 @@ extension CategoryListReactor {
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             let setCategories = self.categoryUseCase.fetchCategories(group: group)
                 .asObservable()
-                .catchAndReturn(CategoryList(items: .init()))
+                .catchAndReturn([])
                 .map { categoryList -> Mutation in
                     return .setCategories(categoryList)
                 }
@@ -58,7 +58,7 @@ extension CategoryListReactor {
         var newState = state
         switch mutation {
         case .setCategories(let list):
-            newState.categoryList = list
+            newState.categorySections = [.init(categoryList: list)]
             return newState
             
         case .setLoading(let loading):

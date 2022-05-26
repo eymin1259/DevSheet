@@ -124,14 +124,9 @@ extension CategoryListViewController {
     }
     
     private func bindState(reactor: CategoryListReactor) {
-        
         reactor.state
-            .map { $0.categoryList }
-            .filterNil()
-            .distinctUntilChanged()
-            .subscribe(onNext: { list in
-                beaverLog.debug("category list -> ", context: list)
-            }).disposed(by: self.disposeBag)
-    
+            .map { $0.categorySections }
+            .bind(to: categoryTableView.rx.items(dataSource: tableViewDataSource))
+            .disposed(by: disposeBag)
     }
 }

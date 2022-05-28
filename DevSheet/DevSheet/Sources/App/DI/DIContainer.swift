@@ -7,6 +7,7 @@
 
 import Foundation
 import Swinject
+import UIKit
 
 extension Container {
     
@@ -74,9 +75,12 @@ extension Container {
     }
     
     private func registerViewController() {
-        register(SplashViewController.self) { r in
+        register(SplashViewController.self) { [unowned self] r in
             let reactor = r.resolve(SplashReactor.self)!
-            let vc = SplashViewController(reactor: reactor)
+            let vc = SplashViewController(
+                reactor: reactor,
+                mainTabFactory: self.mainTabFactory
+            )
             return vc
         }
         
@@ -102,6 +106,13 @@ extension Container {
     }
     
     // MARK: factories
+    private func mainTabFactory() -> UIViewController {
+        let mainTabVC = resolve(MainTabBarController.self)!
+        mainTabVC.modalPresentationStyle = .fullScreen
+        mainTabVC.modalTransitionStyle = .crossDissolve
+        return mainTabVC
+    }
+    
     private func  mainTabBarControllerFactory(mainTab: MainTab) -> UIViewController {
         let createdVC: UIViewController
         switch mainTab {

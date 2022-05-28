@@ -15,6 +15,7 @@ final class SplashViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = SplashReactor
+    private var mainTabFactory: () -> UIViewController
 
     // MARK: UI
     private let splashImageView: UIImageView = {
@@ -39,7 +40,11 @@ final class SplashViewController: BaseViewController, View {
     }()
     
     // MARK: initialize
-    init(reactor: Reactor) {
+    init(
+        reactor: Reactor,
+        mainTabFactory: @escaping () -> UIViewController
+    ) {
+        self.mainTabFactory = mainTabFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -84,26 +89,17 @@ final class SplashViewController: BaseViewController, View {
         let updateAction = UIAlertAction(title: "업데이트", style: .default) { _ in
           print("debug : update Action ")
         }
-        let laterAction = UIAlertAction(title: "나중에", style: .cancel) { _ in
+        let laterAction = UIAlertAction(title: "나중에", style: .cancel) { [weak self] _ in
             print("debug : later Action ")
-//            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                exit(0)
-//            }
-            self.gotoMainTab()
+            self?.gotoMainTab()
         }
         [laterAction, updateAction].forEach(alert.addAction)
         self.present(alert, animated: true, completion: nil)
     }
     
     private func gotoMainTab() {
-        guard let DIContainer = self.DIContainer else { return }
-        let vc = DIContainer.resolve(MainTabBarController.self)!
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            self?.present(vc, animated: true, completion: nil)
-        }
+        let vc = mainTabFactory()
+        present(vc, animated: true, completion: nil)
     }
 }
 
@@ -129,7 +125,12 @@ extension SplashViewController {
                 if result == true {
                     self?.showUpdateAlert()
                 } else {
-                    self?.gotoMainTab()
+                    let splashDuration: DispatchTimeInterval = .seconds(2)
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + splashDuration
+                    ) { [weak self] in
+                        self?.gotoMainTab()
+                    }
                 }
             }).disposed(by: self.disposeBag)
     }

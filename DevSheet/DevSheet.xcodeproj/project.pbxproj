@@ -179,23 +179,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		A151BEB6283D187C002780F5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A1634A40283B9E9400403498 /* Version.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		A151BEB7283D1888002780F5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A151BEB4283D1877002780F5 /* CategoryListSection.swift */,
-				A1634A39283B9B4000403498 /* Category.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		A1634A3B283B9DC300403498 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,7 +247,8 @@
 			children = (
 				A1AE5FD2283B858700C71F9B /* CategoryRepository.swift */,
 				A1AE5FD0283B854B00C71F9B /* CategoryUseCase.swift */,
-				A151BEB7283D1888002780F5 /* Model */,
+				A151BEB4283D1877002780F5 /* CategoryListSection.swift */,
+				A1634A39283B9B4000403498 /* Category.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -422,7 +406,7 @@
 			children = (
 				A1B5F0CF2833DA630098DF44 /* VersionRepository.swift */,
 				A1B5F0D12833DA790098DF44 /* VersionUseCase.swift */,
-				A151BEB6283D187C002780F5 /* Model */,
+				A1634A40283B9E9400403498 /* Version.swift */,
 			);
 			path = Version;
 			sourceTree = "<group>";

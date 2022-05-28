@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Question {
+    var id: String
+    var title: String
+    var categoryId: String
+    var deleted: Bool
+}

@@ -79,19 +79,20 @@ final class SplashViewController: BaseViewController, View {
     
     private func showUpdateAlert() {
         let title = "업데이트"
-        let message = "새로운 업데이트"
+        let message = "새로운 버전으로 업데이트가 필요합니다."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let updateAction = UIAlertAction(title: "update", style: .default) { _ in
+        let updateAction = UIAlertAction(title: "업데이트", style: .default) { _ in
           print("debug : update Action ")
         }
-        let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { _ in
-            print("debug : cancel Action ")
-            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                exit(0)
-            }
+        let laterAction = UIAlertAction(title: "나중에", style: .cancel) { _ in
+            print("debug : later Action ")
+//            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                exit(0)
+//            }
+            self.gotoMainTab()
         }
-        [cancelAction, updateAction].forEach(alert.addAction)
+        [laterAction, updateAction].forEach(alert.addAction)
         self.present(alert, animated: true, completion: nil)
     }
     

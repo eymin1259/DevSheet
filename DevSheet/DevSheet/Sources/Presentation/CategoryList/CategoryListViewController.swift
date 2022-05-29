@@ -41,6 +41,12 @@ final class CategoryListViewController: BaseViewController, View {
         return tableView
     }()
     
+    private lazy var backBarBtn: UIBarButtonItem = {
+        let title = "뒤로"
+        var barBtn = UIBarButtonItem(title: title, style: .plain, target: self, action: nil)
+        return barBtn
+    }()
+    
     // MARK: initialize
     init(
         reactor: Reactor,
@@ -74,6 +80,7 @@ final class CategoryListViewController: BaseViewController, View {
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = .black
+        navigationItem.backBarButtonItem = backBarBtn
         
         // tablewView
         self.view.addSubview(categoryTableView)

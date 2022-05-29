@@ -13,11 +13,10 @@ final class QuestionListReactor: Reactor {
     // MARK: properties
     enum Action {
         case viewDidAppear(String) // categoryId: String
-        case refresh
     }
     
     enum Mutation {
-        case setCategories([Category])
+        case setQuestions([Question])
         case setLoading(Bool)
     }
     
@@ -38,14 +37,32 @@ final class QuestionListReactor: Reactor {
 extension QuestionListReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
-        
-        return .empty()
+        switch action {
+        case .viewDidAppear(let categoryId):
+            guard !self.currentState.isLoading else { return .empty() }
+            let startLoading = Observable<Mutation>.just(.setLoading(true))
+            let endLoading = Observable<Mutation>.just(.setLoading(false))
+            let setQuestions = self.questionUseCase
+                .fetchQuestions(categoryId: categoryId)
+                .asObservable()
+                .catchAndReturn([])
+                .map { questionList -> Mutation in
+                    return .setQuestions(questionList)
+                }
+            return .concat([startLoading, setQuestions, endLoading])
+        }
     }
     
     // MARK: Reduce
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
- 
-        return newState
+        switch mutation {
+        case .setQuestions(let list):
+            newState.questionSections = [.init(questionList: list)]
+            return newState
+        case .setLoading(let loading):
+            newState.isLoading = loading
+            return newState
+        }
     }
 }

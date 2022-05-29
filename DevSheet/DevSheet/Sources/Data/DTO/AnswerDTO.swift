@@ -11,6 +11,7 @@ import Firebase
 struct AnswerDTO {
     var id: String
     var questionId: String
+    var title: String
     var content: String
     var createdBy: String
     var timeStamp: Timestamp
@@ -19,6 +20,7 @@ struct AnswerDTO {
     init(id: String, dictionary: [String: Any]) {
         self.id = id
         self.questionId = dictionary["questionId"] as? String ?? ""
+        self.title = dictionary["title"] as? String ?? ""
         self.content = dictionary["content"] as? String ?? ""
         self.createdBy = dictionary["createdBy"] as? String ?? ""
         self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
@@ -26,9 +28,10 @@ struct AnswerDTO {
     }
     
     func toDomain() -> Answer {
-        return Answer(
+        return .init(
             id: id,
             questionId: questionId,
+            title: title,
             content: content,
             createdBy: createdBy,
             createdAt: timeStamp.dateValue().getToday(),

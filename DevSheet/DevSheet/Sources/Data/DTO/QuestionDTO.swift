@@ -24,7 +24,7 @@ struct QuestionDTO {
     }
     
     func toDomain() -> Question {
-        return Question(
+        return .init(
             id: id,
             title: title,
             categoryId: categoryId,

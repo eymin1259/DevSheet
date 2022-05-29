@@ -42,7 +42,7 @@ final class QuestionListViewController: BaseViewController, View {
         btn.tintColor = .white
         btn.contentMode = .scaleAspectFill
         btn.clipsToBounds = true
-        btn.layer.cornerRadius = 20
+        btn.layer.cornerRadius = 25
         btn.backgroundColor = .systemOrange
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
@@ -95,10 +95,26 @@ final class QuestionListViewController: BaseViewController, View {
         // addSheetBtn
         self.view.addSubview(addSheetBtn)
         addSheetBtn.snp.makeConstraints {
-            $0.width.equalTo(40)
-            $0.height.equalTo(40)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20)
-            $0.right.equalToSuperview().inset(20)
+            $0.width.equalTo(50)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(60)
+            $0.right.equalToSuperview().inset(10)
+        }
+    }
+    
+    private func showAddSheetBtn() {
+        let asyncDuration: DispatchTimeInterval = .milliseconds(500)
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + asyncDuration
+        ) { [weak self] in
+            guard let self = self else { return }
+            let animateDutaion: TimeInterval = 0.5
+            self.addSheetBtn.snp.updateConstraints {
+                $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(10)
+            }
+            UIView.animate(withDuration: animateDutaion) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
@@ -126,6 +142,11 @@ extension QuestionListViewController {
     }
     
     private func bindAction(reactor: QuestionListReactor) {
+        self.rx.viewDidLoad
+            .subscribe { [weak self] _ in
+                self?.showAddSheetBtn()
+            }.disposed(by: self.disposeBag)
+        
         self.rx.viewDidAppear
             .map { [unowned self] _ in
                 Reactor.Action.viewDidAppear(self.category.id)

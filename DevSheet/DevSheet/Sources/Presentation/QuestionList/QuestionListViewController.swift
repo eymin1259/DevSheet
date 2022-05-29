@@ -19,6 +19,7 @@ final class QuestionListViewController: BaseViewController, View {
     typealias Reactor = QuestionListReactor
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
+    private var answerDetailFactory: (Question) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -51,10 +52,12 @@ final class QuestionListViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        category: Category
+        category: Category,
+        answerDetailFactory : @escaping (Question) -> UIViewController
     ) {
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
+        self.answerDetailFactory = answerDetailFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -159,6 +162,19 @@ extension QuestionListViewController {
             .subscribe { _ in
                 print("debug : addSheetBtn tap ")
             }.disposed(by: self.disposeBag)
+        
+        Observable
+            .zip(
+                questionTableView.rx.itemSelected,
+                questionTableView.rx.modelSelected(Question.self)
+            )
+            .bind { [weak self] indexPath, model in
+                guard let self = self else {return}
+                self.questionTableView.deselectRow(at: indexPath, animated: true)
+                let answerVC = self.answerDetailFactory(model)
+                self.navigationController?.pushViewController(answerVC, animated: true)
+            }
+            .disposed(by: disposeBag)
 
     }
     

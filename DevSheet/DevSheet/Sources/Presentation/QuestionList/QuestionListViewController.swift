@@ -11,6 +11,7 @@ import SnapKit
 import RxViewController
 import RxOptional
 import RxDataSources
+import UIKit
 
 final class QuestionListViewController: BaseViewController, View {    
     
@@ -32,6 +33,19 @@ final class QuestionListViewController: BaseViewController, View {
             forCellReuseIdentifier: QuestionListCell.ID
         )
         return tableView
+    }()
+    
+    private let addSheetBtn: UIButton = {
+        var btn = UIButton()
+        let img = UIImage(named: "icon_write")
+        btn.setImage(img, for: .normal)
+        btn.tintColor = .white
+        btn.contentMode = .scaleAspectFill
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 20
+        btn.backgroundColor = .systemOrange
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
     }()
     
     // MARK: initialize
@@ -77,6 +91,15 @@ final class QuestionListViewController: BaseViewController, View {
             $0.height.equalTo(1)
             $0.top.equalToSuperview()
         }
+        
+        // addSheetBtn
+        self.view.addSubview(addSheetBtn)
+        addSheetBtn.snp.makeConstraints {
+            $0.width.equalTo(40)
+            $0.height.equalTo(40)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(20)
+            $0.right.equalToSuperview().inset(20)
+        }
     }
     
     // MARK: Factories
@@ -109,6 +132,13 @@ extension QuestionListViewController {
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        addSheetBtn.rx
+            .tap
+            .subscribe { _ in
+                print("debug : addSheetBtn tap ")
+            }.disposed(by: self.disposeBag)
+
     }
     
     private func bindState(reactor: QuestionListReactor) {

@@ -64,7 +64,6 @@ final class CategoryListViewController: BaseViewController, View {
 
     // MARK: methods
     private func setupUI() {
-        
         // ViewController
         self.view.backgroundColor = .systemGray6
         self.navigationItem.title = self.categoryGroup.description
@@ -118,7 +117,6 @@ extension CategoryListViewController {
     }
     
     private func bindAction(reactor: CategoryListReactor) {
-        
         self.rx.viewDidAppear
             .map { [unowned self] _ in
                 Reactor.Action.viewDidAppear(self.categoryGroup)

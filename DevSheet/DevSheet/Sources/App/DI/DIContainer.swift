@@ -38,6 +38,12 @@ extension Container {
             let repo = CategoryRepositoryImpl(firebaseService: firebase)
             return repo
         }.inObjectScope(.transient)
+        
+        register(QuestionRepository.self) { r in
+            let firebase = r.resolve(FirebaseService.self)!
+            let repo = QuestionRepositoryImpl(firebaseService: firebase)
+            return repo
+        }.inObjectScope(.transient)
     }
     
     private func registerUseCase() {
@@ -52,6 +58,12 @@ extension Container {
             let useCase = CategoryUseCaseImpl(categoryRepository: repo)
             return useCase
         }.inObjectScope(.transient)
+        
+        register(QuestionUseCase.self) { r in
+            let repo = r.resolve(QuestionRepository.self)!
+            let useCase = QuestionUseCaseImpl(questionRepository: repo)
+            return useCase
+        }.inObjectScope(.transient)
     }
     
     private func registerReactor() {
@@ -64,6 +76,12 @@ extension Container {
         register(CategoryListReactor.self) { r in
             let useCase = r.resolve(CategoryUseCase.self)!
             let reactor = CategoryListReactor(categoryUseCase: useCase)
+            return reactor
+        }.inObjectScope(.transient)
+        
+        register(QuestionListReactor.self) { r in
+            let useCase = r.resolve(QuestionUseCase.self)!
+            let reactor = QuestionListReactor(questionUseCase: useCase)
             return reactor
         }.inObjectScope(.transient)
     }
@@ -84,9 +102,15 @@ extension Container {
             return vc
         }
         
-        register(CategoryListViewController.self) { (r: Resolver, mainTab: MainTab) in
+        register(
+            CategoryListViewController.self
+        ) { [unowned self] (r: Resolver, mainTab: MainTab) in
             let reactor = r.resolve(CategoryListReactor.self)!
-            let vc = CategoryListViewController(reactor: reactor, mainTab: mainTab)
+            let vc = CategoryListViewController(
+                reactor: reactor,
+                mainTab: mainTab,
+                viewControllerFactory: self.questionListViewControllerFactory(categoryId:)
+            )
             return vc
         }.inObjectScope(.transient)
         
@@ -103,6 +127,15 @@ extension Container {
             )
             return vc
         }
+        
+        register(QuestionListViewController.self) { (r: Resolver, categoryId: String) in
+            let reactor = r.resolve(QuestionListReactor.self)!
+            let vc = QuestionListViewController(
+                reactor: reactor,
+                categoryId: categoryId
+            )
+            return vc
+        }.inObjectScope(.transient)
     }
     
     // MARK: factories
@@ -130,5 +163,10 @@ extension Container {
         }
         createdVC.tabBarItem = mainTab.getTabBarItem()
         return createdVC
+    }
+    
+    private func questionListViewControllerFactory(categoryId: String) -> UIViewController {
+        let questionVC = resolve(QuestionListViewController.self, argument: categoryId)!
+        return questionVC
     }
 }

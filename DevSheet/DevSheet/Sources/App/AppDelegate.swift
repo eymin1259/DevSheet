@@ -9,7 +9,7 @@ import UIKit
 import Firebase
 import SwiftyBeaver
 
-let beaverLog = SwiftyBeaver.self
+let BeaverLog = SwiftyBeaver.self
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // SwiftyBeaver log to Xcode Console
         let console = ConsoleDestination()
         console.format = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M $X"
-        beaverLog.addDestination(console)
+        BeaverLog.addDestination(console)
         
         // firebase setting
         FirebaseApp.configure()

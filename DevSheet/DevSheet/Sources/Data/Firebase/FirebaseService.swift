@@ -16,7 +16,7 @@ protocol FirebaseService {
 final class FirebaseServiceImpl: FirebaseService {
     
     func request(_ api: ServiceAPI) -> Single<QuerySnapshot> {
-        beaverLog.debug("api :", context: api)
+        BeaverLog.debug("api :", context: api)
         return api.task()
             .flatMap { query in
                 return Single<QuerySnapshot>.create { single in

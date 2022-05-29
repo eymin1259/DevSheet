@@ -9,5 +9,5 @@ import Foundation
 import  RxSwift
 
 protocol CategoryRepository {
-    func fetchCategories(group: Int) -> Single<[Category]>
+    func fetchCategories(group: MainTab) -> Single<[Category]>
 }

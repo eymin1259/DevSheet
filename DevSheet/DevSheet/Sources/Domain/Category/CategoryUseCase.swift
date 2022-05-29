@@ -24,6 +24,6 @@ final class  CategoryUseCaseImpl: CategoryUseCase {
     
     // MARK: methods
     func fetchCategories(group: MainTab) -> Single<[Category]> {
-        return categoryRepository.fetchCategories(group: group.rawValue)
+        return categoryRepository.fetchCategories(group: group)
     }
 }

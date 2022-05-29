@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CategoryListCell: UITableViewCell {
+final class CategoryListCell: BaseTableViewCell {
     
     // MARK: properties
     static let ID = "CategoryListCell"
@@ -19,16 +19,6 @@ class CategoryListCell: UITableViewCell {
         lbl.font = .systemFont(ofSize: 15)
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
-    }()
-    
-    private let nextBtn: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.backgroundColor = .clear
-        let img = UIImage(named: "btn_next")
-        iv.image = img
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
     }()
     
     // MARK: life cycle
@@ -42,24 +32,12 @@ class CategoryListCell: UITableViewCell {
     }
     
     // MARK: methods
-    func setupUI() {
-        
-        // TableViewCell
-        backgroundColor = .white
-        
+    override func setupUI() {
+        super.setupUI()
         // categoryNameLabel
         contentView.addSubview(categoryNameLabel)
         categoryNameLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
-        }
-        
-        // nextBtn
-        contentView.addSubview(nextBtn)
-        nextBtn.snp.makeConstraints {
-            $0.width.equalTo(6)
-            $0.height.equalTo(12)
-            $0.right.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
     }

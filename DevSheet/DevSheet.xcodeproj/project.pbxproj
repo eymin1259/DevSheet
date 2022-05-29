@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A12B90F42843776100156AA7 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90F32843776100156AA7 /* BaseTableViewCell.swift */; };
 		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
 		A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB8283D1C14002780F5 /* CategoryListCell.swift */; };
 		A151BEBD28427342002780F5 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEBC28427342002780F5 /* QuestionListViewController.swift */; };
@@ -94,6 +95,7 @@
 		778AAA77B9C7472AAEC3F477 /* Pods-DevSheet-DevSheetUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheet-DevSheetUITests.release.xcconfig"; path = "Target Support Files/Pods-DevSheet-DevSheetUITests/Pods-DevSheet-DevSheetUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8C681EB0F81107A551EA4192 /* Pods-DevSheetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevSheetTests.release.xcconfig"; path = "Target Support Files/Pods-DevSheetTests/Pods-DevSheetTests.release.xcconfig"; sourceTree = "<group>"; };
 		9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSheet_DevSheetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A12B90F32843776100156AA7 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
 		A151BEB8283D1C14002780F5 /* CategoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
 		A151BEBC28427342002780F5 /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */,
+				A12B90F32843776100156AA7 /* BaseTableViewCell.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -807,6 +810,7 @@
 				A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */,
 				A1634A36283B93E700403498 /* CategoryAPI.swift in Sources */,
 				A1A35CA928433E080047AF82 /* AddSheetViewController.swift in Sources */,
+				A12B90F42843776100156AA7 /* BaseTableViewCell.swift in Sources */,
 				A151BEC32842736D002780F5 /* Question.swift in Sources */,
 				A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */,
 				A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */,

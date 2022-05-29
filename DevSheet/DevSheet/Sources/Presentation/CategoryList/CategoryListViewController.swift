@@ -131,7 +131,6 @@ extension CategoryListViewController {
             )
             .bind { [weak self] indexPath, model in
                 guard let self = self else {return}
-                beaverLog.verbose("modelSelected", context: model)
                 self.categoryTableView.deselectRow(at: indexPath, animated: true)
                 let questionListVC = self.viewControllerFactory(model.id)
                 self.navigationController?.pushViewController(questionListVC, animated: true)

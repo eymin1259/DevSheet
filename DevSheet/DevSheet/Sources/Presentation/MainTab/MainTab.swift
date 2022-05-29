@@ -11,7 +11,6 @@ enum MainTab: Int, CaseIterable {
     case cs
     case develop
     case favorite
-    case mypage
 }
 
 extension MainTab: CustomStringConvertible {
@@ -20,7 +19,6 @@ extension MainTab: CustomStringConvertible {
         case .cs: return "컴퓨터과학"
         case .develop: return "개발"
         case .favorite: return "즐겨찾기"
-        case .mypage: return "마이페이지"
         }
     }
 }
@@ -34,8 +32,6 @@ extension MainTab {
             return UIImage(named: "icon_develop_active")?.withRenderingMode(.alwaysTemplate)
         case .favorite:
             return UIImage(named: "icon_favorite_active")?.withRenderingMode(.alwaysTemplate)
-        case .mypage:
-            return UIImage(named: "icon_mypage_active")?.withRenderingMode(.alwaysTemplate)
         }
     }
     
@@ -47,8 +43,6 @@ extension MainTab {
             return UIImage(named: "icon_develop")?.withRenderingMode(.alwaysTemplate)
         case .favorite:
             return UIImage(named: "icon_favorite")?.withRenderingMode(.alwaysTemplate)
-        case .mypage:
-            return UIImage(named: "icon_mypage")?.withRenderingMode(.alwaysTemplate)
         }
     }
 }

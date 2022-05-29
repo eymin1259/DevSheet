@@ -36,7 +36,6 @@
 		A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */; };
 		A1AE5FB82837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */; };
 		A1AE5FC8283B669400C71F9B /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */; };
-		A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */; };
 		A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */; };
 		A1AE5FCF283B852000C71F9B /* CategoryListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FCE283B852000C71F9B /* CategoryListReactor.swift */; };
 		A1AE5FD1283B854B00C71F9B /* CategoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1AE5FD0283B854B00C71F9B /* CategoryUseCase.swift */; };
@@ -125,7 +124,6 @@
 		A1AE5FB52837BF2A00C71F9B /* MainTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewModel.swift; sourceTree = "<group>"; };
 		A1AE5FB72837D7F100C71F9B /* BMHANNA_11yrs_ttf.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = BMHANNA_11yrs_ttf.ttf; sourceTree = "<group>"; };
 		A1AE5FC7283B669400C71F9B /* CategoryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListViewController.swift; sourceTree = "<group>"; };
-		A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
 		A1AE5FCC283B767D00C71F9B /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		A1AE5FCE283B852000C71F9B /* CategoryListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListReactor.swift; sourceTree = "<group>"; };
 		A1AE5FD0283B854B00C71F9B /* CategoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryUseCase.swift; sourceTree = "<group>"; };
@@ -292,14 +290,6 @@
 			path = CategoryList;
 			sourceTree = "<group>";
 		};
-		A1AE5FC4283B632900C71F9B /* Mypage */ = {
-			isa = PBXGroup;
-			children = (
-				A1AE5FC9283B66AD00C71F9B /* MypageViewController.swift */,
-			);
-			path = Mypage;
-			sourceTree = "<group>";
-		};
 		A1AE5FC6283B635500C71F9B /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,7 +405,6 @@
 			isa = PBXGroup;
 			children = (
 				A1A35CA728433DED0047AF82 /* AddSheet */,
-				A1AE5FC4283B632900C71F9B /* Mypage */,
 				A151BEBA28427310002780F5 /* QuestionList */,
 				A1AE5FC3283B627500C71F9B /* CategoryList */,
 				A1AE5FB02837BE4000C71F9B /* MainTab */,
@@ -844,7 +833,6 @@
 				A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
 				A151BEBF2842734C002780F5 /* QuestionListReactor.swift in Sources */,
-				A1AE5FCA283B66AD00C71F9B /* MypageViewController.swift in Sources */,
 				A151BECE284273C1002780F5 /* QuestionAPI.swift in Sources */,
 				A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */,
 				A1634A3A283B9B4000403498 /* Category.swift in Sources */,

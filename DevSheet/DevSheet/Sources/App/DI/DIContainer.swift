@@ -158,8 +158,6 @@ extension Container {
         case .favorite:
             let rootVC = resolve(CategoryListViewController.self, argument: mainTab)!
             createdVC = UINavigationController(rootViewController: rootVC)
-        case .mypage:
-            createdVC = resolve(MypageViewController.self)!
         }
         createdVC.tabBarItem = mainTab.getTabBarItem()
         return createdVC

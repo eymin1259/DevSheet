@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		A12B90F42843776100156AA7 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90F32843776100156AA7 /* BaseTableViewCell.swift */; };
 		A12B90F62843858C00156AA7 /* AddSheetReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90F52843858C00156AA7 /* AddSheetReactor.swift */; };
+		A12B90FA28438D1F00156AA7 /* AnswerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90F928438D1F00156AA7 /* AnswerDetailViewController.swift */; };
+		A12B90FC28438D2B00156AA7 /* AnswerDetailReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90FB28438D2B00156AA7 /* AnswerDetailReactor.swift */; };
+		A12B90FE28438D3E00156AA7 /* AnswerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90FD28438D3E00156AA7 /* AnswerUseCase.swift */; };
+		A12B910028438D4600156AA7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90FF28438D4600156AA7 /* Answer.swift */; };
+		A12B910228438D4F00156AA7 /* AnswerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910128438D4F00156AA7 /* AnswerRepository.swift */; };
+		A12B910428438D6B00156AA7 /* AnswerRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910328438D6B00156AA7 /* AnswerRepositoryImpl.swift */; };
 		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
 		A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB8283D1C14002780F5 /* CategoryListCell.swift */; };
 		A151BEBD28427342002780F5 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEBC28427342002780F5 /* QuestionListViewController.swift */; };
@@ -97,6 +103,12 @@
 		9EE7855CE8F624998618C615 /* Pods_DevSheet_DevSheetUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevSheet_DevSheetUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A12B90F32843776100156AA7 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		A12B90F52843858C00156AA7 /* AddSheetReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSheetReactor.swift; sourceTree = "<group>"; };
+		A12B90F928438D1F00156AA7 /* AnswerDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDetailViewController.swift; sourceTree = "<group>"; };
+		A12B90FB28438D2B00156AA7 /* AnswerDetailReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDetailReactor.swift; sourceTree = "<group>"; };
+		A12B90FD28438D3E00156AA7 /* AnswerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerUseCase.swift; sourceTree = "<group>"; };
+		A12B90FF28438D4600156AA7 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		A12B910128438D4F00156AA7 /* AnswerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRepository.swift; sourceTree = "<group>"; };
+		A12B910328438D6B00156AA7 /* AnswerRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRepositoryImpl.swift; sourceTree = "<group>"; };
 		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
 		A151BEB8283D1C14002780F5 /* CategoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
 		A151BEBC28427342002780F5 /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +215,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A12B90F728438C9000156AA7 /* AnswerDetail */ = {
+			isa = PBXGroup;
+			children = (
+				A12B90F928438D1F00156AA7 /* AnswerDetailViewController.swift */,
+				A12B90FB28438D2B00156AA7 /* AnswerDetailReactor.swift */,
+			);
+			path = AnswerDetail;
+			sourceTree = "<group>";
+		};
+		A12B90F828438C9D00156AA7 /* Answer */ = {
+			isa = PBXGroup;
+			children = (
+				A12B910128438D4F00156AA7 /* AnswerRepository.swift */,
+				A12B90FD28438D3E00156AA7 /* AnswerUseCase.swift */,
+				A12B90FF28438D4600156AA7 /* Answer.swift */,
+			);
+			path = Answer;
+			sourceTree = "<group>";
+		};
 		A151BEBA28427310002780F5 /* QuestionList */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,8 +247,8 @@
 		A151BEBB28427325002780F5 /* Question */ = {
 			isa = PBXGroup;
 			children = (
-				A151BEC72842738E002780F5 /* QuestionUseCase.swift */,
 				A151BEC92842739A002780F5 /* QuestionRepository.swift */,
+				A151BEC72842738E002780F5 /* QuestionUseCase.swift */,
 				A151BEC528427381002780F5 /* QuestionListSection.swift */,
 				A151BEC22842736D002780F5 /* Question.swift */,
 			);
@@ -404,6 +435,7 @@
 		A1B5F0AD28327F040098DF44 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				A12B90F728438C9000156AA7 /* AnswerDetail */,
 				A1A35CA728433DED0047AF82 /* AddSheet */,
 				A151BEBA28427310002780F5 /* QuestionList */,
 				A1AE5FC3283B627500C71F9B /* CategoryList */,
@@ -436,6 +468,7 @@
 		A1B5F0CB2833D9BF0098DF44 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				A12B90F828438C9D00156AA7 /* Answer */,
 				A151BEBB28427325002780F5 /* Question */,
 				A1AE5FC6283B635500C71F9B /* Category */,
 				A1B5F0CE2833DA4A0098DF44 /* Version */,
@@ -449,6 +482,7 @@
 				A1B5F0D32833DAA70098DF44 /* VersionRepositoryImpl.swift */,
 				A1AE5FD4283B859A00C71F9B /* CategoryRepositoryImpl.swift */,
 				A151BECB284273B7002780F5 /* QuestionRepositoryImpl.swift */,
+				A12B910328438D6B00156AA7 /* AnswerRepositoryImpl.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -807,11 +841,13 @@
 				A151BEC32842736D002780F5 /* Question.swift in Sources */,
 				A1AE5FB22837BE9000C71F9B /* MainTab.swift in Sources */,
 				A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */,
+				A12B910028438D4600156AA7 /* Answer.swift in Sources */,
 				A1634A47283D035D00403498 /* CALayer+.swift in Sources */,
 				A1AE5FB62837BF2A00C71F9B /* MainTabViewModel.swift in Sources */,
 				A151BEC628427381002780F5 /* QuestionListSection.swift in Sources */,
 				A151BEC82842738F002780F5 /* QuestionUseCase.swift in Sources */,
 				A1AE5FCD283B767D00C71F9B /* BaseViewController.swift in Sources */,
+				A12B910228438D4F00156AA7 /* AnswerRepository.swift in Sources */,
 				A151BED0284279A9002780F5 /* QuestionDTO.swift in Sources */,
 				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1AE5FD5283B859A00C71F9B /* CategoryRepositoryImpl.swift in Sources */,
@@ -819,6 +855,7 @@
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
 				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,
+				A12B910428438D6B00156AA7 /* AnswerRepositoryImpl.swift in Sources */,
 				A1AE5FA9283524C700C71F9B /* ServiceAPI.swift in Sources */,
 				A1AE5FAB283524F700C71F9B /* VersionAPI.swift in Sources */,
 				A151BECC284273B7002780F5 /* QuestionRepositoryImpl.swift in Sources */,
@@ -832,6 +869,9 @@
 				A1AE5FD1283B854B00C71F9B /* CategoryUseCase.swift in Sources */,
 				A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
+				A12B90FE28438D3E00156AA7 /* AnswerUseCase.swift in Sources */,
+				A12B90FA28438D1F00156AA7 /* AnswerDetailViewController.swift in Sources */,
+				A12B90FC28438D2B00156AA7 /* AnswerDetailReactor.swift in Sources */,
 				A151BEBF2842734C002780F5 /* QuestionListReactor.swift in Sources */,
 				A151BECE284273C1002780F5 /* QuestionAPI.swift in Sources */,
 				A1AE5FB42837BEBF00C71F9B /* MainTabBarController.swift in Sources */,

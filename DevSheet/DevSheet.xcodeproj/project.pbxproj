@@ -15,6 +15,8 @@
 		A12B910028438D4600156AA7 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B90FF28438D4600156AA7 /* Answer.swift */; };
 		A12B910228438D4F00156AA7 /* AnswerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910128438D4F00156AA7 /* AnswerRepository.swift */; };
 		A12B910428438D6B00156AA7 /* AnswerRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910328438D6B00156AA7 /* AnswerRepositoryImpl.swift */; };
+		A12B910628438F1700156AA7 /* AnswerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910528438F1700156AA7 /* AnswerAPI.swift */; };
+		A12B91082843907E00156AA7 /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B91072843907E00156AA7 /* AnswerDTO.swift */; };
 		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
 		A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB8283D1C14002780F5 /* CategoryListCell.swift */; };
 		A151BEBD28427342002780F5 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEBC28427342002780F5 /* QuestionListViewController.swift */; };
@@ -109,6 +111,8 @@
 		A12B90FF28438D4600156AA7 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		A12B910128438D4F00156AA7 /* AnswerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRepository.swift; sourceTree = "<group>"; };
 		A12B910328438D6B00156AA7 /* AnswerRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerRepositoryImpl.swift; sourceTree = "<group>"; };
+		A12B910528438F1700156AA7 /* AnswerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerAPI.swift; sourceTree = "<group>"; };
+		A12B91072843907E00156AA7 /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
 		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
 		A151BEB8283D1C14002780F5 /* CategoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
 		A151BEBC28427342002780F5 /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 				A1634A3C283B9DE100403498 /* VersionDTO.swift */,
 				A1634A3E283B9DFF00403498 /* CategoryDTO.swift */,
 				A151BECF284279A9002780F5 /* QuestionDTO.swift */,
+				A12B91072843907E00156AA7 /* AnswerDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				A1AE5FAA283524F700C71F9B /* VersionAPI.swift */,
 				A1634A35283B93E700403498 /* CategoryAPI.swift */,
 				A151BECD284273C1002780F5 /* QuestionAPI.swift */,
+				A12B910528438F1700156AA7 /* AnswerAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -852,6 +858,7 @@
 				A1AE5FAF2835AB3100C71F9B /* FirebaseError.swift in Sources */,
 				A1AE5FD5283B859A00C71F9B /* CategoryRepositoryImpl.swift in Sources */,
 				A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */,
+				A12B910628438F1700156AA7 /* AnswerAPI.swift in Sources */,
 				A1B5F0AC28327E850098DF44 /* DIContainer.swift in Sources */,
 				A1B5F076283270890098DF44 /* SplashViewController.swift in Sources */,
 				A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */,
@@ -868,6 +875,7 @@
 				A1AE5FD3283B858700C71F9B /* CategoryRepository.swift in Sources */,
 				A1AE5FD1283B854B00C71F9B /* CategoryUseCase.swift in Sources */,
 				A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */,
+				A12B91082843907E00156AA7 /* AnswerDTO.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
 				A12B90FE28438D3E00156AA7 /* AnswerUseCase.swift in Sources */,
 				A12B90FA28438D1F00156AA7 /* AnswerDetailViewController.swift in Sources */,

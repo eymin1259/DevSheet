@@ -46,17 +46,16 @@ class CategoryListCell: UITableViewCell {
         
         // TableViewCell
         backgroundColor = .white
-        heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // categoryNameLabel
-        addSubview(categoryNameLabel)
+        contentView.addSubview(categoryNameLabel)
         categoryNameLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
         
         // nextBtn
-        addSubview(nextBtn)
+        contentView.addSubview(nextBtn)
         nextBtn.snp.makeConstraints {
             $0.width.equalTo(6)
             $0.height.equalTo(12)

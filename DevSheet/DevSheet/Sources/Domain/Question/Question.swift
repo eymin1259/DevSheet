@@ -11,5 +11,6 @@ struct Question {
     var id: String
     var title: String
     var categoryId: String
+    var createdAt: Date
     var deleted: Bool
 }

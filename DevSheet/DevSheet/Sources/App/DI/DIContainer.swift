@@ -109,7 +109,7 @@ extension Container {
             let vc = CategoryListViewController(
                 reactor: reactor,
                 mainTab: mainTab,
-                viewControllerFactory: self.questionListViewControllerFactory(categoryId:)
+                viewControllerFactory: self.questionListViewControllerFactory(category:)
             )
             return vc
         }.inObjectScope(.transient)
@@ -128,11 +128,11 @@ extension Container {
             return vc
         }
         
-        register(QuestionListViewController.self) { (r: Resolver, categoryId: String) in
+        register(QuestionListViewController.self) { (r: Resolver, category: Category) in
             let reactor = r.resolve(QuestionListReactor.self)!
             let vc = QuestionListViewController(
                 reactor: reactor,
-                categoryId: categoryId
+                category: category
             )
             return vc
         }.inObjectScope(.transient)
@@ -165,8 +165,8 @@ extension Container {
         return createdVC
     }
     
-    private func questionListViewControllerFactory(categoryId: String) -> UIViewController {
-        let questionVC = resolve(QuestionListViewController.self, argument: categoryId)!
+    private func questionListViewControllerFactory(category: Category) -> UIViewController {
+        let questionVC = resolve(QuestionListViewController.self, argument: category)!
         return questionVC
     }
 }

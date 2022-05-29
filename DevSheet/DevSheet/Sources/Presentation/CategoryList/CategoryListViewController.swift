@@ -18,7 +18,7 @@ final class CategoryListViewController: BaseViewController, View {
     typealias Reactor = CategoryListReactor
     private var categoryGroup: MainTab
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<CategoryListSection>
-    private var viewControllerFactory: (String) -> UIViewController
+    private var viewControllerFactory: (Category) -> UIViewController
     
     // MARK: UI
     private let categoryTableView: UITableView = {
@@ -44,7 +44,7 @@ final class CategoryListViewController: BaseViewController, View {
     init(
         reactor: Reactor,
         mainTab group: MainTab,
-        viewControllerFactory: @escaping (String) -> UIViewController
+        viewControllerFactory: @escaping (Category) -> UIViewController
     ) {
         tableViewDataSource = Self.dataSourceFactory()
         self.categoryGroup = group
@@ -88,7 +88,6 @@ final class CategoryListViewController: BaseViewController, View {
         shadowView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(1)
-            $0.centerX.equalToSuperview()
             $0.top.equalToSuperview()
         }
     }
@@ -133,7 +132,7 @@ extension CategoryListViewController {
             .bind { [weak self] indexPath, model in
                 guard let self = self else {return}
                 self.categoryTableView.deselectRow(at: indexPath, animated: true)
-                let questionListVC = self.viewControllerFactory(model.id)
+                let questionListVC = self.viewControllerFactory(model)
                 self.navigationController?.pushViewController(questionListVC, animated: true)
             }
             .disposed(by: disposeBag)

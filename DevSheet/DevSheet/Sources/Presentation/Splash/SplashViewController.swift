@@ -23,16 +23,15 @@ final class SplashViewController: BaseViewController, View {
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .clear
         let randomImgNum = Int.random(in: 1..<4)
-        if let randomImg = UIImage(named: "splash\(randomImgNum)") {
-            iv.image = randomImg
-        }
+        let randomImg = UIImage(named: "splash\(randomImgNum)")
+        iv.image = randomImg
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
     private lazy var splashLabel: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: FONT_BM, size: 40)
+        lbl.font = UIFont(name: FONT_BM, size: 30)
         lbl.text = "개발족보"
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
@@ -67,9 +66,9 @@ final class SplashViewController: BaseViewController, View {
         // imageView
         self.view.addSubview(splashImageView)
         splashImageView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(20)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(270)
+            $0.leading.equalToSuperview().inset(70)
+            $0.trailing.equalToSuperview().inset(70)
+            $0.height.equalTo(150)
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-50)
         }
@@ -78,7 +77,7 @@ final class SplashViewController: BaseViewController, View {
         self.view.addSubview(splashLabel)
         splashLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(splashImageView.snp.bottom).offset(20)
+            $0.top.equalTo(splashImageView.snp.bottom).offset(15)
         }
     }
     

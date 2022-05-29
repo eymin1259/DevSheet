@@ -16,7 +16,7 @@ final class QuestionListViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = QuestionListReactor
-    private var categoryId: String
+    private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     
     // MARK: UI
@@ -37,9 +37,9 @@ final class QuestionListViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        categoryId: String
+        category: Category
     ) {
-        self.categoryId = categoryId
+        self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
@@ -59,15 +59,7 @@ final class QuestionListViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
-
-        // shadow
-        self.view.addSubview(shadowView)
-        shadowView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview()
-        }
+        self.navigationItem.title = self.category.name
         
         // tablewView
         self.view.addSubview(questionTableView)
@@ -76,6 +68,14 @@ final class QuestionListViewController: BaseViewController, View {
             $0.top.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalToSuperview()
+        }
+        
+        // shadow
+        self.view.addSubview(shadowView)
+        shadowView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.height.equalTo(1)
+            $0.top.equalToSuperview()
         }
     }
     
@@ -105,7 +105,7 @@ extension QuestionListViewController {
     private func bindAction(reactor: QuestionListReactor) {
         self.rx.viewDidAppear
             .map { [unowned self] _ in
-                Reactor.Action.viewDidAppear(self.categoryId)
+                Reactor.Action.viewDidAppear(self.category.id)
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

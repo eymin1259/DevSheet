@@ -12,6 +12,17 @@ struct Answer {
     var questionId: String
     var content: String
     var createdBy: String
-    var createdAt: Date
+    var createdAt: String
     var deleted: Bool
+    
+    static func getEmptyAnswer() -> Answer {
+        return Answer(
+            id: "",
+            questionId: "",
+            content: "답변이 아직 작성되지 않았습니다",
+            createdBy: "",
+            createdAt: Date().getToday(),
+            deleted: false
+        )
+    }
 }

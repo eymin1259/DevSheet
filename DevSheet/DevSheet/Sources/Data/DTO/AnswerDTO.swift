@@ -31,7 +31,7 @@ struct AnswerDTO {
             questionId: questionId,
             content: content,
             createdBy: createdBy,
-            createdAt: timeStamp.dateValue(),
+            createdAt: timeStamp.dateValue().getToday(),
             deleted: deleted
         )
     }

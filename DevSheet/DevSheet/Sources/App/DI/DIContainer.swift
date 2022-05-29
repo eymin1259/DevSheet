@@ -114,11 +114,6 @@ extension Container {
             return vc
         }.inObjectScope(.transient)
         
-        register(MypageViewController.self) { _ in
-            let vc = MypageViewController()
-            return vc
-        }
-        
         register(MainTabBarController.self) { [unowned self] r in
             let viewModel = r.resolve(MainTabViewModel.self)!
             let vc =  MainTabBarController(

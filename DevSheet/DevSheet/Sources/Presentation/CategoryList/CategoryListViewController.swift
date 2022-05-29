@@ -18,6 +18,7 @@ final class CategoryListViewController: BaseViewController, View {
     typealias Reactor = CategoryListReactor
     private var categoryGroup: MainTab
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<CategoryListSection>
+    private var viewControllerFactory: (String) -> UIViewController
     
     // MARK: UI
     private let shadowView: UIView = {
@@ -41,9 +42,14 @@ final class CategoryListViewController: BaseViewController, View {
     }()
     
     // MARK: initialize
-    init(reactor: Reactor, mainTab group: MainTab ) {
+    init(
+        reactor: Reactor,
+        mainTab group: MainTab,
+        viewControllerFactory: @escaping (String) -> UIViewController
+    ) {
         tableViewDataSource = Self.dataSourceFactory()
         self.categoryGroup = group
+        self.viewControllerFactory = viewControllerFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -88,7 +94,7 @@ final class CategoryListViewController: BaseViewController, View {
         }
     }
     
-    // MARK: Factories
+    // MARK: Factory
     private static func dataSourceFactory()
     -> RxTableViewSectionedReloadDataSource<CategoryListSection> {
         return .init { _, tableView, index, item in
@@ -113,12 +119,27 @@ extension CategoryListViewController {
     }
     
     private func bindAction(reactor: CategoryListReactor) {
+        
         self.rx.viewDidAppear
             .map { [unowned self] _ in
                 Reactor.Action.viewDidAppear(self.categoryGroup)
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        Observable
+            .zip(
+                categoryTableView.rx.itemSelected,
+                categoryTableView.rx.modelSelected(Category.self)
+            )
+            .bind { [weak self] indexPath, model in
+                guard let self = self else {return}
+                beaverLog.verbose("modelSelected", context: model)
+                self.categoryTableView.deselectRow(at: indexPath, animated: true)
+                let questionListVC = self.viewControllerFactory(model.id)
+                self.navigationController?.pushViewController(questionListVC, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindState(reactor: CategoryListReactor) {

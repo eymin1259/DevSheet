@@ -77,6 +77,7 @@ final class QuestionListViewController: BaseViewController, View {
         // viewcontroller
         self.view.backgroundColor = .white
         self.navigationItem.title = self.category.name
+        navigationItem.backBarButtonItem = backBarBtn
         
         // tablewView
         self.view.addSubview(questionTableView)

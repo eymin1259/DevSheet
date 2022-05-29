@@ -31,6 +31,12 @@ class BaseViewController: UIViewController {
         return shadow
     }()
     
+    lazy var backBarBtn: UIBarButtonItem = {
+        let title = "뒤로"
+        var barBtn = UIBarButtonItem(title: title, style: .plain, target: self, action: nil)
+        return barBtn
+    }()
+    
     // MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()

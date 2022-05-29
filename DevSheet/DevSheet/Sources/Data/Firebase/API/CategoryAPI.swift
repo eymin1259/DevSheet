@@ -19,24 +19,16 @@ extension CategoryAPI: ServiceAPI {
         return Firestore.firestore().collection("categories")
     }
     
-    func task() -> Single<QuerySnapshot> {
+    func task() -> Single<Query> {
         switch self {
         case .fetchCategories(let group):
-            return Single<QuerySnapshot>.create { single in
-                collection
-                    .whereField("group", isEqualTo: group)
-                    .order(by: "order", descending: false)
-                    .getDocuments { snapshot, err in
-                        if let err = err {
-                            single(.failure(err))
-                        }
-                        if let  snapshot = snapshot,
-                           snapshot.isEmpty == false {
-                            single(.success(snapshot))
-                        } else {
-                            single(.failure(FirebaseError.noData))
-                        }
-                    }
+            return Single<Query>.create { single in
+                single(.success(
+                    collection
+                        .whereField("group", isEqualTo: group)
+                        .order(by: "order", descending: false)
+                ))
+                
                 return Disposables.create()
             }
         }

@@ -11,5 +11,5 @@ import RxSwift
 
 protocol ServiceAPI {
     var collection: CollectionReference { get }
-    func task() -> Single<QuerySnapshot>
+    func task() -> Single<Query>
 }

@@ -19,23 +19,15 @@ extension QuestionAPI: ServiceAPI {
         return Firestore.firestore().collection("questions")
     }
     
-    func task() -> Single<QuerySnapshot> {
+    func task() -> Single<Query> {
         switch self {
         case .fetchQuestions(let categoryId):
-            return Single<QuerySnapshot>.create { single in
-                collection
-                    .whereField("categoryId", isEqualTo: categoryId)
-                    .getDocuments { snapshot, err in
-                        if let err = err {
-                            single(.failure(err))
-                        }
-                        if let  snapshot = snapshot,
-                           snapshot.isEmpty == false {
-                            single(.success(snapshot))
-                        } else {
-                            single(.failure(FirebaseError.noData))
-                        }
-                    }
+            return Single<Query>.create { single in
+                single(.success(
+                    collection
+                        .whereField("categoryId", isEqualTo: categoryId)
+                        .whereField("deleted", isEqualTo: false)
+                ))
                 return Disposables.create()
             }
         }

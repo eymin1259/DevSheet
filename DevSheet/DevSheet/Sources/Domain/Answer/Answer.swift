@@ -12,6 +12,7 @@ struct Answer {
     var questionId: String
     var title: String
     var content: String
+    var version: Int
     var createdBy: String
     var createdAt: String
     var deleted: Bool
@@ -22,6 +23,7 @@ struct Answer {
             questionId: "",
             title: "",
             content: "답변이 아직 작성되지 않았습니다",
+            version: -1,
             createdBy: "",
             createdAt: Date().getToday(),
             deleted: false

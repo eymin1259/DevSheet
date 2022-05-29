@@ -27,7 +27,7 @@ extension AnswerAPI: ServiceAPI {
                     collection
                         .whereField("questionId", isEqualTo: questionId)
                         .whereField("deleted", isEqualTo: false)
-                        .order(by: "timeStamp", descending: true)
+                        .order(by: "version", descending: true)
                         .limit(to: 1)
                 ))
                 return Disposables.create()

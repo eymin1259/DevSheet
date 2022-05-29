@@ -21,14 +21,6 @@ final class CategoryListViewController: BaseViewController, View {
     private var viewControllerFactory: (String) -> UIViewController
     
     // MARK: UI
-    private let shadowView: UIView = {
-        var shadow = UIView()
-        shadow.backgroundColor = .white
-        shadow.layer.makeShadow()
-        shadow.translatesAutoresizingMaskIntoConstraints = false
-        return shadow
-    }()
-    
     private let categoryTableView: UITableView = {
         var tableView = UITableView()
         tableView.separatorStyle = .none

@@ -14,7 +14,6 @@ class BaseViewController: UIViewController {
     // MARK: properties
     let FONT_BM = "BMHANNA11yrsold"
     var disposeBag: DisposeBag = .init()
-
     var DIContainer: Container? {
         if let uiSceneDelegate = UIApplication.shared.connectedScenes.first?.delegate,
            let sceneDelegate = uiSceneDelegate as? SceneDelegate {
@@ -22,6 +21,15 @@ class BaseViewController: UIViewController {
         }
         return nil
     }
+    
+    // MARK: UI
+    let shadowView: UIView = {
+        var shadow = UIView()
+        shadow.backgroundColor = .white
+        shadow.layer.makeShadow()
+        shadow.translatesAutoresizingMaskIntoConstraints = false
+        return shadow
+    }()
     
     // MARK: life cycle
     override func viewDidLoad() {

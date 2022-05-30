@@ -17,6 +17,38 @@ final class AnswerDetailViewController: BaseViewController, View {
     typealias Reactor = AnswerDetailReactor
     private var question: Question
     
+    // MARK: UI
+    private lazy var titleTextView: UITextView = {
+        var textView = UITextView()
+        textView.autocorrectionType = .no
+        textView.isScrollEnabled = false
+        textView.font = .boldSystemFont(ofSize: 20)
+        textView.isUserInteractionEnabled = false
+        textView.text = self.question.title
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
+    private let dividerView: UIView = {
+        var divider = UIView()
+        divider.backgroundColor = .systemGray5
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        return divider
+    }()
+    
+    private var contentTextView: UITextView = {
+        var textView = UITextView()
+        textView.autocorrectionType = .no
+        textView.isScrollEnabled = true
+        textView.font = .systemFont(ofSize: 15)
+        textView.textColor = .darkGray
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.text = "답변이 아직 작성되지 않았습니다"
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
     // MARK: initialize
     init(
         reactor: Reactor,
@@ -50,6 +82,29 @@ final class AnswerDetailViewController: BaseViewController, View {
             $0.top.equalToSuperview()
         }
         
+        self.view.addSubview(titleTextView)
+        titleTextView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(10)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.height.greaterThanOrEqualTo(10)
+        }
+        
+        self.view.addSubview(dividerView)
+        dividerView.snp.makeConstraints {
+            $0.top.equalTo(titleTextView.snp.bottom)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
+        }
+        
+        self.view.addSubview(contentTextView)
+        contentTextView.snp.makeConstraints {
+            $0.top.equalTo(dividerView.snp.bottom).offset(3)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(5)
+        }
     }
 }
 

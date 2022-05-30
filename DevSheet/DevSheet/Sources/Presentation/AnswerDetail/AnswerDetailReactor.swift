@@ -21,7 +21,7 @@ final class AnswerDetailReactor: Reactor {
     }
     
     struct State {
-        var latestAnswer: Answer = .getEmptyAnswer()
+        var latestAnswer: Answer?
         var isLoading: Bool = false
     }
     

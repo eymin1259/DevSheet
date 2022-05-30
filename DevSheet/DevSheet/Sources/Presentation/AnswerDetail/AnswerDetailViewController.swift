@@ -10,6 +10,7 @@ import UIKit
 import ReactorKit
 import SnapKit
 import RxViewController
+import RxOptional
 
 final class AnswerDetailViewController: BaseViewController, View {
     
@@ -44,7 +45,7 @@ final class AnswerDetailViewController: BaseViewController, View {
         textView.textColor = .darkGray
         textView.isUserInteractionEnabled = true
         textView.isEditable = false
-        textView.text = "답변이 아직 작성되지 않았습니다"
+        textView.text = ""
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
@@ -125,6 +126,12 @@ extension AnswerDetailViewController {
     }
     
     private func bindState(reactor: AnswerDetailReactor) {
-        
+        reactor.state
+            .map { $0.latestAnswer }
+            .filterNil()
+            .subscribe(onNext: { [weak self] answer in
+                self?.contentTextView.text = answer.content
+            })
+            .disposed(by: disposeBag)
     }
 }

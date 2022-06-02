@@ -27,11 +27,14 @@ final class AddSheetReactor: Reactor {
     
     let initialState: State = .init()
     var questionUseCase: QuestionUseCase
+    var answerUseCase: AnswerUseCase
     
     // MARK: initialize
     init(
-        questionUseCase: QuestionUseCase
+        questionUseCase: QuestionUseCase,
+        answerUseCase: AnswerUseCase
     ) {
         self.questionUseCase = questionUseCase
+        self.answerUseCase = answerUseCase
     }
 }

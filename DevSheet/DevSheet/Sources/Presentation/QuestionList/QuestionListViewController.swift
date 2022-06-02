@@ -20,6 +20,7 @@ final class QuestionListViewController: BaseViewController, View {
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Question) -> UIViewController
+    private var addSheetFactory: (Category) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -41,6 +42,7 @@ final class QuestionListViewController: BaseViewController, View {
         let img = UIImage(named: "icon_write")
         btn.setImage(img, for: .normal)
         btn.tintColor = .white
+        
         btn.contentMode = .scaleAspectFill
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 25
@@ -53,11 +55,13 @@ final class QuestionListViewController: BaseViewController, View {
     init(
         reactor: Reactor,
         category: Category,
-        answerDetailFactory : @escaping (Question) -> UIViewController
+        answerDetailFactory: @escaping (Question) -> UIViewController,
+        addSheetFactory: @escaping (Category) -> UIViewController
     ) {
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
         self.answerDetailFactory = answerDetailFactory
+        self.addSheetFactory = addSheetFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -160,8 +164,10 @@ extension QuestionListViewController {
         
         addSheetBtn.rx
             .tap
-            .subscribe { _ in
-                print("debug : addSheetBtn tap ")
+            .subscribe {  [weak self] _ in
+                guard let self = self else {return}
+                let addSheetVC = self.addSheetFactory(self.category)
+                self.present(addSheetVC, animated: true, completion: nil)
             }.disposed(by: self.disposeBag)
         
         Observable

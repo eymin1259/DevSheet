@@ -102,6 +102,16 @@ extension Container {
             let reactor = AnswerDetailReactor(answerUseCase: useCase)
             return reactor
         }.inObjectScope(.transient)
+        
+        register(AddSheetReactor.self) { r in
+            let question = r.resolve(QuestionUseCase.self)!
+            let answer = r.resolve(AnswerUseCase.self)!
+            let reactor = AddSheetReactor(
+                questionUseCase: question,
+                answerUseCase: answer
+            )
+            return reactor
+        }.inObjectScope(.transient)
     }
     
     private func registerViewModel() {
@@ -148,7 +158,8 @@ extension Container {
             let vc = QuestionListViewController(
                 reactor: reactor,
                 category: category,
-                answerDetailFactory: self.answerDetailViewControllerFactory(question:)
+                answerDetailFactory: self.answerDetailViewControllerFactory(question:),
+                addSheetFactory: self.addSheetViewControllerFactory(category:)
             )
             return vc
         }.inObjectScope(.transient)
@@ -158,6 +169,15 @@ extension Container {
             let vc = AnswerDetailViewController(
                 reactor: reactor,
                 question: question
+            )
+            return vc
+        }.inObjectScope(.transient)
+        
+        register(AddSheetViewController.self) { (r: Resolver, category: Category) in
+            let reactor = r.resolve(AddSheetReactor.self)!
+            let vc = AddSheetViewController(
+                reactor: reactor,
+                category: category
             )
             return vc
         }.inObjectScope(.transient)
@@ -196,5 +216,11 @@ extension Container {
     private func answerDetailViewControllerFactory(question: Question) -> UIViewController {
         let answerVC = resolve(AnswerDetailViewController.self, argument: question)!
         return answerVC
+    }
+    
+    private func addSheetViewControllerFactory(category: Category) -> UIViewController {
+        let addSheetVC = resolve(AddSheetViewController.self, argument: category)!
+        addSheetVC.modalPresentationStyle = .pageSheet
+        return addSheetVC
     }
 }

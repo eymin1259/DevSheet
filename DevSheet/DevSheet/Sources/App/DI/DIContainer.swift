@@ -219,8 +219,9 @@ extension Container {
     }
     
     private func addSheetViewControllerFactory(category: Category) -> UIViewController {
-        let addSheetVC = resolve(AddSheetViewController.self, argument: category)!
-        addSheetVC.modalPresentationStyle = .pageSheet
+        let rootVC = resolve(AddSheetViewController.self, argument: category)!
+        let addSheetVC = UINavigationController(rootViewController: rootVC)
+        addSheetVC.modalPresentationStyle = .overFullScreen
         return addSheetVC
     }
 }

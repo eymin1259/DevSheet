@@ -13,7 +13,8 @@ final class EditSheetReactor: Reactor {
     // MARK: properties
     enum Action {
         case viewDidLoad(Category, EditMode, String, String) // questionStr, answerStr
-        case inputText(String, String) // question, answer
+        case inputQuestion(String)
+        case inputAnswer(String)
         case tapSaveBtn(Category, String, String) // Category, question, answer
     }
     
@@ -59,10 +60,10 @@ extension EditSheetReactor {
             let setQuestion =  Observable<Mutation>.just(.setQuestion(question))
             let setAnswer = Observable<Mutation>.just(.setAnswer(answer))
             return .concat([setCategory, setEditMode, setQuestion, setAnswer])
-        case .inputText(let question, let answer):
-            let setQuestion = Observable<Mutation>.just(.setQuestion(question))
-            let setAnswer = Observable<Mutation>.just(.setAnswer(answer))
-            return .concat([setQuestion, setAnswer])
+        case .inputQuestion(let question):
+            return Observable<Mutation>.just(.setQuestion(question))
+        case .inputAnswer(let answer):
+            return Observable<Mutation>.just(.setAnswer(answer))
         case .tapSaveBtn(_, _, _):
             return .empty()
         }

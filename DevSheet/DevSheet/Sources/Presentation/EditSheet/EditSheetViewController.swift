@@ -118,16 +118,16 @@ extension EditSheetViewController {
                 self?.dismiss(animated: true, completion: nil)
             }.disposed(by: self.disposeBag)
         
-        Observable
-            .combineLatest(
-                questionTitleTextView.rx.didChange,
-                answerContentTextView.rx.didChange
-            )
+        questionTitleTextView.rx.didChange
             .map { [unowned self] _ in
-                Reactor.Action.inputText(
-                    questionTitleTextView.text,
-                    answerContentTextView.text
-                )
+                Reactor.Action.inputQuestion(questionTitleTextView.text)
+            }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        answerContentTextView.rx.didChange
+            .map { [unowned self] _ in
+                Reactor.Action.inputAnswer(answerContentTextView.text)
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

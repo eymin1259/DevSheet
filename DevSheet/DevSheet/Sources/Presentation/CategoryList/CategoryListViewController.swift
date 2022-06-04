@@ -76,14 +76,9 @@ final class CategoryListViewController: BaseViewController, View {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalToSuperview()
         }
-
-        // shadow
-        self.view.addSubview(shadowView)
-        shadowView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.top.equalToSuperview()
-        }
+        
+        // navigationLineView
+        self.addNavigationLineView()
     }
     
     // MARK: Factory

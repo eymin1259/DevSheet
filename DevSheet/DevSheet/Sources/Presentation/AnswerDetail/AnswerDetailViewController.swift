@@ -75,13 +75,8 @@ final class AnswerDetailViewController: BaseViewController, View {
         // viewcontroller
         self.view.backgroundColor = .white
         
-        // shadow
-        self.view.addSubview(shadowView)
-        shadowView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.top.equalToSuperview()
-        }
+        // navigationLineView
+        self.addNavigationLineView()
         
         self.view.addSubview(titleTextView)
         titleTextView.snp.makeConstraints {

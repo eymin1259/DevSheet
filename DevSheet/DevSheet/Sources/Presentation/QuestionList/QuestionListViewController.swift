@@ -92,13 +92,8 @@ final class QuestionListViewController: BaseViewController, View {
             $0.centerX.equalToSuperview()
         }
         
-        // shadow
-        self.view.addSubview(shadowView)
-        shadowView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(1)
-            $0.top.equalToSuperview()
-        }
+        // navigationLineView
+        self.addNavigationLineView()
         
         // addSheetBtn
         self.view.addSubview(addSheetBtn)

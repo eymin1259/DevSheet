@@ -62,7 +62,6 @@ final class SplashViewController: BaseViewController, View {
     private func setupUI() {
         // view
         self.view.backgroundColor = .white
-        
         // imageView
         self.view.addSubview(splashImageView)
         splashImageView.snp.makeConstraints {
@@ -72,7 +71,6 @@ final class SplashViewController: BaseViewController, View {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview().offset(-50)
         }
-        
         // splashLabel
         self.view.addSubview(splashLabel)
         splashLabel.snp.makeConstraints {

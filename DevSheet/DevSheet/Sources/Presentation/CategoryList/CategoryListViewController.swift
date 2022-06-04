@@ -67,7 +67,6 @@ final class CategoryListViewController: BaseViewController, View {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = .black
         navigationItem.backBarButtonItem = backBarBtn
-        
         // tablewView
         self.view.addSubview(categoryTableView)
         categoryTableView.snp.makeConstraints {
@@ -76,7 +75,6 @@ final class CategoryListViewController: BaseViewController, View {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalToSuperview()
         }
-        
         // navigationLineView
         self.addNavigationLineView()
     }

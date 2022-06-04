@@ -82,7 +82,6 @@ final class QuestionListViewController: BaseViewController, View {
         self.view.backgroundColor = .white
         self.navigationItem.title = self.category.name
         navigationItem.backBarButtonItem = backBarBtn
-        
         // tablewView
         self.view.addSubview(questionTableView)
         questionTableView.snp.makeConstraints {
@@ -91,10 +90,8 @@ final class QuestionListViewController: BaseViewController, View {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
             $0.centerX.equalToSuperview()
         }
-        
         // navigationLineView
         self.addNavigationLineView()
-        
         // addSheetBtn
         self.view.addSubview(addSheetBtn)
         addSheetBtn.snp.makeConstraints {

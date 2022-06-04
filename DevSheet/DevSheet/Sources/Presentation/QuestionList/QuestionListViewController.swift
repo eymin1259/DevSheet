@@ -39,10 +39,11 @@ final class QuestionListViewController: BaseViewController, View {
     
     private let addNewSheetBtn: UIButton = {
         var btn = UIButton()
-        let img = UIImage(named: "icon_write")
+        let img = UIImage(named: "btn_add")?.withTintColor(.white, renderingMode: .alwaysTemplate)
         btn.setImage(img, for: .normal)
         btn.tintColor = .white
-        btn.contentMode = .scaleAspectFill
+        btn.imageEdgeInsets = .init(top: 15, left: 15, bottom: 15, right: 15)
+        btn.contentMode = .scaleAspectFit
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 25
         btn.backgroundColor = .systemOrange

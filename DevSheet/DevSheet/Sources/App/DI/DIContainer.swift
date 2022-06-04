@@ -235,7 +235,7 @@ extension Container {
             arguments: category, editMode, question, answer
         )!
         let editSheetVC = UINavigationController(rootViewController: rootVC)
-        editSheetVC.modalPresentationStyle = .overFullScreen
+        editSheetVC.modalPresentationStyle = .fullScreen
         return editSheetVC
     }
 }

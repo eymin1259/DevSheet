@@ -15,8 +15,8 @@ enum EditMode {
 extension EditMode {
     var navigationTitleText: String {
         switch self {
-        case .ADD: return "족보 쓰기"
-        case .UPDATE: return "족보 수정"
+        case .ADD: return "새로운 족보 추가"
+        case .UPDATE: return "족보 수정하기"
         }
     }
     

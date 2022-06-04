@@ -37,12 +37,74 @@ class BaseViewController: UIViewController {
         return barBtn
     }()
     
+    lazy var questionTitleTextView: UITextView = {
+        var textView = UITextView()
+        textView.autocorrectionType = .no
+        textView.isScrollEnabled = false
+        textView.font = .boldSystemFont(ofSize: 20)
+        textView.textColor = .label
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+    
+    let titleContentdividerView: UIView = {
+        var divider = UIView()
+        divider.backgroundColor = .systemGray5
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        return divider
+    }()
+    
+    let answerContentTextView: UITextView = {
+        var textView = UITextView()
+        textView.autocorrectionType = .no
+        textView.isScrollEnabled = true
+        textView.font = .systemFont(ofSize: 15)
+        textView.textColor = .darkGray
+        textView.isUserInteractionEnabled = true
+        textView.isEditable = false
+        textView.text = ""
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
+    }()
+
     // MARK: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     // MARK: methods
+    func addQuestionTitleTextView() {
+        self.view.addSubview(questionTitleTextView)
+        questionTitleTextView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(10)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.height.greaterThanOrEqualTo(10)
+        }
+    }
+    
+    func addTitleContentdividerView() {
+        self.view.addSubview(titleContentdividerView)
+        titleContentdividerView.snp.makeConstraints {
+            $0.top.equalTo(questionTitleTextView.snp.bottom)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.height.equalTo(1)
+        }
+    }
+    
+    func addAnswerContentTextView() {
+        self.view.addSubview(answerContentTextView)
+        answerContentTextView.snp.makeConstraints {
+            $0.top.equalTo(titleContentdividerView.snp.bottom).offset(3)
+            $0.left.equalToSuperview().inset(20)
+            $0.right.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(5)
+        }
+    }
+    
     func addNavigationLineView() {
         self.view.addSubview(navigationLineView)
         navigationLineView.snp.makeConstraints {

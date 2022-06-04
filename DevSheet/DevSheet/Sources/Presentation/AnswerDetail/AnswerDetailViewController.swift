@@ -19,35 +19,11 @@ final class AnswerDetailViewController: BaseViewController, View {
     private var question: Question
     
     // MARK: UI
-    private lazy var titleTextView: UITextView = {
-        var textView = UITextView()
-        textView.autocorrectionType = .no
-        textView.isScrollEnabled = false
-        textView.font = .boldSystemFont(ofSize: 20)
-        textView.isUserInteractionEnabled = false
-        textView.text = self.question.title
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
-    }()
-    
     private let dividerView: UIView = {
         var divider = UIView()
         divider.backgroundColor = .systemGray5
         divider.translatesAutoresizingMaskIntoConstraints = false
         return divider
-    }()
-    
-    private var contentTextView: UITextView = {
-        var textView = UITextView()
-        textView.autocorrectionType = .no
-        textView.isScrollEnabled = true
-        textView.font = .systemFont(ofSize: 15)
-        textView.textColor = .darkGray
-        textView.isUserInteractionEnabled = true
-        textView.isEditable = false
-        textView.text = ""
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        return textView
     }()
     
     // MARK: initialize
@@ -74,33 +50,14 @@ final class AnswerDetailViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
-        
-        // navigationLineView
         self.addNavigationLineView()
-        
-        self.view.addSubview(titleTextView)
-        titleTextView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(10)
-            $0.left.equalToSuperview().inset(20)
-            $0.right.equalToSuperview().inset(20)
-            $0.height.greaterThanOrEqualTo(10)
-        }
-        
-        self.view.addSubview(dividerView)
-        dividerView.snp.makeConstraints {
-            $0.top.equalTo(titleTextView.snp.bottom)
-            $0.left.equalToSuperview().inset(20)
-            $0.right.equalToSuperview().inset(20)
-            $0.height.equalTo(1)
-        }
-        
-        self.view.addSubview(contentTextView)
-        contentTextView.snp.makeConstraints {
-            $0.top.equalTo(dividerView.snp.bottom).offset(3)
-            $0.left.equalToSuperview().inset(20)
-            $0.right.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(5)
-        }
+        // questionTitle
+        self.questionTitleTextView.text = self.question.title
+        self.addQuestionTitleTextView()
+        // TitleContentdivider
+        self.addTitleContentdividerView()
+        // AnswerContent
+        self.addAnswerContentTextView()
     }
 }
 
@@ -125,7 +82,7 @@ extension AnswerDetailViewController {
             .map { $0.latestAnswer }
             .filterNil()
             .subscribe(onNext: { [weak self] answer in
-                self?.contentTextView.text = answer.content
+                self?.answerContentTextView.text = answer.content
             })
             .disposed(by: disposeBag)
     }

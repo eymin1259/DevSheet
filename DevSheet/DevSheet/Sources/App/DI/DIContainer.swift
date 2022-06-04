@@ -103,10 +103,10 @@ extension Container {
             return reactor
         }.inObjectScope(.transient)
         
-        register(AddSheetReactor.self) { r in
+        register(EditSheetReactor.self) { r in
             let question = r.resolve(QuestionUseCase.self)!
             let answer = r.resolve(AnswerUseCase.self)!
-            let reactor = AddSheetReactor(
+            let reactor = EditSheetReactor(
                 questionUseCase: question,
                 answerUseCase: answer
             )
@@ -159,7 +159,7 @@ extension Container {
                 reactor: reactor,
                 category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(question:),
-                addSheetFactory: self.addSheetViewControllerFactory(category:)
+                editSheetFactory: self.editSheetViewControllerFactory(category:)
             )
             return vc
         }.inObjectScope(.transient)
@@ -173,9 +173,9 @@ extension Container {
             return vc
         }.inObjectScope(.transient)
         
-        register(AddSheetViewController.self) { (r: Resolver, category: Category) in
-            let reactor = r.resolve(AddSheetReactor.self)!
-            let vc = AddSheetViewController(
+        register(EditSheetViewController.self) { (r: Resolver, category: Category) in
+            let reactor = r.resolve(EditSheetReactor.self)!
+            let vc = EditSheetViewController(
                 reactor: reactor,
                 category: category
             )
@@ -218,10 +218,10 @@ extension Container {
         return answerVC
     }
     
-    private func addSheetViewControllerFactory(category: Category) -> UIViewController {
-        let rootVC = resolve(AddSheetViewController.self, argument: category)!
-        let addSheetVC = UINavigationController(rootViewController: rootVC)
-        addSheetVC.modalPresentationStyle = .overFullScreen
-        return addSheetVC
+    private func editSheetViewControllerFactory(category: Category) -> UIViewController {
+        let rootVC = resolve(EditSheetViewController.self, argument: category)!
+        let editSheetVC = UINavigationController(rootViewController: rootVC)
+        editSheetVC.modalPresentationStyle = .overFullScreen
+        return editSheetVC
     }
 }

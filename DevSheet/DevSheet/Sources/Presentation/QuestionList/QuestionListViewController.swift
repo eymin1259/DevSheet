@@ -20,7 +20,7 @@ final class QuestionListViewController: BaseViewController, View {
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Question) -> UIViewController
-    private var addSheetFactory: (Category) -> UIViewController
+    private var editSheetFactory: (Category) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -37,7 +37,7 @@ final class QuestionListViewController: BaseViewController, View {
         return tableView
     }()
     
-    private let addSheetBtn: UIButton = {
+    private let editSheetBtn: UIButton = {
         var btn = UIButton()
         let img = UIImage(named: "icon_write")
         btn.setImage(img, for: .normal)
@@ -56,12 +56,12 @@ final class QuestionListViewController: BaseViewController, View {
         reactor: Reactor,
         category: Category,
         answerDetailFactory: @escaping (Question) -> UIViewController,
-        addSheetFactory: @escaping (Category) -> UIViewController
+        editSheetFactory: @escaping (Category) -> UIViewController
     ) {
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
         self.answerDetailFactory = answerDetailFactory
-        self.addSheetFactory = addSheetFactory
+        self.editSheetFactory = editSheetFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -92,9 +92,9 @@ final class QuestionListViewController: BaseViewController, View {
         }
         // navigationLineView
         self.addNavigationLineView()
-        // addSheetBtn
-        self.view.addSubview(addSheetBtn)
-        addSheetBtn.snp.makeConstraints {
+        // editSheetBtn
+        self.view.addSubview(editSheetBtn)
+        editSheetBtn.snp.makeConstraints {
             $0.width.equalTo(50)
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(60)
@@ -102,14 +102,14 @@ final class QuestionListViewController: BaseViewController, View {
         }
     }
     
-    private func showAddSheetBtn() {
+    private func showEditSheetBtn() {
         let asyncDuration: DispatchTimeInterval = .milliseconds(500)
         DispatchQueue.main.asyncAfter(
             deadline: .now() + asyncDuration
         ) { [weak self] in
             guard let self = self else { return }
             let animateDutaion: TimeInterval = 0.5
-            self.addSheetBtn.snp.updateConstraints {
+            self.editSheetBtn.snp.updateConstraints {
                 $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(10)
             }
             UIView.animate(withDuration: animateDutaion) {
@@ -144,7 +144,7 @@ extension QuestionListViewController {
     private func bindAction(reactor: QuestionListReactor) {
         self.rx.viewDidLoad
             .subscribe { [weak self] _ in
-                self?.showAddSheetBtn()
+                self?.showEditSheetBtn()
             }.disposed(by: self.disposeBag)
         
         self.rx.viewDidAppear
@@ -154,12 +154,11 @@ extension QuestionListViewController {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        addSheetBtn.rx
-            .tap
+        editSheetBtn.rx.tap
             .subscribe {  [weak self] _ in
                 guard let self = self else {return}
-                let addSheetVC = self.addSheetFactory(self.category)
-                self.present(addSheetVC, animated: true, completion: nil)
+                let editSheetVC = self.editSheetFactory(self.category)
+                self.present(editSheetVC, animated: true, completion: nil)
             }.disposed(by: self.disposeBag)
         
         Observable

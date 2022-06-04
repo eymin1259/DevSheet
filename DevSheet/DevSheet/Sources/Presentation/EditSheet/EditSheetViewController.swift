@@ -1,5 +1,5 @@
 //
-//  AddSheetViewController.swift
+//  EditSheetViewController.swift
 //  DevSheet
 //
 //  Created by yongmin lee on 5/29/22.
@@ -9,14 +9,17 @@ import UIKit
 import ReactorKit
 import SnapKit
 import RxCocoa
+import RxViewController
+import RxOptional
 
-final class AddSheetViewController: BaseViewController, View {
+final class EditSheetViewController: BaseViewController, View {
     
     // MARK: properties
-    typealias Reactor = AddSheetReactor
+    typealias Reactor = EditSheetReactor
     private var category: Category
-    let questionPlaceHolder = "질문을 작성해주세요"
-    let answerPlaceHolder = "답변을 작성해주세요"
+    private var editMode: EditMode
+    private var defaultQuestoin: String
+    private var defaultAnswer: String
     
     // MARK: UI
     private let closeBtn: UIButton = {
@@ -44,9 +47,15 @@ final class AddSheetViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        category: Category
+        category: Category,
+        editMode: EditMode,
+        defaultQuestoin: String,
+        defaultAnswer: String
     ) {
         self.category = category
+        self.editMode = editMode
+        self.defaultQuestoin = defaultQuestoin
+        self.defaultAnswer = defaultAnswer
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -66,19 +75,17 @@ final class AddSheetViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
-        self.navigationItem.title = "족보 쓰기"
+        self.navigationItem.title = editMode.navigationTitleText
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeBtn)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveBtn)
         self.addNavigationLineView()
         // questionTitle
-        self.questionTitleTextView.text = questionPlaceHolder
         self.questionTitleTextView.textColor = .placeholderText
         self.questionTitleTextView.isEditable = true
         self.addQuestionTitleTextView()
         // TitleContentdivider
         self.addTitleContentdividerView()
         // AnswerContent
-        self.answerContentTextView.text = answerPlaceHolder
         self.answerContentTextView.textColor = .placeholderText
         self.answerContentTextView.isEditable = true
         self.addAnswerContentTextView()
@@ -86,18 +93,44 @@ final class AddSheetViewController: BaseViewController, View {
 }
 
 // MARK: Reactor Bind
-extension AddSheetViewController {
-    func bind(reactor: AddSheetReactor) {
+extension EditSheetViewController {
+    func bind(reactor: EditSheetReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
     
-    private func bindAction(reactor: AddSheetReactor) {
+    private func bindAction(reactor: EditSheetReactor) {
+        
+        self.rx.viewDidLoad
+            .map { [unowned self] _ in
+                Reactor.Action.viewDidLoad(
+                    category,
+                    editMode,
+                    defaultQuestoin,
+                    defaultAnswer
+                )
+            }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         closeBtn.rx.tap
             .subscribe { [weak self] _ in
                 self?.dismiss(animated: true, completion: nil)
             }.disposed(by: self.disposeBag)
+        
+        Observable
+            .combineLatest(
+                questionTitleTextView.rx.didChange,
+                answerContentTextView.rx.didChange
+            )
+            .map { [unowned self] _ in
+                Reactor.Action.inputText(
+                    questionTitleTextView.text,
+                    answerContentTextView.text
+                )
+            }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         saveBtn.rx.tap
             .subscribe { [unowned self] _ in
@@ -105,13 +138,29 @@ extension AddSheetViewController {
             }.disposed(by: self.disposeBag)
     }
     
-    private func bindState(reactor: AddSheetReactor) {
+    private func bindState(reactor: EditSheetReactor) {
+        reactor.state
+            .map { $0.question }
+            .filterNil()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] question in
+                self?.questionTitleTextView.text = question
+            })
+            .disposed(by: disposeBag)
         
+        reactor.state
+            .map { $0.answer }
+            .filterNil()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] answer in
+                self?.answerContentTextView.text = answer
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: TextField Delegate
-extension AddSheetViewController {
+extension EditSheetViewController {
     func textFieldDelegate() {
         questionTitleTextView.rx.didBeginEditing
             .subscribe { [unowned self] _ in
@@ -123,7 +172,7 @@ extension AddSheetViewController {
         questionTitleTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if questionTitleTextView.text.isEmpty {
-                    questionTitleTextView.text = questionPlaceHolder
+                    questionTitleTextView.text = defaultQuestoin
                     questionTitleTextView.textColor = .placeholderText
                 }
             }.disposed(by: self.disposeBag)
@@ -138,7 +187,7 @@ extension AddSheetViewController {
         answerContentTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if answerContentTextView.text.isEmpty {
-                    answerContentTextView.text = answerPlaceHolder
+                    answerContentTextView.text = defaultAnswer
                     answerContentTextView.textColor = .placeholderText
                 }
             }.disposed(by: self.disposeBag)

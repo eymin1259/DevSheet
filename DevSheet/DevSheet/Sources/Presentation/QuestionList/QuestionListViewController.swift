@@ -20,7 +20,7 @@ final class QuestionListViewController: BaseViewController, View {
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Question) -> UIViewController
-    private var editSheetFactory: (Category) -> UIViewController
+    private var editSheetFactory: (Category, EditMode, String, String) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -37,12 +37,11 @@ final class QuestionListViewController: BaseViewController, View {
         return tableView
     }()
     
-    private let editSheetBtn: UIButton = {
+    private let addNewSheetBtn: UIButton = {
         var btn = UIButton()
         let img = UIImage(named: "icon_write")
         btn.setImage(img, for: .normal)
         btn.tintColor = .white
-        
         btn.contentMode = .scaleAspectFill
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 25
@@ -56,7 +55,7 @@ final class QuestionListViewController: BaseViewController, View {
         reactor: Reactor,
         category: Category,
         answerDetailFactory: @escaping (Question) -> UIViewController,
-        editSheetFactory: @escaping (Category) -> UIViewController
+        editSheetFactory: @escaping (Category, EditMode, String, String) -> UIViewController
     ) {
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
@@ -93,8 +92,8 @@ final class QuestionListViewController: BaseViewController, View {
         // navigationLineView
         self.addNavigationLineView()
         // editSheetBtn
-        self.view.addSubview(editSheetBtn)
-        editSheetBtn.snp.makeConstraints {
+        self.view.addSubview(addNewSheetBtn)
+        addNewSheetBtn.snp.makeConstraints {
             $0.width.equalTo(50)
             $0.height.equalTo(50)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(60)
@@ -109,7 +108,7 @@ final class QuestionListViewController: BaseViewController, View {
         ) { [weak self] in
             guard let self = self else { return }
             let animateDutaion: TimeInterval = 0.5
-            self.editSheetBtn.snp.updateConstraints {
+            self.addNewSheetBtn.snp.updateConstraints {
                 $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(10)
             }
             UIView.animate(withDuration: animateDutaion) {
@@ -154,10 +153,15 @@ extension QuestionListViewController {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        editSheetBtn.rx.tap
+        addNewSheetBtn.rx.tap
             .subscribe {  [weak self] _ in
                 guard let self = self else {return}
-                let editSheetVC = self.editSheetFactory(self.category)
+                let editSheetVC = self.editSheetFactory(
+                    self.category,
+                    .ADD,
+                    EditMode.ADD.defaultQuestoin,
+                    EditMode.ADD.defaultAnswer
+                )
                 self.present(editSheetVC, animated: true, completion: nil)
             }.disposed(by: self.disposeBag)
         

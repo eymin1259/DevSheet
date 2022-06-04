@@ -18,6 +18,7 @@
 		A12B910628438F1700156AA7 /* AnswerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910528438F1700156AA7 /* AnswerAPI.swift */; };
 		A12B91082843907E00156AA7 /* AnswerDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B91072843907E00156AA7 /* AnswerDTO.swift */; };
 		A12B910A284399A800156AA7 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B9109284399A800156AA7 /* Date+.swift */; };
+		A12B910E284B1E8E00156AA7 /* EditMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12B910D284B1E8E00156AA7 /* EditMode.swift */; };
 		A151BEB5283D1877002780F5 /* CategoryListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB4283D1877002780F5 /* CategoryListSection.swift */; };
 		A151BEB9283D1C14002780F5 /* CategoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEB8283D1C14002780F5 /* CategoryListCell.swift */; };
 		A151BEBD28427342002780F5 /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A151BEBC28427342002780F5 /* QuestionListViewController.swift */; };
@@ -115,6 +116,7 @@
 		A12B910528438F1700156AA7 /* AnswerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerAPI.swift; sourceTree = "<group>"; };
 		A12B91072843907E00156AA7 /* AnswerDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerDTO.swift; sourceTree = "<group>"; };
 		A12B9109284399A800156AA7 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
+		A12B910D284B1E8E00156AA7 /* EditMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMode.swift; sourceTree = "<group>"; };
 		A151BEB4283D1877002780F5 /* CategoryListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListSection.swift; sourceTree = "<group>"; };
 		A151BEB8283D1C14002780F5 /* CategoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListCell.swift; sourceTree = "<group>"; };
 		A151BEBC28427342002780F5 /* QuestionListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				A1A35CA828433E080047AF82 /* EditSheetViewController.swift */,
 				A12B90F52843858C00156AA7 /* EditSheetReactor.swift */,
+				A12B910D284B1E8E00156AA7 /* EditMode.swift */,
 			);
 			path = EditSheet;
 			sourceTree = "<group>";
@@ -881,6 +884,7 @@
 				A1634A3D283B9DE100403498 /* VersionDTO.swift in Sources */,
 				A12B91082843907E00156AA7 /* AnswerDTO.swift in Sources */,
 				A1B5F072283270890098DF44 /* AppDelegate.swift in Sources */,
+				A12B910E284B1E8E00156AA7 /* EditMode.swift in Sources */,
 				A12B90FE28438D3E00156AA7 /* AnswerUseCase.swift in Sources */,
 				A12B90FA28438D1F00156AA7 /* AnswerDetailViewController.swift in Sources */,
 				A12B90FC28438D2B00156AA7 /* AnswerDetailReactor.swift in Sources */,

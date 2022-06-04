@@ -159,7 +159,9 @@ extension Container {
                 reactor: reactor,
                 category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(question:),
-                editSheetFactory: self.editSheetViewControllerFactory(category:)
+                editSheetFactory: self.editSheetViewControllerFactory(
+                    category:editMode:question:answer:
+                )
             )
             return vc
         }.inObjectScope(.transient)
@@ -173,11 +175,15 @@ extension Container {
             return vc
         }.inObjectScope(.transient)
         
-        register(EditSheetViewController.self) { (r: Resolver, category: Category) in
+        register(EditSheetViewController.self) {
+            (r: Resolver, category: Category, editMode: EditMode, question: String, answer: String) in
             let reactor = r.resolve(EditSheetReactor.self)!
             let vc = EditSheetViewController(
                 reactor: reactor,
-                category: category
+                category: category,
+                editMode: editMode,
+                defaultQuestoin: question,
+                defaultAnswer: answer
             )
             return vc
         }.inObjectScope(.transient)
@@ -218,8 +224,16 @@ extension Container {
         return answerVC
     }
     
-    private func editSheetViewControllerFactory(category: Category) -> UIViewController {
-        let rootVC = resolve(EditSheetViewController.self, argument: category)!
+    private func editSheetViewControllerFactory(
+        category: Category,
+        editMode: EditMode,
+        question: String,
+        answer: String
+    ) -> UIViewController {
+        let rootVC = resolve(
+            EditSheetViewController.self,
+            arguments: category, editMode, question, answer
+        )!
         let editSheetVC = UINavigationController(rootViewController: rootVC)
         editSheetVC.modalPresentationStyle = .overFullScreen
         return editSheetVC

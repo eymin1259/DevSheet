@@ -76,6 +76,16 @@ extension Container {
             let useCase = AnswerUseCaseImpl(answerRepository: repo)
             return useCase
         }.inObjectScope(.transient)
+        
+        register(SheetUseCase.self) { r in
+            let questionRepo = r.resolve(QuestionRepository.self)!
+            let answerRepo = r.resolve(AnswerRepository.self)!
+            let useCase = SheetUseCaseImpl(
+                questionRepository: questionRepo,
+                answerRepository: answerRepo
+            )
+            return useCase
+        }.inObjectScope(.transient)
     }
     
     private func registerReactor() {
@@ -104,12 +114,8 @@ extension Container {
         }.inObjectScope(.transient)
         
         register(EditSheetReactor.self) { r in
-            let question = r.resolve(QuestionUseCase.self)!
-            let answer = r.resolve(AnswerUseCase.self)!
-            let reactor = EditSheetReactor(
-                questionUseCase: question,
-                answerUseCase: answer
-            )
+            let usecase = r.resolve(SheetUseCase.self)!
+            let reactor = EditSheetReactor(sheetUseCase: usecase)
             return reactor
         }.inObjectScope(.transient)
     }

@@ -9,6 +9,7 @@ import UIKit
 import Swinject
 import RxSwift
 import SnapKit
+import Loaf
 
 class BaseViewController: UIViewController {
  
@@ -150,5 +151,20 @@ class BaseViewController: UIViewController {
         btn.titleLabel?.font = titleFont
         btn.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: btn)
+    }
+    
+    func showErrorToast(message: String?) {
+        let errMsg = message ?? "에러 발생"
+        Loaf(errMsg, state: .error, location: .bottom, sender: self).show()
+    }
+    
+    func showToast(message: String?, completion: @escaping() -> Void ) {
+        let msg = message ?? "완료"
+        Loaf(msg, state: .success, location: .bottom, sender: self).show(.average) { dismissalType in
+            switch dismissalType {
+            default:
+                completion()
+            }
+        }
     }
 }

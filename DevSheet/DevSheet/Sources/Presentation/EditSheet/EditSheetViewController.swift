@@ -17,7 +17,7 @@ final class EditSheetViewController: BaseViewController, View {
     // MARK: properties
     typealias Reactor = EditSheetReactor
     private var category: Category
-    private var editMode: EditMode
+    private var editMode: SheetEditMode
     private var defaultQuestoin: String
     private var defaultAnswer: String
     
@@ -48,7 +48,7 @@ final class EditSheetViewController: BaseViewController, View {
     init(
         reactor: Reactor,
         category: Category,
-        editMode: EditMode,
+        editMode: SheetEditMode,
         defaultQuestoin: String,
         defaultAnswer: String
     ) {
@@ -80,12 +80,14 @@ final class EditSheetViewController: BaseViewController, View {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveBtn)
         self.addNavigationLineView()
         // questionTitle
+        self.questionTitleTextView.text = defaultQuestoin
         self.questionTitleTextView.textColor = .placeholderText
         self.questionTitleTextView.isEditable = true
         self.addQuestionTitleTextView()
         // TitleContentdivider
         self.addTitleContentdividerView()
         // AnswerContent
+        self.answerContentTextView.text = defaultAnswer
         self.answerContentTextView.textColor = .placeholderText
         self.answerContentTextView.isEditable = true
         self.addAnswerContentTextView()
@@ -106,8 +108,8 @@ extension EditSheetViewController {
                 Reactor.Action.viewDidLoad(
                     category,
                     editMode,
-                    defaultQuestoin,
-                    defaultAnswer
+                    nil,
+                    nil
                 )
             }
             .bind(to: reactor.action)
@@ -133,9 +135,9 @@ extension EditSheetViewController {
             .disposed(by: self.disposeBag)
         
         saveBtn.rx.tap
-            .subscribe { [unowned self] _ in
-            
-            }.disposed(by: self.disposeBag)
+            .map { _ in Reactor.Action.tapSaveBtn }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
     }
     
     private func bindState(reactor: EditSheetReactor) {
@@ -154,6 +156,28 @@ extension EditSheetViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] answer in
                 self?.answerContentTextView.text = answer
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.saveResult }
+            .filterNil()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] result in
+                if result == true {
+                    self?.showToast(message: "저장 완료") {
+                        self?.dismiss(animated: true)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.errorMessage }
+            .filterNil()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] message in
+                self?.showErrorToast(message: message)
             })
             .disposed(by: disposeBag)
     }

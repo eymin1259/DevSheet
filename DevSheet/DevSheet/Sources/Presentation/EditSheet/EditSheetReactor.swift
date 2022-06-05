@@ -12,41 +12,38 @@ final class EditSheetReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidLoad(Category, EditMode, String, String) // questionStr, answerStr
+        case viewDidLoad(Category, SheetEditMode, String?, String?) // questionStr, answerStr
         case inputQuestion(String)
         case inputAnswer(String)
-        case tapSaveBtn(Category, String, String) // Category, question, answer
+        case tapSaveBtn
     }
     
     enum Mutation {
         case setCategory(Category)
-        case setEditMode(EditMode)
-        case setQuestion(String)
-        case setAnswer(String)
-        case setSaveResult(Bool, String?)
+        case setEditMode(SheetEditMode)
+        case setQuestion(String?)
+        case setAnswer(String?)
+        case setSaveResult(Bool)
+        case setErrorMessage(String?)
         case setLoading(Bool)
     }
     
     struct State {
         var category: Category?
-        var editMode: EditMode?
+        var editMode: SheetEditMode?
         var question: String?
         var answer: String?
-        var saveResult: (Bool, String?)?
+        var saveResult: Bool?
+        var errorMessage: String?
         var isLoading: Bool = false
     }
     
     let initialState: State = .init()
-    var questionUseCase: QuestionUseCase
-    var answerUseCase: AnswerUseCase
+    var sheetUseCase: SheetUseCase
     
     // MARK: initialize
-    init(
-        questionUseCase: QuestionUseCase,
-        answerUseCase: AnswerUseCase
-    ) {
-        self.questionUseCase = questionUseCase
-        self.answerUseCase = answerUseCase
+    init(sheetUseCase: SheetUseCase) {
+        self.sheetUseCase = sheetUseCase
     }
 }
 
@@ -60,12 +57,39 @@ extension EditSheetReactor {
             let setQuestion =  Observable<Mutation>.just(.setQuestion(question))
             let setAnswer = Observable<Mutation>.just(.setAnswer(answer))
             return .concat([setCategory, setEditMode, setQuestion, setAnswer])
+            
         case .inputQuestion(let question):
             return Observable<Mutation>.just(.setQuestion(question))
+            
         case .inputAnswer(let answer):
             return Observable<Mutation>.just(.setAnswer(answer))
-        case .tapSaveBtn(_, _, _):
-            return .empty()
+            
+        case .tapSaveBtn:
+            guard !self.currentState.isLoading else { return .empty() }
+            guard let editMode = self.currentState.editMode else { return .empty() }
+            guard let category = self.currentState.category else { return .empty() }
+            let startLoading = Observable<Mutation>.just(.setLoading(true))
+            let endLoading = Observable<Mutation>.just(.setLoading(false))
+            var setSheet: Observable<EditSheetReactor.Mutation>
+            if editMode == .ADD {
+                setSheet = sheetUseCase
+                    .addNewSheet(
+                        category: category,
+                        questionText: self.currentState.question,
+                        answerText: self.currentState.answer
+                    )
+                    .asObservable()
+                    .map { result -> EditSheetReactor.Mutation  in
+                        return EditSheetReactor.Mutation.setSaveResult(result)
+                    }
+                    .catch { err in
+                        return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
+                    }
+            } else { // .UPDATE
+                //                sheetUseCase.addNewSheet()
+                setSheet = .empty()
+            }
+            return .concat([startLoading, setSheet, endLoading])
         }
     }
     
@@ -85,7 +109,11 @@ extension EditSheetReactor {
         case .setAnswer(let answer):
             newState.answer = answer
             return newState
-        case .setSaveResult(_, _):
+        case .setSaveResult(let result):
+            newState.saveResult = result
+            return newState
+        case .setErrorMessage(let msg):
+            newState.errorMessage = msg
             return newState
         case .setLoading(let loading):
             newState.isLoading = loading

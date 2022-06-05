@@ -10,5 +10,6 @@ import Firebase
 
 protocol ServiceAPI {
     var collection: CollectionReference { get }
-    func task() -> Query
+    func get() -> Query?
+    func post(completion: @escaping(Error?, DocumentReference?) -> Void)
 }

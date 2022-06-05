@@ -22,8 +22,8 @@ final class QuestionRepositoryImpl: QuestionRepository {
     // MARK: methods
     func fetchQuestions(categoryId: String) -> Single<[Question]> {
         return firebaseService
-            .request(
-                QuestionAPI.fetchQuestions(categoryId: categoryId)
+            .get(
+                QuestionAPI.getQuestions(categoryId: categoryId)
             )
             .map { snapshot in
                 var ret = [Question]()
@@ -35,5 +35,13 @@ final class QuestionRepositoryImpl: QuestionRepository {
                 }
                 return ret
             }
+    }
+    
+    func addNewQuestion(categoryId: String, title: String) -> Single<String> {
+        return firebaseService
+            .post(
+                QuestionAPI.addNewQuestion(categoryId: categoryId, title: title)
+            )
+            .map { $0.documentID }
     }
 }

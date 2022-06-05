@@ -22,8 +22,8 @@ final class CategoryRepositoryImpl: CategoryRepository {
     // MARK: methods
     func fetchCategories(group: MainTab) -> Single<[Category]> {
         return firebaseService
-            .request(
-                CategoryAPI.fetchCategories(group: group.rawValue)
+            .get(
+                CategoryAPI.getCategories(group: group.rawValue)
             )
             .map { snapshot in
                 var ret = [Category]()

@@ -13,17 +13,23 @@ enum VersionAPI {
 }
 
 extension VersionAPI: ServiceAPI {
-    
     var collection: CollectionReference {
         return Firestore.firestore().collection("versions")
     }
     
-    func task() -> Query {
+    func get() -> Query? {
         switch self {
         case .getVersionCheck:
             return collection
                 .order(by: "timeStamp", descending: true)
                 .limit(to: 1)
+        }
+    }
+    
+    func post(completion: @escaping (Error?, DocumentReference?) -> Void) {
+        switch self {
+        default:
+            completion(nil, nil)
         }
     }
 }

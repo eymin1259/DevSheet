@@ -21,7 +21,8 @@ final class VersionRepositoryImpl: VersionRepository {
     
     // MARK: methods
     func getVersionCheck() -> Single<Version> {
-        return firebaseService.request(VersionAPI.getVersionCheck)
+        return firebaseService
+            .get(VersionAPI.getVersionCheck)
             .map { snapshot in
                 let id = snapshot.documents.first!.documentID
                 let data = snapshot.documents.first!.data()

@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 enum CategoryAPI {
-    case fetchCategories(group: Int)
+    case getCategories(group: Int)
 }
 
 extension CategoryAPI: ServiceAPI {
@@ -18,12 +18,19 @@ extension CategoryAPI: ServiceAPI {
         return Firestore.firestore().collection("categories")
     }
     
-    func task() -> Query {
+    func get() -> Query? {
         switch self {
-        case .fetchCategories(let group):
+        case .getCategories(let group):
             return collection
                 .whereField("group", isEqualTo: group)
                 .order(by: "order", descending: false)
+        }
+    }
+    
+    func post(completion: @escaping (Error?, DocumentReference?) -> Void) {
+        switch self {
+        default:
+            completion(nil, nil)
         }
     }
 }

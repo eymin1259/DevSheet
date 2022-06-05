@@ -22,8 +22,8 @@ final class AnswerRepositoryImpl: AnswerRepository {
     // MARK: methods
     func fetchAnswer(questionId: String) -> Single<Answer> {
         return firebaseService
-            .request(
-                AnswerAPI.fertchAnswer(questionId: questionId)
+            .get(
+                AnswerAPI.gethAnswer(questionId: questionId)
             )
             .map { snapshot in
                 let id = snapshot.documents.first!.documentID

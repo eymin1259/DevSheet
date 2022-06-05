@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 enum AnswerAPI {
-    case fertchAnswer(questionId: String)
+    case gethAnswer(questionId: String)
 }
 
 extension AnswerAPI: ServiceAPI {
@@ -18,14 +18,21 @@ extension AnswerAPI: ServiceAPI {
         return Firestore.firestore().collection("answers")
     }
     
-    func task() -> Query {
+    func get() -> Query? {
         switch self {
-        case .fertchAnswer(let questionId):
+        case .gethAnswer(let questionId):
             return collection
                 .whereField("questionId", isEqualTo: questionId)
                 .whereField("deleted", isEqualTo: false)
                 .order(by: "version", descending: true)
                 .limit(to: 1)
+        }
+    }
+    
+    func post(completion: @escaping (Error?, DocumentReference?) -> Void) {
+        switch self {
+        default:
+            completion(nil, nil)
         }
     }
 }

@@ -21,8 +21,8 @@ struct AnswerDTO {
     init(id: String, dictionary: [String: Any]) {
         self.id = id
         self.questionId = dictionary["questionId"] as? String ?? ""
-        self.title = dictionary["title"] as? String ?? ""
-        self.content = dictionary["content"] as? String ?? ""
+        self.title = dictionary["questionTitle"] as? String ?? ""
+        self.content = dictionary["answerContent"] as? String ?? ""
         self.version = dictionary["version"] as? Int ?? -1
         self.createdBy = dictionary["createdBy"] as? String ?? ""
         self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())

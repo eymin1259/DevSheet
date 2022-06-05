@@ -182,7 +182,7 @@ extension Container {
         }.inObjectScope(.transient)
         
         register(EditSheetViewController.self) {
-            (r: Resolver, category: Category, editMode: EditMode, question: String, answer: String) in
+            (r: Resolver, category: Category, editMode: SheetEditMode, question: String, answer: String) in
             let reactor = r.resolve(EditSheetReactor.self)!
             let vc = EditSheetViewController(
                 reactor: reactor,
@@ -232,7 +232,7 @@ extension Container {
     
     private func editSheetViewControllerFactory(
         category: Category,
-        editMode: EditMode,
+        editMode: SheetEditMode,
         question: String,
         answer: String
     ) -> UIViewController {

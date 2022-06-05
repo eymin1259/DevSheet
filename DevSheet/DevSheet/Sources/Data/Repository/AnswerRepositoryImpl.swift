@@ -31,4 +31,12 @@ final class AnswerRepositoryImpl: AnswerRepository {
                 return AnswerDTO(id: id, dictionary: data).toDomain()
             }
     }
+    
+    func addNewAnswer(questionId: String, title: String, content: String, creator: String) -> Single<String> {
+        return firebaseService
+            .post(
+                AnswerAPI.addNewAnswer(questionId: questionId, title: title, content: content, creator: creator)
+            )
+            .map { $0.documentID }
+    }
 }

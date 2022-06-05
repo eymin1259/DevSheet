@@ -12,6 +12,7 @@ enum SheetError: Error {
     case server
     case emptyQuestion
     case emptyAnswer
+    case saveFail
 }
 
 extension SheetError: LocalizedError {
@@ -21,6 +22,7 @@ extension SheetError: LocalizedError {
         case .server: return "서버 오류"
         case .emptyQuestion: return "질문이 비었습니다."
         case .emptyAnswer: return "답변이 비었습니다."
+        case .saveFail: return "저장 실패"
         }
     }
 }

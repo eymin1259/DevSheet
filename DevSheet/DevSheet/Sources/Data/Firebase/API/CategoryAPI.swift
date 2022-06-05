@@ -7,7 +7,6 @@
 
 import Foundation
 import Firebase
-import RxSwift
 
 enum CategoryAPI {
     case fetchCategories(group: Int)
@@ -19,18 +18,12 @@ extension CategoryAPI: ServiceAPI {
         return Firestore.firestore().collection("categories")
     }
     
-    func task() -> Single<Query> {
+    func task() -> Query {
         switch self {
         case .fetchCategories(let group):
-            return Single<Query>.create { single in
-                single(.success(
-                    collection
-                        .whereField("group", isEqualTo: group)
-                        .order(by: "order", descending: false)
-                ))
-                
-                return Disposables.create()
-            }
+            return collection
+                .whereField("group", isEqualTo: group)
+                .order(by: "order", descending: false)
         }
     }
 }

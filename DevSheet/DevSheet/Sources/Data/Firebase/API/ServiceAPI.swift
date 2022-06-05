@@ -7,9 +7,8 @@
 
 import Foundation
 import Firebase
-import RxSwift
 
 protocol ServiceAPI {
     var collection: CollectionReference { get }
-    func task() -> Single<Query>
+    func task() -> Query
 }

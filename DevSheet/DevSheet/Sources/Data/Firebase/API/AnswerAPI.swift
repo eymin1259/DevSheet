@@ -7,7 +7,6 @@
 
 import Foundation
 import Firebase
-import RxSwift
 
 enum AnswerAPI {
     case fertchAnswer(questionId: String)
@@ -19,19 +18,14 @@ extension AnswerAPI: ServiceAPI {
         return Firestore.firestore().collection("answers")
     }
     
-    func task() -> Single<Query> {
+    func task() -> Query {
         switch self {
         case .fertchAnswer(let questionId):
-            return Single<Query>.create { single in
-                single(.success(
-                    collection
-                        .whereField("questionId", isEqualTo: questionId)
-                        .whereField("deleted", isEqualTo: false)
-                        .order(by: "version", descending: true)
-                        .limit(to: 1)
-                ))
-                return Disposables.create()
-            }
+            return collection
+                .whereField("questionId", isEqualTo: questionId)
+                .whereField("deleted", isEqualTo: false)
+                .order(by: "version", descending: true)
+                .limit(to: 1)
         }
     }
 }

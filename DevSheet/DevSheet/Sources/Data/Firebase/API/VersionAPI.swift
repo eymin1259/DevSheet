@@ -7,7 +7,6 @@
 
 import Foundation
 import Firebase
-import RxSwift
 
 enum VersionAPI {
     case getVersionCheck
@@ -19,17 +18,12 @@ extension VersionAPI: ServiceAPI {
         return Firestore.firestore().collection("versions")
     }
     
-    func task() -> Single<Query> {
+    func task() -> Query {
         switch self {
         case .getVersionCheck:
-            return Single<Query>.create { single in
-                single(.success(
-                    collection
-                        .order(by: "timeStamp", descending: true)
-                        .limit(to: 1)
-                ))
-                return Disposables.create()
-            }
+            return collection
+                .order(by: "timeStamp", descending: true)
+                .limit(to: 1)
         }
     }
 }

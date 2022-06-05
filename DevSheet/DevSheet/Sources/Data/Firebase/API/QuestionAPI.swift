@@ -7,7 +7,6 @@
 
 import Foundation
 import Firebase
-import RxSwift
 
 enum QuestionAPI {
     case fetchQuestions(categoryId: String)
@@ -19,17 +18,12 @@ extension QuestionAPI: ServiceAPI {
         return Firestore.firestore().collection("questions")
     }
     
-    func task() -> Single<Query> {
+    func task() -> Query {
         switch self {
         case .fetchQuestions(let categoryId):
-            return Single<Query>.create { single in
-                single(.success(
-                    collection
-                        .whereField("categoryId", isEqualTo: categoryId)
-                        .whereField("deleted", isEqualTo: false)
-                ))
-                return Disposables.create()
-            }
+            return collection
+                .whereField("categoryId", isEqualTo: categoryId)
+                .whereField("deleted", isEqualTo: false)
         }
     }
 }

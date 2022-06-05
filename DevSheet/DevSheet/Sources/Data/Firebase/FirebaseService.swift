@@ -17,22 +17,19 @@ final class FirebaseServiceImpl: FirebaseService {
     
     func request(_ api: ServiceAPI) -> Single<QuerySnapshot> {
         BeaverLog.debug("api :", context: api)
-        return api.task()
-            .flatMap { query in
-                return Single<QuerySnapshot>.create { single in
-                    query.getDocuments { snapshot, err in
-                        if let err = err {
-                            single(.failure(err))
-                        }
-                        if let  snapshot = snapshot,
-                           snapshot.isEmpty == false {
-                            single(.success(snapshot))
-                        } else {
-                            single(.failure(FirebaseError.noData))
-                        }
-                    }
-                    return Disposables.create()
+        return Single<QuerySnapshot>.create { single in
+            api.task().getDocuments { snapshot, err in
+                if let err = err {
+                    single(.failure(err))
+                }
+                if let  snapshot = snapshot,
+                   snapshot.isEmpty == false {
+                    single(.success(snapshot))
+                } else {
+                    single(.failure(FirebaseError.noData))
                 }
             }
+            return Disposables.create()
+        }
     }
 }

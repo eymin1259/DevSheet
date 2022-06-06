@@ -86,6 +86,7 @@ extension AnswerDetailReactor {
             return newState
             
         case .setAddFavoriteResult(let result):
+            print("debug :  reduce  setAddFavoriteResult -> \(result)")
             newState.addFavoriteResult = result
             return newState
             

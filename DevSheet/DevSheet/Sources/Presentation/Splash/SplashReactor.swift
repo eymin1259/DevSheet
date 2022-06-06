@@ -16,10 +16,12 @@ final class SplashReactor: Reactor {
     }
     
     enum Mutation {
+        case setDBInit(Bool)
         case checkUpdate(Bool)
     }
     
     struct State {
+        var dbInit: Bool?
         var shouldUpdate: Bool?
     }
     
@@ -37,10 +39,19 @@ extension SplashReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidAppear:
-            return versionUseCase.checkShouldUpdate()
+            let setDBInit = versionUseCase
+                .createTables()
+                .asObservable()
+                .catchAndReturn(false)
+                .map(SplashReactor.Mutation.setDBInit)
+            
+            let checkUpdate = versionUseCase
+                .checkShouldUpdate()
                 .asObservable()
                 .catchAndReturn(true)
                 .map(Mutation.checkUpdate)
+            
+            return .concat([setDBInit, checkUpdate])
         }
     }
     
@@ -50,6 +61,10 @@ extension SplashReactor {
         switch mutation {
         case .checkUpdate(let shouldUpdate):
             newState.shouldUpdate = shouldUpdate
+            return newState
+            
+        case .setDBInit(let result):
+            newState.dbInit = result
             return newState
         }
     }

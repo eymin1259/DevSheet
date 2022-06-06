@@ -25,34 +25,38 @@ extension Container {
             return FirebaseServiceImpl()
         }
         
-        register(LocalDBService.self) { _ in
-            return LocalDBServiceImpl()
+        register(SQLiteService.self) { _ in
+            return SQLiteServiceImpl()
         }.inObjectScope(.container)
     }
     
     private func registerRepository() {
         register(VersionRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let repo = VersionRepositoryImpl(firebaseService: firebase)
+            let sqlite = r.resolve(SQLiteService.self)!
+            let repo = VersionRepositoryImpl(
+                firebaseService: firebase,
+                sqliteService: sqlite
+            )
             return repo
         }
         
         register(CategoryRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let localDB = r.resolve(LocalDBService.self)!
+            let sqlite = r.resolve(SQLiteService.self)!
             let repo = CategoryRepositoryImpl(
                 firebaseService: firebase,
-                localDBService: localDB
+                sqliteService: sqlite
             )
             return repo
         }.inObjectScope(.transient)
         
         register(QuestionRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let localDB = r.resolve(LocalDBService.self)!
+            let sqlite = r.resolve(SQLiteService.self)!
             let repo = QuestionRepositoryImpl(
                 firebaseService: firebase,
-                localDBService: localDB
+                sqliteService: sqlite
             )
             return repo
         }.inObjectScope(.transient)

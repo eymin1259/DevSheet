@@ -34,13 +34,25 @@ final class QuestionUseCaseImpl: QuestionUseCase {
     }
     
     func saveFavoriteQuestion(question: Question) -> Single<Bool> {
-        let favoriteQuestions = questionRepository.fetchFavoriteQuestions().filter { favQuestion in
-            favQuestion.id == question.id
-        }
-        if favoriteQuestions.isEmpty {
-            return questionRepository.saveFavoriteQuestion(question: question)
-        } else {
-            return Single<Bool>.just(true)
-        }
+//        let favoriteQuestions = questionRepository.fetchFavoriteQuestions().filter { favQuestion in
+//            favQuestion.id == question.id
+//        }
+//        if favoriteQuestions.isEmpty {
+//            return questionRepository.saveFavoriteQuestion(question: question)
+//        } else {
+//            return Single<Bool>.just(true)
+//        }
+        
+        return questionRepository.fetchAllFavoriteQuestions()
+            .flatMap { [unowned self] questionList -> Single<Bool> in
+                let favoriteQuestions = questionList.filter { favQuestion in
+                    favQuestion.id == question.id
+                }
+                if favoriteQuestions.isEmpty {
+                    return questionRepository.saveFavoriteQuestion(question: question)
+                } else {
+                    return Single<Bool>.just(true)
+                }
+            }
     }
 }

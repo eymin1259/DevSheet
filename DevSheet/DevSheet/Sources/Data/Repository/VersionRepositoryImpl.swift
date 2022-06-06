@@ -13,13 +13,29 @@ final class VersionRepositoryImpl: VersionRepository {
     
     // MARK: properties
     var firebaseService: FirebaseService
+    var sqliteService: SQLiteService
     
     // MARK: initialize
-    init(firebaseService: FirebaseService) {
+    init(
+        firebaseService: FirebaseService,
+        sqliteService: SQLiteService
+    ) {
         self.firebaseService = firebaseService
+        self.sqliteService = sqliteService
     }
     
     // MARK: methods
+    func createTables()  -> Single<Bool> {
+        return sqliteService.create(query: CategoryQuery.createCategoryTable)
+            .flatMap { [unowned self] result in
+                if result {
+                    return sqliteService.create(query: QuestionQuery.createQuestionTable)
+                } else {
+                    return  Single<Bool>.just(false)
+                }
+            }
+    }
+    
     func getVersionCheck() -> Single<Version> {
         return firebaseService
             .get(VersionAPI.getVersionCheck)

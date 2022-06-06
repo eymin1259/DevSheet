@@ -10,9 +10,9 @@ import Foundation
 struct Category {
     var id: String
     var name: String
-    var group: Int
+    var groupId: Int
     var imageUrl: String
-    var order: Int
+    var orderNumber: Int
     var createdAt: String
     var deleted: Bool
 }

@@ -10,6 +10,7 @@ import RxSwift
 
 protocol VersionUseCase {
     func checkShouldUpdate() -> Single<Bool>
+    func createTables()  -> Single<Bool>
 }
 
 final class  VersionUseCaseImpl: VersionUseCase {
@@ -41,5 +42,9 @@ final class  VersionUseCaseImpl: VersionUseCase {
                     return false
                 }
             }
+    }
+    
+    func createTables() -> Single<Bool> {
+        return versionRepository.createTables()
     }
 }

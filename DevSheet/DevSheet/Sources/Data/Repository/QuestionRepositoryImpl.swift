@@ -8,20 +8,21 @@
 import Foundation
 import RxSwift
 import Firebase
+import SQLite3
 
 final class QuestionRepositoryImpl: QuestionRepository {
     
     // MARK: properties
     var firebaseService: FirebaseService
-    var localDBService: LocalDBService
+    var sqliteService: SQLiteService
     
     // MARK: initialize
     init(
         firebaseService: FirebaseService,
-        localDBService: LocalDBService
+        sqliteService: SQLiteService
     ) {
         self.firebaseService = firebaseService
-        self.localDBService = localDBService
+        self.sqliteService = sqliteService
     }
     
     // MARK: methods
@@ -50,13 +51,29 @@ final class QuestionRepositoryImpl: QuestionRepository {
             .map { $0.documentID }
     }
     
-    func fetchFavoriteQuestions() -> [Question] {
-        let results = localDBService.fetch(object: QuestionDTO.self)
-        var ret: [Question] = .init()
-        results.forEach { dto in
-            ret.append(dto.toDomain())
+    func fetchAllFavoriteQuestions() -> Single<[Question]> {
+        return Single<[Question]>.create { [unowned self] single in
+            var result = [Question]()
+            sqliteService.read(query: QuestionQuery.selectAllFavoriteQuestions) { row in
+                let id = String(cString: sqlite3_column_text(row, 0))
+                let title = String(cString: sqlite3_column_text(row, 1))
+                let categoryId = String(cString: sqlite3_column_text(row, 2))
+                let timeStamp = String(cString: sqlite3_column_text(row, 3))
+                let deletedInt = Int(sqlite3_column_int(row, 4))
+                let dto = QuestionDTO(id: id, dictionary: [
+                    "id": id,
+                    "title": title,
+                    "categoryId": categoryId,
+                    "timeStamp": timeStamp,
+                    "deleted": deletedInt == 0 ? false : true
+                ])
+                result.append(dto.toDomain())
+            } errorHandler: { err in
+                single(.failure(err))
+            }
+            single(.success(result))
+            return Disposables.create()
         }
-        return ret
     }
     
     func saveFavoriteQuestion(question: Question) -> Single<Bool> {
@@ -68,7 +85,7 @@ final class QuestionRepositoryImpl: QuestionRepository {
                 "timeStamp": question.createdAt,
                 "deleted": question.deleted
             ])
-        return localDBService.write(object: questionDTO)
+        return sqliteService.create(query: QuestionQuery.insertQuestion(questionDTO))
     }
     
 }

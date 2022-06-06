@@ -8,44 +8,32 @@
 import Foundation
 import RxSwift
 import Firebase
-import RealmSwift
+import SQLite3
 
 final class CategoryRepositoryImpl: CategoryRepository {
     
     // MARK: properties
     var firebaseService: FirebaseService
-    var localDBService: LocalDBService
+    var sqliteService: SQLiteService
     
     // MARK: initialize
     init(
         firebaseService: FirebaseService,
-        localDBService: LocalDBService
+        sqliteService: SQLiteService
     ) {
         self.firebaseService = firebaseService
-        self.localDBService = localDBService
+        self.sqliteService = sqliteService
     }
     
     // MARK: methods
     func fetchCategories(group: MainTab) -> Single<[Category]> {
         
         if group == .favorite {
-            return Single<[Category]>.create { [weak self] single in
-                guard let self = self else {
-                    single(.failure(NSError(domain: "RepoRefError", code: -1, userInfo: nil)))
-                    return Disposables.create()
-                }
-                let results = self.localDBService.fetch(object: CategoryDTO.self)
-                var categoryList: [Category] = .init()
-                results.forEach { dto in
-                    categoryList.append(dto.toDomain())
-                }
-                single(.success(categoryList))
-                return Disposables.create()
-            }
+            return self.fetchAllFavoriteCategories()
         } else { // .cs or .develop
             return firebaseService
                 .get(
-                    CategoryAPI.getCategories(group: group.rawValue)
+                    CategoryAPI.getCategories(groupId: group.rawValue)
                 )
                 .map { snapshot in
                     var ret = [Category]()
@@ -60,13 +48,38 @@ final class CategoryRepositoryImpl: CategoryRepository {
         }
     }
     
-    func fetchFavoriteCategories() -> [Category] {
-        let results = localDBService.fetch(object: CategoryDTO.self)
-        var ret: [Category] = .init()
-        results.forEach { dto in
-            ret.append(dto.toDomain())
+    func fetchAllFavoriteCategories() -> Single<[Category]> {
+        return Single<[Category]>.create { [unowned self] single in
+//            guard let self = self else {
+//                single(.failure(NSError(domain: "RepoRefError", code: -1, userInfo: nil)))
+//                return Disposables.create()
+//            }
+            var result = [Category]()
+            sqliteService.read(query: CategoryQuery.selectAllFavoriteCategories) { row in
+                let id = String(cString: sqlite3_column_text(row, 0))
+                let name = String(cString: sqlite3_column_text(row, 1))
+                let groupId = Int(sqlite3_column_int(row, 2))
+                let imageUrl = String(cString: sqlite3_column_text(row, 3))
+                let orderNumber = Int(sqlite3_column_int(row, 4))
+                let timeStamp = String(cString: sqlite3_column_text(row, 5))
+                let deletedInt = Int(sqlite3_column_int(row, 6))
+                let dto = CategoryDTO(id: id, dictionary: [
+                    "id": id,
+                    "name": name,
+                    "groupId": groupId,
+                    "imageUrl": imageUrl,
+                    "orderNumber": orderNumber,
+                    "timeStamp": timeStamp,
+                    "deleted": deletedInt == 0 ? false : true
+                    
+                ])
+                result.append(dto.toDomain())
+            } errorHandler: { err in
+                single(.failure(err))
+            }
+            single(.success(result))
+            return Disposables.create()
         }
-        return ret
     }
     
     func saveFavoriteCategory(category: Category) -> Single<Bool> {
@@ -74,12 +87,12 @@ final class CategoryRepositoryImpl: CategoryRepository {
             id: category.id,
             dictionary: [
                 "name": category.name,
-                "group": category.group,
+                "groupId": category.groupId,
                 "imageUrl": category.imageUrl,
-                "order": category.order,
+                "orderNumber": category.orderNumber,
                 "timeStamp": category.createdAt,
                 "deleted": category.deleted
             ])
-        return localDBService.write(object: categoryDTO)
+        return sqliteService.create(query: CategoryQuery.insertCategory(categoryDTO))
     }
 }

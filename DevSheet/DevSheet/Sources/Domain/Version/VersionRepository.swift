@@ -10,4 +10,5 @@ import  RxSwift
 
 protocol VersionRepository {
     func getVersionCheck() -> Single<Version>
+    func createTables() -> Single<Bool>
 }

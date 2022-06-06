@@ -80,9 +80,6 @@ final class SplashViewController: BaseViewController, View {
     }
     
     private func showUpdateAlert() {
-        let title = "업데이트"
-        let message = "새로운 버전으로 업데이트가 필요합니다."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let updateAction = UIAlertAction(title: "업데이트", style: .default) { _ in
           print("debug : update Action ")
         }
@@ -90,8 +87,25 @@ final class SplashViewController: BaseViewController, View {
             print("debug : later Action ")
             self?.gotoMainTab()
         }
-        [laterAction, updateAction].forEach(alert.addAction)
-        self.present(alert, animated: true, completion: nil)
+        self.showAlert(
+            title: "업데이트",
+            message: "새로운 버전으로 업데이트가 필요합니다.",
+            actions: [updateAction, laterAction]
+        )
+    }
+    
+    private func showDBErrorAlert() {
+        let confirmAction = UIAlertAction(title: "확인", style: .cancel) { _ in
+            UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                exit(0)
+            }
+        }
+        self.showAlert(
+            title: "내부 오류가 발생하였습니다.",
+            message: "앱을 다시 실행해주세요",
+            actions: [confirmAction]
+        )
     }
     
     private func gotoMainTab() {
@@ -128,6 +142,15 @@ extension SplashViewController {
                     ) { [weak self] in
                         self?.gotoMainTab()
                     }
+                }
+            }).disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.dbInit }
+            .filterNil()
+            .subscribe(onNext: { [weak self] result in
+                if result == false {
+                    self?.showDBErrorAlert()
                 }
             }).disposed(by: self.disposeBag)
     }

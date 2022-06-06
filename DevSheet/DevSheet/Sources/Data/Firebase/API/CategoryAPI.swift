@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 
 enum CategoryAPI {
-    case getCategories(group: Int)
+    case getCategories(groupId: Int)
 }
 
 extension CategoryAPI: ServiceAPI {
@@ -20,10 +20,10 @@ extension CategoryAPI: ServiceAPI {
     
     func get() -> Query? {
         switch self {
-        case .getCategories(let group):
+        case .getCategories(let groupId):
             return collection
-                .whereField("group", isEqualTo: group)
-                .order(by: "order", descending: false)
+                .whereField("groupId", isEqualTo: groupId)
+                .order(by: "orderNumber", descending: false)
         }
     }
     

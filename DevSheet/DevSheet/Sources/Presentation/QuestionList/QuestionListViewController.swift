@@ -74,6 +74,7 @@ final class QuestionListViewController: BaseViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        showEditSheetBtn()
     }
     
     // MARK: methods
@@ -142,11 +143,6 @@ extension QuestionListViewController {
     }
     
     private func bindAction(reactor: QuestionListReactor) {
-        self.rx.viewDidLoad
-            .subscribe { [weak self] _ in
-                self?.showEditSheetBtn()
-            }.disposed(by: self.disposeBag)
-        
         self.rx.viewDidAppear
             .map { [unowned self] _ in
                 Reactor.Action.viewDidAppear(self.category.id)

@@ -163,6 +163,16 @@ extension EditSheetViewController {
             .disposed(by: disposeBag)
         
         reactor.state
+            .map { $0.isLoading }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] isLoading in
+                if isLoading {
+                    self?.showLoadingHud()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
             .map { $0.saveResult }
             .filterNil()
             .distinctUntilChanged()
@@ -180,6 +190,7 @@ extension EditSheetViewController {
             .filterNil()
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] message in
+                self?.hideLoadingHud()
                 self?.showErrorToast(message: message)
             })
             .disposed(by: disposeBag)

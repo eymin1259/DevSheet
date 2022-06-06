@@ -114,5 +114,17 @@ extension AnswerDetailViewController {
                 self?.answerContentTextView.text = answer.content
             })
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.isLoading }
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] isLoading in
+                if isLoading {
+                    self?.showLoadingHud()
+                }  else  {
+                    self?.hideLoadingHud()
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -129,4 +129,16 @@ class BaseViewController: UIViewController {
             completion()
         }
     }
+    
+    func showLoadingHud() {
+        ProgressHUD.animationType = .circleRotateChase
+        ProgressHUD.show(nil, interaction: false)
+    }
+    
+    func hideLoadingHud() {
+        let delay: DispatchTimeInterval = .milliseconds(300)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            ProgressHUD.dismiss()
+        }
+    }
 }

@@ -17,6 +17,7 @@ final class QuestionListViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = QuestionListReactor
+    private var categoryGroup: MainTab
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Category, Question) -> UIViewController
@@ -52,10 +53,12 @@ final class QuestionListViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
+        categoryGroup: MainTab,
         category: Category,
         answerDetailFactory: @escaping (Category, Question) -> UIViewController,
         editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
     ) {
+        self.categoryGroup = categoryGroup
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
         self.answerDetailFactory = answerDetailFactory
@@ -129,7 +132,10 @@ extension QuestionListViewController {
     private func bindAction(reactor: QuestionListReactor) {
         self.rx.viewDidAppear
             .map { [unowned self] _ in
-                Reactor.Action.viewDidAppear(self.category.id)
+                Reactor.Action.viewDidAppear(
+                    self.categoryGroup,
+                    self.category.id
+                )
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

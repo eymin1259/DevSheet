@@ -27,9 +27,8 @@ final class CategoryRepositoryImpl: CategoryRepository {
     
     // MARK: methods
     func fetchCategories(group: MainTab) -> Single<[Category]> {
-        
         if group == .favorite {
-            return self.fetchAllFavoriteCategories()
+            return fetchAllFavoriteCategories()
         } else { // .cs or .develop
             return firebaseService
                 .get(

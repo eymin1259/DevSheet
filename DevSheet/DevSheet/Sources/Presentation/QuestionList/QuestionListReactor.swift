@@ -12,7 +12,7 @@ final class QuestionListReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidAppear(String) // categoryId: String
+        case viewDidAppear(MainTab, String) // categoryId: String
     }
     
     enum Mutation {
@@ -38,12 +38,12 @@ extension QuestionListReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidAppear(let categoryId):
+        case .viewDidAppear(let categoryGroup, let categoryId):
             guard !self.currentState.isLoading else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             let setQuestions = self.questionUseCase
-                .fetchQuestions(categoryId: categoryId)
+                .fetchQuestions(categoryGroup: categoryGroup, categoryId: categoryId)
                 .asObservable()
                 .catchAndReturn([])
                 .map { questionList -> Mutation in

@@ -26,21 +26,25 @@ final class QuestionRepositoryImpl: QuestionRepository {
     }
     
     // MARK: methods
-    func fetchQuestions(categoryId: String) -> Single<[Question]> {
-        return firebaseService
-            .get(
-                QuestionAPI.getQuestions(categoryId: categoryId)
-            )
-            .map { snapshot in
-                var ret = [Question]()
-                for doc in snapshot.documents {
-                    let id = doc.documentID
-                    let data = doc.data()
-                    let question = QuestionDTO(id: id, dictionary: data).toDomain()
-                    ret.append(question)
+    func fetchQuestions(categoryGroup:MainTab, categoryId: String) -> Single<[Question]> {
+        if categoryGroup == .favorite {
+            return fetchAllFavoriteQuestions(categoryId: categoryId)
+        } else {
+            return firebaseService
+                .get(
+                    QuestionAPI.getQuestions(categoryId: categoryId)
+                )
+                .map { snapshot in
+                    var ret = [Question]()
+                    for doc in snapshot.documents {
+                        let id = doc.documentID
+                        let data = doc.data()
+                        let question = QuestionDTO(id: id, dictionary: data).toDomain()
+                        ret.append(question)
+                    }
+                    return ret
                 }
-                return ret
-            }
+        }
     }
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {
@@ -51,10 +55,10 @@ final class QuestionRepositoryImpl: QuestionRepository {
             .map { $0.documentID }
     }
     
-    func fetchAllFavoriteQuestions() -> Single<[Question]> {
+    func fetchAllFavoriteQuestions(categoryId: String?) -> Single<[Question]> {
         return Single<[Question]>.create { [unowned self] single in
             var result = [Question]()
-            sqliteService.read(query: QuestionQuery.selectAllFavoriteQuestions) { row in
+            sqliteService.read(query: QuestionQuery.selectAllFavoriteQuestions(categoryId: categoryId)) { row in
                 let id = String(cString: sqlite3_column_text(row, 0))
                 let title = String(cString: sqlite3_column_text(row, 1))
                 let categoryId = String(cString: sqlite3_column_text(row, 2))

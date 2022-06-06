@@ -9,7 +9,7 @@ import Foundation
 
 enum QuestionQuery {
     case createQuestionTable
-    case selectAllFavoriteQuestions
+    case selectAllFavoriteQuestions(categoryId: String?)
     case insertQuestion(QuestionDTO)
 }
 
@@ -20,8 +20,12 @@ extension QuestionQuery: SQLiteQuery {
         case .createQuestionTable:
             return "CREATE TABLE IF NOT EXISTS Questions (id TEXT PRIMARY KEY, title TEXT, categoryId TEXT, timeStamp TEXT, deleted INTEGER);"
             
-        case .selectAllFavoriteQuestions:
-            return "SELECT * FROM Questions WHERE deleted = '0';"
+        case .selectAllFavoriteQuestions(let categoryId):
+            if let categoryId = categoryId {
+                return "SELECT * FROM Questions WHERE categoryId = '\(categoryId)' AND deleted = '0';"
+            } else {
+                return "SELECT * FROM Questions WHERE deleted = '0';"
+            }
             
         case .insertQuestion(let questionDTO):
             let deletedInt = questionDTO.deleted ? 1 : 0

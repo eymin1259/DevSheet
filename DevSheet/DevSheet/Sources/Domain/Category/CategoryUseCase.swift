@@ -29,14 +29,6 @@ final class  CategoryUseCaseImpl: CategoryUseCase {
     }
     
     func saveFavoriteCategory(category: Category) -> Single<Bool> {
-//        let favoriteCategories = categoryRepository.fetchFavoriteCategories().filter { favCategory in
-//            favCategory.id == category.id
-//        }
-//        if favoriteCategories.isEmpty {
-//            return categoryRepository.saveFavoriteCategory(category: category)
-//        } else {
-//            return Single<Bool>.just(true)
-//        }
         return categoryRepository.fetchAllFavoriteCategories()
             .flatMap { [unowned self] categoryList -> Single<Bool> in
                 let favoriteCategories = categoryList.filter { favCategory in

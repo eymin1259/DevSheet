@@ -13,10 +13,15 @@ final class QuestionRepositoryImpl: QuestionRepository {
     
     // MARK: properties
     var firebaseService: FirebaseService
+    var localDBService: LocalDBService
     
     // MARK: initialize
-    init(firebaseService: FirebaseService) {
+    init(
+        firebaseService: FirebaseService,
+        localDBService: LocalDBService
+    ) {
         self.firebaseService = firebaseService
+        self.localDBService = localDBService
     }
     
     // MARK: methods
@@ -44,4 +49,26 @@ final class QuestionRepositoryImpl: QuestionRepository {
             )
             .map { $0.documentID }
     }
+    
+    func fetchFavoriteQuestions() -> [Question] {
+        let results = localDBService.fetch(object: QuestionDTO.self)
+        var ret: [Question] = .init()
+        results.forEach { dto in
+            ret.append(dto.toDomain())
+        }
+        return ret
+    }
+    
+    func saveFavoriteQuestion(question: Question) -> Single<Bool> {
+        let questionDTO = QuestionDTO(
+            id: question.id,
+            dictionary: [
+                "title": question.title,
+                "categoryId": question.categoryId,
+                "timeStamp": question.createdAt,
+                "deleted": question.deleted
+            ])
+        return localDBService.write(object: questionDTO)
+    }
+    
 }

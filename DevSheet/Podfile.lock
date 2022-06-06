@@ -7,11 +7,6 @@ PODS:
   - ReactorKit (3.2.0):
     - RxSwift (~> 6.0)
     - WeakMapTable (~> 1.1)
-  - Realm (10.25.2):
-    - Realm/Headers (= 10.25.2)
-  - Realm/Headers (10.25.2)
-  - RealmSwift (10.25.2):
-    - Realm (= 10.25.2)
   - RxBlocking (6.5.0):
     - RxSwift (= 6.5.0)
   - RxCocoa (6.5.0):
@@ -42,7 +37,6 @@ DEPENDENCIES:
   - ProgressHUD
   - Quick
   - ReactorKit
-  - RealmSwift
   - RxBlocking
   - RxCocoa
   - RxDataSources
@@ -61,8 +55,6 @@ SPEC REPOS:
     - ProgressHUD
     - Quick
     - ReactorKit
-    - Realm
-    - RealmSwift
     - RxBlocking
     - RxCocoa
     - RxDataSources
@@ -83,8 +75,6 @@ SPEC CHECKSUMS:
   ProgressHUD: 4bdaa0d2ddf676b23324b199f9facffb5c3a1620
   Quick: 6473349e43b9271a8d43839d9ba1c442ed1b7ac4
   ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
-  Realm: 978303663d0509166498f423d112e5ee97d4c91b
-  RealmSwift: a0c30c1efc49e928a0a6f8fb141bb2629616d79b
   RxBlocking: 04b5fd28bb5ea49f7d64b80db8bbfe50d9cc1c7d
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
@@ -98,6 +88,6 @@ SPEC CHECKSUMS:
   Swinject: 97112918bd7e0785dc2df7036213f3c8cbba6586
   WeakMapTable: 05c694ce8439a7a9ebabb56187287a63c57673d6
 
-PODFILE CHECKSUM: a6330797d7c5c85755acbd674f20a6c26cfbd525
+PODFILE CHECKSUM: 2e1089a459758a4a7544310e8ff72207bdf665f6
 
 COCOAPODS: 1.11.2

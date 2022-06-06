@@ -33,6 +33,9 @@ target 'DevSheet' do
   
   # HUD
   pod 'ProgressHUD'
+  
+  #Local DB
+  pod 'RealmSwift'
 
   target 'DevSheetTests' do
     inherit! :search_paths

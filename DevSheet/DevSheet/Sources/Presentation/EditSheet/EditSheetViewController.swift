@@ -16,10 +16,11 @@ final class EditSheetViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = EditSheetReactor
-    private var category: Category
     private var editMode: SheetEditMode
-    private var defaultQuestoin: String
-    private var defaultAnswer: String
+    private var categoryId: String
+    private var questionId: String?
+    private var defaultQuestoinStr: String
+    private var defaultAnswerStr: String
     
     // MARK: UI
     private let closeBtn: UIButton = {
@@ -47,15 +48,17 @@ final class EditSheetViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        category: Category,
         editMode: SheetEditMode,
-        defaultQuestoin: String,
-        defaultAnswer: String
+        categoryId: String,
+        questionId: String?,
+        defaultQuestoinStr: String,
+        defaultAnswerStr: String
     ) {
-        self.category = category
         self.editMode = editMode
-        self.defaultQuestoin = defaultQuestoin
-        self.defaultAnswer = defaultAnswer
+        self.categoryId = categoryId
+        self.questionId = questionId
+        self.defaultQuestoinStr = defaultQuestoinStr
+        self.defaultAnswerStr = defaultAnswerStr
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -80,14 +83,14 @@ final class EditSheetViewController: BaseViewController, View {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveBtn)
         self.addNavigationLineView()
         // questionTitle
-        self.questionTitleTextView.text = defaultQuestoin
+        self.questionTitleTextView.text = defaultQuestoinStr
         self.questionTitleTextView.textColor = .placeholderText
         self.questionTitleTextView.isEditable = true
         self.addQuestionTitleTextView()
         // TitleContentdivider
         self.addTitleContentdividerView()
         // AnswerContent
-        self.answerContentTextView.text = defaultAnswer
+        self.answerContentTextView.text = defaultAnswerStr
         self.answerContentTextView.textColor = .placeholderText
         self.answerContentTextView.isEditable = true
         self.addAnswerContentTextView()
@@ -106,10 +109,11 @@ extension EditSheetViewController {
         self.rx.viewDidLoad
             .map { [unowned self] _ in
                 Reactor.Action.viewDidLoad(
-                    category,
                     editMode,
-                    nil,
-                    nil
+                    categoryId,
+                    questionId,
+                    defaultQuestoinStr,
+                    defaultAnswerStr
                 )
             }
             .bind(to: reactor.action)
@@ -146,6 +150,7 @@ extension EditSheetViewController {
             .filterNil()
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] question in
+                self?.questionTitleTextView.textColor = .label
                 self?.questionTitleTextView.text = question
             })
             .disposed(by: disposeBag)
@@ -155,6 +160,7 @@ extension EditSheetViewController {
             .filterNil()
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] answer in
+                self?.answerContentTextView.textColor = .darkGray
                 self?.answerContentTextView.text = answer
             })
             .disposed(by: disposeBag)
@@ -196,7 +202,7 @@ extension EditSheetViewController {
         questionTitleTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if questionTitleTextView.text.isEmpty {
-                    questionTitleTextView.text = defaultQuestoin
+                    questionTitleTextView.text = defaultQuestoinStr
                     questionTitleTextView.textColor = .placeholderText
                 }
             }.disposed(by: self.disposeBag)
@@ -211,7 +217,7 @@ extension EditSheetViewController {
         answerContentTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if answerContentTextView.text.isEmpty {
-                    answerContentTextView.text = defaultAnswer
+                    answerContentTextView.text = defaultAnswerStr
                     answerContentTextView.textColor = .placeholderText
                 }
             }.disposed(by: self.disposeBag)

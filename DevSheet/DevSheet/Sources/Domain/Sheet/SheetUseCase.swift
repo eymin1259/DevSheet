@@ -9,8 +9,8 @@ import Foundation
 import RxSwift
 
 protocol SheetUseCase {
-    func addNewSheet(category: Category, questionText: String?, answerText: String?) -> Single<Bool>
-    func updateSheet(category: Category, question: Question, answer: Answer)
+    func addNewSheet(categoryId: String, questionText: String?, answerText: String?) -> Single<Bool>
+    func updateSheet(questionId: String, questionText: String?, answerText: String?) -> Single<Bool>
 }
 
 final class SheetUseCaseImpl: SheetUseCase {
@@ -29,7 +29,7 @@ final class SheetUseCaseImpl: SheetUseCase {
     
     // MARK: methods
     func addNewSheet(
-        category: Category,
+        categoryId: String,
         questionText: String?,
         answerText: String?
     ) -> Single<Bool> {
@@ -40,7 +40,7 @@ final class SheetUseCaseImpl: SheetUseCase {
         let uuid  = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid "
         return questionRepository
             .addNewQuestion(
-                categoryId: category.id,
+                categoryId: categoryId,
                 title: questionText
             )
             .flatMap { questionId in
@@ -49,7 +49,13 @@ final class SheetUseCaseImpl: SheetUseCase {
             .map { _ in true }
     }
     
-    func updateSheet(category: Category, question: Question, answer: Answer) {
-        //
+    func updateSheet(questionId: String, questionText: String?, answerText: String?) -> Single<Bool> {
+        guard let questionText = questionText else { return .error(SheetError.emptyQuestion) }
+        guard !questionText.isEmpty else { return .error(SheetError.emptyQuestion) }
+        guard let answerText = answerText else { return .error(SheetError.emptyAnswer) }
+        guard !answerText.isEmpty else { return .error(SheetError.emptyAnswer) }
+        let uuid  = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid "
+        return self.answerRepository.addNewAnswer(questionId: questionId, title: questionText, content: answerText, creator: uuid)
+            .map { _ in true }
     }
 }

@@ -17,6 +17,7 @@ final class AnswerDetailViewController: BaseViewController, View {
     // MARK: properties
     typealias Reactor = AnswerDetailReactor
     private var question: Question
+    private var editSheetFactory: (SheetEditMode, String, String?, String, String) -> UIViewController // cid, qid, q, a
     
     // MARK: UI
     private let dividerView: UIView = {
@@ -26,12 +27,26 @@ final class AnswerDetailViewController: BaseViewController, View {
         return divider
     }()
     
+    private let editBtn: UIButton = {
+        var btn = UIButton()
+        btn.frame = CGRect(
+            origin: .zero,
+            size: .init(width: 30, height: 30)
+        )
+        btn.setTitle("수정", for: .normal)
+        btn.setTitleColor(.orange, for: .normal)
+        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        return btn
+    }()
+    
     // MARK: initialize
     init(
         reactor: Reactor,
-        question: Question
+        question: Question,
+        editSheetFactory: @escaping (SheetEditMode, String, String?, String, String) -> UIViewController
     ) {
         self.question = question
+        self.editSheetFactory = editSheetFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
     }
@@ -50,6 +65,8 @@ final class AnswerDetailViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
+        self.navigationItem.title = "족보"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: editBtn)
         self.addNavigationLineView()
         // questionTitle
         self.questionTitleTextView.text = self.question.title
@@ -75,6 +92,19 @@ extension AnswerDetailViewController {
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
+        
+        editBtn.rx.tap
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                let editSheetVC = self.editSheetFactory(
+                    SheetEditMode.UPDATE,
+                    self.question.categoryId,
+                    self.question.id,
+                    self.questionTitleTextView.text,
+                    self.answerContentTextView.text
+                )
+                self.present(editSheetVC, animated: true, completion: nil)
+            }.disposed(by: self.disposeBag)
     }
     
     private func bindState(reactor: AnswerDetailReactor) {

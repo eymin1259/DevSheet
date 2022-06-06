@@ -165,31 +165,31 @@ extension Container {
                 reactor: reactor,
                 category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(question:),
-                editSheetFactory: self.editSheetViewControllerFactory(
-                    category:editMode:question:answer:
-                )
+                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:questionId:questionStr:answerStr:)
             )
             return vc
         }.inObjectScope(.transient)
         
-        register(AnswerDetailViewController.self) { (r: Resolver, question: Question) in
+        register(AnswerDetailViewController.self) { [unowned self]  (r: Resolver, question: Question) in
             let reactor = r.resolve(AnswerDetailReactor.self)!
             let vc = AnswerDetailViewController(
                 reactor: reactor,
-                question: question
+                question: question,
+                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:questionId:questionStr:answerStr:)
             )
             return vc
         }.inObjectScope(.transient)
         
         register(EditSheetViewController.self) {
-            (r: Resolver, category: Category, editMode: SheetEditMode, question: String, answer: String) in
+            (r: Resolver, editMode: SheetEditMode, categoryId: String, questionId: String?, questionStr: String, answerStr: String) in
             let reactor = r.resolve(EditSheetReactor.self)!
             let vc = EditSheetViewController(
                 reactor: reactor,
-                category: category,
                 editMode: editMode,
-                defaultQuestoin: question,
-                defaultAnswer: answer
+                categoryId: categoryId,
+                questionId: questionId,
+                defaultQuestoinStr: questionStr,
+                defaultAnswerStr: answerStr
             )
             return vc
         }.inObjectScope(.transient)
@@ -231,14 +231,15 @@ extension Container {
     }
     
     private func editSheetViewControllerFactory(
-        category: Category,
         editMode: SheetEditMode,
-        question: String,
-        answer: String
+        categoryId: String,
+        questionId: String?,
+        questionStr: String,
+        answerStr: String
     ) -> UIViewController {
         let rootVC = resolve(
             EditSheetViewController.self,
-            arguments: category, editMode, question, answer
+            arguments: editMode, categoryId, questionId, questionStr, answerStr
         )!
         let editSheetVC = UINavigationController(rootViewController: rootVC)
         editSheetVC.modalPresentationStyle = .fullScreen

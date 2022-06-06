@@ -39,15 +39,13 @@ final class QuestionListViewController: BaseViewController, View {
     
     private let addNewSheetBtn: UIButton = {
         var btn = UIButton()
-        let img = UIImage(named: "btn_add")?.withTintColor(.white, renderingMode: .alwaysTemplate)
-        btn.setImage(img, for: .normal)
-        btn.tintColor = .white
-        btn.imageEdgeInsets = .init(top: 15, left: 15, bottom: 15, right: 15)
-        btn.contentMode = .scaleAspectFit
-        btn.clipsToBounds = true
-        btn.layer.cornerRadius = 25
-        btn.backgroundColor = .systemOrange
-        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.frame = CGRect(
+            origin: .zero,
+            size: .init(width: 30, height: 30)
+        )
+        btn.setTitle("추가", for: .normal)
+        btn.setTitleColor(.orange, for: .normal)
+        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
         return btn
     }()
     
@@ -74,7 +72,6 @@ final class QuestionListViewController: BaseViewController, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        showEditSheetBtn()
     }
     
     // MARK: methods
@@ -83,6 +80,7 @@ final class QuestionListViewController: BaseViewController, View {
         self.view.backgroundColor = .white
         self.navigationItem.title = self.category.name
         navigationItem.backBarButtonItem = backBarBtn
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addNewSheetBtn)
         // tablewView
         self.view.addSubview(questionTableView)
         questionTableView.snp.makeConstraints {
@@ -93,30 +91,6 @@ final class QuestionListViewController: BaseViewController, View {
         }
         // navigationLineView
         self.addNavigationLineView()
-        // editSheetBtn
-        self.view.addSubview(addNewSheetBtn)
-        addNewSheetBtn.snp.makeConstraints {
-            $0.width.equalTo(50)
-            $0.height.equalTo(50)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(60)
-            $0.right.equalToSuperview().inset(10)
-        }
-    }
-    
-    private func showEditSheetBtn() {
-        let asyncDuration: DispatchTimeInterval = .milliseconds(500)
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + asyncDuration
-        ) { [weak self] in
-            guard let self = self else { return }
-            let animateDutaion: TimeInterval = 0.5
-            self.addNewSheetBtn.snp.updateConstraints {
-                $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(10)
-            }
-            UIView.animate(withDuration: animateDutaion) {
-                self.view.layoutIfNeeded()
-            }
-        }
     }
     
     // MARK: Factories

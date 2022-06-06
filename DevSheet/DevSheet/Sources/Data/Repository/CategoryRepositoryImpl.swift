@@ -29,8 +29,19 @@ final class CategoryRepositoryImpl: CategoryRepository {
     func fetchCategories(group: MainTab) -> Single<[Category]> {
         
         if group == .favorite {
-            //
-            return Observable.empty().asSingle()
+            return Single<[Category]>.create { [weak self] single in
+                guard let self = self else {
+                    single(.failure(NSError(domain: "RepoRefError", code: -1, userInfo: nil)))
+                    return Disposables.create()
+                }
+                let results = self.localDBService.fetch(object: CategoryDTO.self)
+                var categoryList: [Category] = .init()
+                results.forEach { dto in
+                    categoryList.append(dto.toDomain())
+                }
+                single(.success(categoryList))
+                return Disposables.create()
+            }
         } else { // .cs or .develop
             return firebaseService
                 .get(

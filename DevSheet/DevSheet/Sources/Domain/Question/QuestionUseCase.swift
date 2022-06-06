@@ -10,7 +10,8 @@ import RxSwift
 
 protocol QuestionUseCase {
     func fetchQuestions(categoryId: String) -> Single<[Question]>
-    func addNewQuestion(categoryId: String, title: String) -> Single<String> // questionId
+    func addNewQuestion(categoryId: String, title: String) -> Single<String>
+    func saveFavoriteQuestion(question: Question) -> Single<Bool>
 }
 
 final class QuestionUseCaseImpl: QuestionUseCase {
@@ -30,5 +31,16 @@ final class QuestionUseCaseImpl: QuestionUseCase {
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {
         return questionRepository.addNewQuestion(categoryId: categoryId, title: title)
+    }
+    
+    func saveFavoriteQuestion(question: Question) -> Single<Bool> {
+        let favoriteQuestions = questionRepository.fetchFavoriteQuestions().filter { favQuestion in
+            favQuestion.id == question.id
+        }
+        if favoriteQuestions.isEmpty {
+            return questionRepository.saveFavoriteQuestion(question: question)
+        } else {
+            return Single<Bool>.just(true)
+        }
     }
 }

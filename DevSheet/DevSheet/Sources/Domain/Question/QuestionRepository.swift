@@ -10,5 +10,5 @@ import RxSwift
 
 protocol QuestionRepository {
     func fetchQuestions(categoryId: String) -> Single<[Question]>
-    func addNewQuestion(categoryId: String, title: String) -> Single<String> // questionId
+    func addNewQuestion(categoryId: String, title: String) -> Single<String>
 }

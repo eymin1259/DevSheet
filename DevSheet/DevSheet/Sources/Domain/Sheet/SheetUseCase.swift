@@ -10,7 +10,7 @@ import RxSwift
 
 protocol SheetUseCase {
     func addNewSheet(categoryId: String, questionText: String?, answerText: String?) -> Single<Bool>
-    func updateSheet(questionId: String, questionText: String?, answerText: String?) -> Single<Bool>
+    func updateSheet(question: Question, questionText: String?, answerText: String?) -> Single<Bool>
 }
 
 final class SheetUseCaseImpl: SheetUseCase {
@@ -49,13 +49,16 @@ final class SheetUseCaseImpl: SheetUseCase {
             .map { _ in true }
     }
     
-    func updateSheet(questionId: String, questionText: String?, answerText: String?) -> Single<Bool> {
+    func updateSheet(question: Question, questionText: String?, answerText: String?) -> Single<Bool> {
         guard let questionText = questionText else { return .error(SheetError.emptyQuestion) }
         guard !questionText.isEmpty else { return .error(SheetError.emptyQuestion) }
         guard let answerText = answerText else { return .error(SheetError.emptyAnswer) }
         guard !answerText.isEmpty else { return .error(SheetError.emptyAnswer) }
         let uuid  = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid "
-        return self.answerRepository.addNewAnswer(questionId: questionId, title: questionText, content: answerText, creator: uuid)
+        return self.answerRepository
+            .addNewAnswer(
+                questionId: question.id, title: questionText, content: answerText, creator: uuid
+            )
             .map { _ in true }
     }
 }

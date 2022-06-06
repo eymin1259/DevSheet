@@ -89,9 +89,20 @@ extension EditSheetReactor {
                         return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
                     }
             } else { // .UPDATE
-//                guard let questionId = self.currentState.questionId else { return .empty() }
-                //                sheetUseCase.addNewSheet()
-                setSheet = .empty()
+                guard let question = self.currentState.question else { return .empty() }
+                setSheet = sheetUseCase
+                    .updateSheet(
+                        question: question,
+                        questionText: self.currentState.questionText,
+                        answerText: self.currentState.answerText
+                    )
+                    .asObservable()
+                    .map { result -> EditSheetReactor.Mutation  in
+                        return EditSheetReactor.Mutation.setSaveResult(result)
+                    }
+                    .catch { err in
+                        return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
+                    }
             }
             return .concat([startLoading, setSheet, endLoading])
         }

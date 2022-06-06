@@ -25,7 +25,7 @@ extension AnswerAPI: ServiceAPI {
             return collection
                 .whereField("questionId", isEqualTo: questionId)
                 .whereField("deleted", isEqualTo: false)
-                .order(by: "version", descending: true)
+                .order(by: "timeStamp", descending: true)
                 .limit(to: 1)
         default:
             return nil
@@ -40,7 +40,6 @@ extension AnswerAPI: ServiceAPI {
                 "questionId": questionId,
                 "questionTitle": title,
                 "answerContent": content,
-                "version": 1,
                 "createdBy": creator,
                 "timeStamp": Timestamp(date: Date()),
                 "deleted": false

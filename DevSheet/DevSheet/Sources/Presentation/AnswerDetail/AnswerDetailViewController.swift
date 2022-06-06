@@ -86,9 +86,9 @@ extension AnswerDetailViewController {
     }
     
     private func bindAction(reactor: AnswerDetailReactor) {
-        self.rx.viewDidLoad
+        self.rx.viewDidAppear
             .map { [unowned self] _ in
-                Reactor.Action.viewDidLoad(self.question.id)
+                Reactor.Action.viewDidAppear(self.question.id)
             }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

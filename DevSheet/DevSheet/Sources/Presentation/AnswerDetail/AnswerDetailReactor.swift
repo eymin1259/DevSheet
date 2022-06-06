@@ -12,7 +12,7 @@ final class AnswerDetailReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidLoad(String) // questionId
+        case viewDidAppear(String) // questionId
     }
     
     enum Mutation {
@@ -38,7 +38,7 @@ extension AnswerDetailReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad(let questionId):
+        case .viewDidAppear(let questionId):
             guard !self.currentState.isLoading else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))

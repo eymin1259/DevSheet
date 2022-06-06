@@ -13,7 +13,6 @@ struct AnswerDTO {
     var questionId: String
     var title: String
     var content: String
-    var version: Int
     var createdBy: String
     var timeStamp: Timestamp
     var deleted: Bool
@@ -23,7 +22,6 @@ struct AnswerDTO {
         self.questionId = dictionary["questionId"] as? String ?? ""
         self.title = dictionary["questionTitle"] as? String ?? ""
         self.content = dictionary["answerContent"] as? String ?? ""
-        self.version = dictionary["version"] as? Int ?? -1
         self.createdBy = dictionary["createdBy"] as? String ?? ""
         self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
         self.deleted = dictionary["deleted"] as? Bool ?? true
@@ -35,7 +33,6 @@ struct AnswerDTO {
             questionId: questionId,
             title: title,
             content: content,
-            version: version,
             createdBy: createdBy,
             createdAt: timeStamp.dateValue().getToday(),
             deleted: deleted

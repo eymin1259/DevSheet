@@ -10,4 +10,6 @@ import  RxSwift
 
 protocol CategoryRepository {
     func fetchCategories(group: MainTab) -> Single<[Category]>
+    func fetchFavoriteCategories() -> [Category]
+    func saveFavoriteCategory(category: Category) -> Single<Bool>
 }

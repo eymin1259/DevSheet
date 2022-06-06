@@ -12,5 +12,7 @@ struct Category {
     var name: String
     var group: Int
     var imageUrl: String
+    var order: Int
+    var createdAt: String
     var deleted: Bool
 }

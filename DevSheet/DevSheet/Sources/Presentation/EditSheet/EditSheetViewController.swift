@@ -165,7 +165,7 @@ extension EditSheetViewController {
             .distinctUntilChanged()
             .subscribe(onNext: { [weak self] result in
                 if result == true {
-                    self?.showToast(message: "저장 완료") {
+                    self?.showshowSucceedHud(message: "저장 완료") {
                         self?.dismiss(animated: true)
                     }
                 }

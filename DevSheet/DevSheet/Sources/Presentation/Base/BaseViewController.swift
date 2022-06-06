@@ -10,6 +10,7 @@ import Swinject
 import RxSwift
 import SnapKit
 import Loaf
+import ProgressHUD
 
 class BaseViewController: UIViewController {
  
@@ -115,56 +116,17 @@ class BaseViewController: UIViewController {
         }
     }
     
-    func createImageBarButtonItem(
-        imageName: String,
-        buttonWidth: Int = 30,
-        buttonHeight: Int = 30,
-        target: Any,
-        action: Selector
-    ) -> UIBarButtonItem {
-        let btn = UIButton(type: .custom)
-        btn.frame = CGRect(
-            origin: .zero,
-            size: .init(width: buttonWidth, height: buttonHeight)
-        )
-        btn.setImage(UIImage(named: imageName), for: .normal)
-        btn.addTarget(target, action: action, for: .touchUpInside)
-        return UIBarButtonItem(customView: btn)
-    }
-    
-    func createTitleBarButtonItem(
-        title: String,
-        titleColor: UIColor = .orange,
-        titleFont: UIFont = .boldSystemFont(ofSize: 16),
-        buttonWidth: Int = 30,
-        buttonHeight: Int = 30,
-        target: Any,
-        action: Selector
-    ) -> UIBarButtonItem {
-        let btn = UIButton(type: .custom)
-        btn.frame = CGRect(
-            origin: .zero,
-            size: .init(width: buttonWidth, height: buttonHeight)
-        )
-        btn.setTitle(title, for: .normal)
-        btn.setTitleColor(titleColor, for: .normal)
-        btn.titleLabel?.font = titleFont
-        btn.addTarget(target, action: action, for: .touchUpInside)
-        return UIBarButtonItem(customView: btn)
-    }
-    
     func showErrorToast(message: String?) {
         let errMsg = message ?? "에러 발생"
         Loaf(errMsg, state: .error, location: .bottom, sender: self).show()
     }
     
-    func showToast(message: String?, completion: @escaping() -> Void ) {
-        let msg = message ?? "완료"
-        Loaf(msg, state: .success, location: .bottom, sender: self).show(.average) { dismissalType in
-            switch dismissalType {
-            default:
-                completion()
-            }
+    func showshowSucceedHud(message: String?, completion: @escaping() -> Void) {
+        let msg = message
+        let delay: DispatchTimeInterval = .milliseconds(1600)
+        ProgressHUD.showSucceed(msg, interaction: false)
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            completion()
         }
     }
 }

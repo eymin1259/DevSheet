@@ -164,16 +164,17 @@ extension Container {
             let vc = QuestionListViewController(
                 reactor: reactor,
                 category: category,
-                answerDetailFactory: self.answerDetailViewControllerFactory(question:),
+                answerDetailFactory: self.answerDetailViewControllerFactory(category:question:),
                 editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
             )
             return vc
         }.inObjectScope(.transient)
         
-        register(AnswerDetailViewController.self) { [unowned self]  (r: Resolver, question: Question) in
+        register(AnswerDetailViewController.self) { [unowned self]  (r: Resolver, category: Category, question: Question) in
             let reactor = r.resolve(AnswerDetailReactor.self)!
             let vc = AnswerDetailViewController(
                 reactor: reactor,
+                category: category,
                 question: question,
                 editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
             )
@@ -224,8 +225,8 @@ extension Container {
         return questionVC
     }
     
-    private func answerDetailViewControllerFactory(question: Question) -> UIViewController {
-        let answerVC = resolve(AnswerDetailViewController.self, argument: question)!
+    private func answerDetailViewControllerFactory(category: Category, question: Question) -> UIViewController {
+        let answerVC = resolve(AnswerDetailViewController.self, arguments: category, question)!
         return answerVC
     }
     

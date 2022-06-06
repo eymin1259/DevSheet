@@ -13,15 +13,18 @@ final class AnswerDetailReactor: Reactor {
     // MARK: properties
     enum Action {
         case viewDidAppear(String) // questionId
+        case addFavorite(Category, Question)
     }
     
     enum Mutation {
         case setLatestAnswer(Answer)
+        case setAddFavoriteResult(Bool)
         case setLoading(Bool)
     }
     
     struct State {
         var latestAnswer: Answer?
+        var addFavoriteResult: Bool?
         var isLoading: Bool = false
     }
     
@@ -50,6 +53,10 @@ extension AnswerDetailReactor {
                     return .setLatestAnswer(answer)
                 }
             return .concat([startLoading, setAnswer, endLoading])
+            
+        case .addFavorite(let category, let question):
+            print("debubug : reactor addFavorite -> \(category.id), \(question.id)")
+            return .empty()
         }
     }
     
@@ -60,6 +67,11 @@ extension AnswerDetailReactor {
         case .setLatestAnswer(let answer):
             newState.latestAnswer = answer
             return newState
+            
+        case .setAddFavoriteResult(let result):
+            newState.addFavoriteResult = result
+            return newState
+            
         case .setLoading(let loading):
             newState.isLoading = loading
             return newState

@@ -141,4 +141,12 @@ class BaseViewController: UIViewController {
             ProgressHUD.dismiss()
         }
     }
+    
+    func showActionSheet(title: String?, message: String?, actions: [UIAlertAction]) {
+        let actionSheet =  UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        actions.forEach { action in
+            actionSheet.addAction(action)
+        }
+        self.present(actionSheet, animated: true, completion: nil)
+    }
 }

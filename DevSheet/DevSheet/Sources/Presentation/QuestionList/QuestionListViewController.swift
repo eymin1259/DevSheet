@@ -19,7 +19,7 @@ final class QuestionListViewController: BaseViewController, View {
     typealias Reactor = QuestionListReactor
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
-    private var answerDetailFactory: (Question) -> UIViewController
+    private var answerDetailFactory: (Category, Question) -> UIViewController
     private var editSheetFactory: (SheetEditMode, String, Question?, String?) -> UIViewController
     
     // MARK: UI
@@ -53,7 +53,7 @@ final class QuestionListViewController: BaseViewController, View {
     init(
         reactor: Reactor,
         category: Category,
-        answerDetailFactory: @escaping (Question) -> UIViewController,
+        answerDetailFactory: @escaping (Category, Question) -> UIViewController,
         editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
     ) {
         self.category = category
@@ -93,6 +93,16 @@ final class QuestionListViewController: BaseViewController, View {
         self.addNavigationLineView()
     }
     
+    func presentEditSheet() {
+        let editSheetVC = self.editSheetFactory(
+            SheetEditMode.ADD,
+            self.category.id,
+            nil,
+            SheetEditMode.ADD.defaultAnswer
+        )
+        self.present(editSheetVC, animated: true, completion: nil)
+    }
+    
     // MARK: Factories
     private static func tableViewDataSourceFactory()
     -> RxTableViewSectionedReloadDataSource<QuestionListSection> {
@@ -127,13 +137,7 @@ extension QuestionListViewController {
         addNewSheetBtn.rx.tap
             .subscribe {  [weak self] _ in
                 guard let self = self else {return}
-                let editSheetVC = self.editSheetFactory(
-                    SheetEditMode.ADD,
-                    self.category.id,
-                    nil,
-                    SheetEditMode.ADD.defaultAnswer
-                )
-                self.present(editSheetVC, animated: true, completion: nil)
+                self.presentEditSheet()
             }.disposed(by: self.disposeBag)
         
         Observable
@@ -144,7 +148,7 @@ extension QuestionListViewController {
             .bind { [weak self] indexPath, model in
                 guard let self = self else {return}
                 self.questionTableView.deselectRow(at: indexPath, animated: true)
-                let answerVC = self.answerDetailFactory(model)
+                let answerVC = self.answerDetailFactory(self.category, model)
                 self.navigationController?.pushViewController(answerVC, animated: true)
             }
             .disposed(by: disposeBag)

@@ -147,5 +147,16 @@ extension AnswerDetailViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.addFavoriteResult }
+            .filterNil()
+            .subscribe(onNext: { [weak self] result in
+                if result == true {
+                    self?.showshowSucceedHud(message: "추가되었습니다.", completion: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+            
     }
 }

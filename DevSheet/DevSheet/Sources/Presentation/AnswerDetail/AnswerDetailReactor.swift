@@ -63,8 +63,17 @@ extension AnswerDetailReactor {
             return .concat([startLoading, setAnswer, endLoading])
             
         case .addFavorite(let category, let question):
-            print("debubug : reactor addFavorite -> \(category.id), \(question.id)")
-            return .empty()
+            let setAddFavoriteResult = categoryUseCase.saveFavoriteCategory(category: category)
+                .flatMap { result -> Single<Bool> in
+                    if result {
+                        return self.questionUseCase.saveFavoriteQuestion(question: question)
+                    } else {
+                        return Single<Bool>.just(false)
+                    }
+                }
+                .asObservable()
+                .map(AnswerDetailReactor.Mutation.setAddFavoriteResult)
+            return setAddFavoriteResult
         }
     }
     
@@ -82,6 +91,7 @@ extension AnswerDetailReactor {
             
         case .setLoading(let loading):
             newState.isLoading = loading
+            newState.addFavoriteResult = nil
             return newState
         }
     }

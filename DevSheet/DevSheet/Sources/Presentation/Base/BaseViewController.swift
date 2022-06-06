@@ -121,12 +121,12 @@ class BaseViewController: UIViewController {
         Loaf(errMsg, state: .error, location: .bottom, sender: self).show()
     }
     
-    func showshowSucceedHud(message: String?, completion: @escaping() -> Void) {
+    func showshowSucceedHud(message: String?, completion: (() -> Void)?) {
         let msg = message
         let delay: DispatchTimeInterval = .milliseconds(1600)
         ProgressHUD.showSucceed(msg, interaction: false)
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            completion()
+            completion?()
         }
     }
     

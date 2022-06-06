@@ -29,10 +29,18 @@ final class AnswerDetailReactor: Reactor {
     }
     
     let initialState: State = .init()
+    var categoryUseCase: CategoryUseCase
+    var questionUseCase: QuestionUseCase
     var answerUseCase: AnswerUseCase
     
     // MARK: initialize
-    init(answerUseCase: AnswerUseCase) {
+    init(
+        categoryUseCase: CategoryUseCase,
+        questionUseCase: QuestionUseCase,
+        answerUseCase: AnswerUseCase
+    ) {
+        self.categoryUseCase = categoryUseCase
+        self.questionUseCase = questionUseCase
         self.answerUseCase = answerUseCase
     }
 }

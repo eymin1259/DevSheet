@@ -108,8 +108,14 @@ extension Container {
         }.inObjectScope(.transient)
         
         register(AnswerDetailReactor.self) { r in
-            let useCase = r.resolve(AnswerUseCase.self)!
-            let reactor = AnswerDetailReactor(answerUseCase: useCase)
+            let category = r.resolve(CategoryUseCase.self)!
+            let question = r.resolve(QuestionUseCase.self)!
+            let answer = r.resolve(AnswerUseCase.self)!
+            let reactor = AnswerDetailReactor(
+                categoryUseCase: category,
+                questionUseCase: question,
+                answerUseCase: answer
+            )
             return reactor
         }.inObjectScope(.transient)
         

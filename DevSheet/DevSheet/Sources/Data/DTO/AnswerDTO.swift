@@ -7,23 +7,26 @@
 
 import Foundation
 import Firebase
+import RealmSwift
 
-struct AnswerDTO {
-    var id: String
-    var questionId: String
-    var title: String
-    var content: String
-    var createdBy: String
-    var timeStamp: Timestamp
-    var deleted: Bool
+class AnswerDTO: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var questionId: String
+    @Persisted var title: String
+    @Persisted var content: String
+    @Persisted var createdBy: String
+    @Persisted var timeStamp: String
+    @Persisted var deleted: Bool
     
-    init(id: String, dictionary: [String: Any]) {
+    convenience init(id: String, dictionary: [String: Any]) {
+        self.init()
         self.id = id
         self.questionId = dictionary["questionId"] as? String ?? ""
         self.title = dictionary["questionTitle"] as? String ?? ""
         self.content = dictionary["answerContent"] as? String ?? ""
         self.createdBy = dictionary["createdBy"] as? String ?? ""
-        self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
+        let timestamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
+        self.timeStamp = timestamp.dateValue().getToday()
         self.deleted = dictionary["deleted"] as? Bool ?? true
     }
     
@@ -34,7 +37,7 @@ struct AnswerDTO {
             title: title,
             content: content,
             createdBy: createdBy,
-            createdAt: timeStamp.dateValue().getToday(),
+            createdAt: timeStamp,
             deleted: deleted
         )
     }

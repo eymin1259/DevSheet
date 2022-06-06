@@ -7,23 +7,26 @@
 
 import Foundation
 import Firebase
+import RealmSwift
 
-struct CategoryDTO {
-    var id: String
-    var name: String
-    var group: Int
-    var imageUrl: String
-    var order: Int
-    var timeStamp: Timestamp
-    var deleted: Bool
+class CategoryDTO: Object {
+    @Persisted(primaryKey: true) var id: String
+    @Persisted var name: String
+    @Persisted var group: Int
+    @Persisted var imageUrl: String
+    @Persisted var order: Int
+    @Persisted var timeStamp: String
+    @Persisted var deleted: Bool
     
-    init(id: String, dictionary: [String: Any]) {
+    convenience init(id: String, dictionary: [String: Any]) {
+        self.init()
         self.id = id
         self.name = dictionary["name"] as? String ?? ""
         self.group = dictionary["group"] as? Int ?? -1
         self.imageUrl = dictionary["imageUrl"] as? String ?? ""
         self.order = dictionary["order"] as? Int ?? -1
-        self.timeStamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
+        let timestamp = dictionary["timeStamp"] as? Timestamp ?? Timestamp(date: Date())
+        self.timeStamp = timestamp.dateValue().getToday()
         self.deleted = dictionary["deleted"] as? Bool ?? true
     }
     
@@ -33,6 +36,8 @@ struct CategoryDTO {
             name: name,
             group: group,
             imageUrl: imageUrl,
+            order: order,
+            createdAt: timeStamp,
             deleted: deleted
         )
     }

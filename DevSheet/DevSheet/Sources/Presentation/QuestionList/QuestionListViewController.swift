@@ -20,8 +20,7 @@ final class QuestionListViewController: BaseViewController, View {
     private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Question) -> UIViewController
-//    private var editSheetFactory: (String, SheetEditMode, String, String) -> UIViewController
-    private var editSheetFactory: (SheetEditMode, String, String?, String, String) -> UIViewController // cid, qid, q, a
+    private var editSheetFactory: (SheetEditMode, String, Question?, String?) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -57,7 +56,7 @@ final class QuestionListViewController: BaseViewController, View {
         reactor: Reactor,
         category: Category,
         answerDetailFactory: @escaping (Question) -> UIViewController,
-        editSheetFactory: @escaping (SheetEditMode, String, String?, String, String) -> UIViewController
+        editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
     ) {
         self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
@@ -158,7 +157,6 @@ extension QuestionListViewController {
                     SheetEditMode.ADD,
                     self.category.id,
                     nil,
-                    SheetEditMode.ADD.defaultQuestoin,
                     SheetEditMode.ADD.defaultAnswer
                 )
                 self.present(editSheetVC, animated: true, completion: nil)

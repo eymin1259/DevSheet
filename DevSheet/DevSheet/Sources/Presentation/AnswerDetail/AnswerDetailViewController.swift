@@ -17,7 +17,7 @@ final class AnswerDetailViewController: BaseViewController, View {
     // MARK: properties
     typealias Reactor = AnswerDetailReactor
     private var question: Question
-    private var editSheetFactory: (SheetEditMode, String, String?, String, String) -> UIViewController // cid, qid, q, a
+    private var editSheetFactory: (SheetEditMode, String, Question?, String?) -> UIViewController
     
     // MARK: UI
     private let dividerView: UIView = {
@@ -43,7 +43,7 @@ final class AnswerDetailViewController: BaseViewController, View {
     init(
         reactor: Reactor,
         question: Question,
-        editSheetFactory: @escaping (SheetEditMode, String, String?, String, String) -> UIViewController
+        editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
     ) {
         self.question = question
         self.editSheetFactory = editSheetFactory
@@ -99,8 +99,7 @@ extension AnswerDetailViewController {
                 let editSheetVC = self.editSheetFactory(
                     SheetEditMode.UPDATE,
                     self.question.categoryId,
-                    self.question.id,
-                    self.questionTitleTextView.text,
+                    self.question,
                     self.answerContentTextView.text
                 )
                 self.present(editSheetVC, animated: true, completion: nil)

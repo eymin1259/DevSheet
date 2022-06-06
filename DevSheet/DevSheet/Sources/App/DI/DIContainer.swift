@@ -165,7 +165,7 @@ extension Container {
                 reactor: reactor,
                 category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(question:),
-                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:questionId:questionStr:answerStr:)
+                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
             )
             return vc
         }.inObjectScope(.transient)
@@ -175,21 +175,20 @@ extension Container {
             let vc = AnswerDetailViewController(
                 reactor: reactor,
                 question: question,
-                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:questionId:questionStr:answerStr:)
+                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
             )
             return vc
         }.inObjectScope(.transient)
         
         register(EditSheetViewController.self) {
-            (r: Resolver, editMode: SheetEditMode, categoryId: String, questionId: String?, questionStr: String, answerStr: String) in
+            (r: Resolver, editMode: SheetEditMode, categoryId: String, question: Question?, answerText: String?) in
             let reactor = r.resolve(EditSheetReactor.self)!
             let vc = EditSheetViewController(
                 reactor: reactor,
                 editMode: editMode,
                 categoryId: categoryId,
-                questionId: questionId,
-                defaultQuestoinStr: questionStr,
-                defaultAnswerStr: answerStr
+                question: question,
+                defaultAnswerText: answerText
             )
             return vc
         }.inObjectScope(.transient)
@@ -233,13 +232,12 @@ extension Container {
     private func editSheetViewControllerFactory(
         editMode: SheetEditMode,
         categoryId: String,
-        questionId: String?,
-        questionStr: String,
-        answerStr: String
+        question: Question?,
+        answerText: String?
     ) -> UIViewController {
         let rootVC = resolve(
             EditSheetViewController.self,
-            arguments: editMode, categoryId, questionId, questionStr, answerStr
+            arguments: editMode, categoryId, question, answerText
         )!
         let editSheetVC = UINavigationController(rootViewController: rootVC)
         editSheetVC.modalPresentationStyle = .fullScreen

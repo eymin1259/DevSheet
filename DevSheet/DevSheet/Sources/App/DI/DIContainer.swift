@@ -24,6 +24,10 @@ extension Container {
         register(FirebaseService.self) { _ in
             return FirebaseServiceImpl()
         }
+        
+        register(LocalDBService.self) { _ in
+            return LocalDBServiceImpl()
+        }.inObjectScope(.container)
     }
     
     private func registerRepository() {
@@ -35,13 +39,21 @@ extension Container {
         
         register(CategoryRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let repo = CategoryRepositoryImpl(firebaseService: firebase)
+            let localDB = r.resolve(LocalDBService.self)!
+            let repo = CategoryRepositoryImpl(
+                firebaseService: firebase,
+                localDBService: localDB
+            )
             return repo
         }.inObjectScope(.transient)
         
         register(QuestionRepository.self) { r in
             let firebase = r.resolve(FirebaseService.self)!
-            let repo = QuestionRepositoryImpl(firebaseService: firebase)
+            let localDB = r.resolve(LocalDBService.self)!
+            let repo = QuestionRepositoryImpl(
+                firebaseService: firebase,
+                localDBService: localDB
+            )
             return repo
         }.inObjectScope(.transient)
         

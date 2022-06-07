@@ -94,11 +94,11 @@ extension Container {
         }.inObjectScope(.transient)
         
         register(SheetUseCase.self) { r in
-            let questionRepo = r.resolve(QuestionRepository.self)!
-            let answerRepo = r.resolve(AnswerRepository.self)!
+            let question = r.resolve(QuestionUseCase.self)!
+            let answer = r.resolve(AnswerUseCase.self)!
             let useCase = SheetUseCaseImpl(
-                questionRepository: questionRepo,
-                answerRepository: answerRepo
+                questionUseCase: question,
+                answerUseCase: answer
             )
             return useCase
         }.inObjectScope(.transient)

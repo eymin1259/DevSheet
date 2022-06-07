@@ -15,16 +15,16 @@ protocol SheetUseCase {
 
 final class SheetUseCaseImpl: SheetUseCase {
     // MARK: properties
-    var questionRepository: QuestionRepository
-    var answerRepository: AnswerRepository
+    var questionUseCase: QuestionUseCase
+    var answerUseCase: AnswerUseCase
     
     // MARK: initialize
     init(
-        questionRepository: QuestionRepository,
-        answerRepository: AnswerRepository
+        questionUseCase: QuestionUseCase,
+        answerUseCase: AnswerUseCase
     ) {
-        self.questionRepository = questionRepository
-        self.answerRepository = answerRepository
+        self.questionUseCase = questionUseCase
+        self.answerUseCase = answerUseCase
     }
     
     // MARK: methods
@@ -37,15 +37,13 @@ final class SheetUseCaseImpl: SheetUseCase {
         guard !questionText.isEmpty else { return .error(SheetError.emptyQuestion) }
         guard let answerText = answerText else { return .error(SheetError.emptyAnswer) }
         guard !answerText.isEmpty else { return .error(SheetError.emptyAnswer) }
-        let uuid  = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid "
-        
-        return questionRepository
+        return questionUseCase
             .addNewQuestion(
                 categoryId: categoryId,
                 title: questionText
             )
             .flatMap { questionId in
-                self.answerRepository.addNewAnswer(questionId: questionId, title: questionText, content: answerText, creator: uuid)
+                self.answerUseCase.addNewAnswer(questionId: questionId, title: questionText, content: answerText)
             }
             .map { _ in true }
     }
@@ -55,18 +53,14 @@ final class SheetUseCaseImpl: SheetUseCase {
         guard !questionText.isEmpty else { return .error(SheetError.emptyQuestion) }
         guard let answerText = answerText else { return .error(SheetError.emptyAnswer) }
         guard !answerText.isEmpty else { return .error(SheetError.emptyAnswer) }
-        let uuid  = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid "
-        
-        // question update
-        return questionRepository
+        return questionUseCase
             .updateQuestion(questionId: question.id, field: [
                 "title": questionText
             ])
             .flatMap { _ in
-                self.answerRepository
+                self.answerUseCase
                     .addNewAnswer(
-                        questionId: question.id, title: questionText, content: answerText, creator: uuid
-                    )
+                        questionId: question.id, title: questionText, content: answerText)
             }
             .map { _ in true }
     }

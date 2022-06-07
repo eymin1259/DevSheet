@@ -72,38 +72,30 @@ extension EditSheetReactor {
             guard let editMode = self.currentState.editMode else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
-            var setSheet: Observable<EditSheetReactor.Mutation>
+            var editSheet: Single<Bool>
             if editMode == .ADD {
                 guard let categoryId = self.currentState.categoryId else { return .empty() }
-                setSheet = sheetUseCase
-                    .addNewSheet(
-                        categoryId: categoryId,
-                        questionText: self.currentState.questionText,
-                        answerText: self.currentState.answerText
-                    )
-                    .asObservable()
-                    .map { result -> EditSheetReactor.Mutation  in
-                        return EditSheetReactor.Mutation.setSaveResult(result)
-                    }
-                    .catch { err in
-                        return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
-                    }
+                editSheet = sheetUseCase.addNewSheet(
+                    categoryId: categoryId,
+                    questionText: self.currentState.questionText,
+                    answerText: self.currentState.answerText
+                )
             } else { // .UPDATE
                 guard let question = self.currentState.question else { return .empty() }
-                setSheet = sheetUseCase
-                    .updateSheet(
-                        question: question,
-                        questionText: self.currentState.questionText,
-                        answerText: self.currentState.answerText
-                    )
-                    .asObservable()
-                    .map { result -> EditSheetReactor.Mutation  in
-                        return EditSheetReactor.Mutation.setSaveResult(result)
-                    }
-                    .catch { err in
-                        return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
-                    }
+                editSheet = sheetUseCase.updateSheet(
+                    question: question,
+                    questionText: self.currentState.questionText,
+                    answerText: self.currentState.answerText
+                )
             }
+            let setSheet = editSheet
+                .asObservable()
+                .map { result -> EditSheetReactor.Mutation  in
+                    return EditSheetReactor.Mutation.setSaveResult(result)
+                }
+                .catch { err in
+                    return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
+                }
             return .concat([startLoading, setSheet, endLoading])
         }
     }

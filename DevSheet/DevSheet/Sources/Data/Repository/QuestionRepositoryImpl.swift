@@ -55,6 +55,16 @@ final class QuestionRepositoryImpl: QuestionRepository {
             .map { $0.documentID }
     }
     
+    func updateQuestion(questionId: String, field: [String:Any]) -> Single<Bool> {
+        return firebaseService
+            .post(
+                QuestionAPI.updateQuestion(questionId: questionId, field: field)
+            )
+            .map { _ in
+                return true
+            }
+    }
+    
     func fetchAllFavoriteQuestions(categoryId: String?) -> Single<[Question]> {
         return Single<[Question]>.create { [unowned self] single in
             var result = [Question]()

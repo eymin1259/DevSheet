@@ -11,6 +11,7 @@ import RxSwift
 protocol QuestionUseCase {
     func fetchQuestions(categoryGroup: MainTab, categoryId: String) -> Single<[Question]>
     func addNewQuestion(categoryId: String, title: String) -> Single<String>
+    func updateQuestion(questionId: String, field: [String:Any]) -> Single<Bool>
     func saveFavoriteQuestion(question: Question) -> Single<Bool>
 }
 
@@ -34,6 +35,10 @@ final class QuestionUseCaseImpl: QuestionUseCase {
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {
         return questionRepository.addNewQuestion(categoryId: categoryId, title: title)
+    }
+    
+    func updateQuestion(questionId: String, field: [String : Any]) -> Single<Bool> {
+        return questionRepository.updateQuestion(questionId: questionId, field: field)
     }
     
     func saveFavoriteQuestion(question: Question) -> Single<Bool> {        

@@ -11,6 +11,7 @@ import Firebase
 enum QuestionAPI {
     case getQuestions(categoryId: String)
     case addNewQuestion(categoryId: String, title: String)
+    case updateQuestion(questionId: String, field: [String:Any])
 }
 
 extension QuestionAPI: ServiceAPI {
@@ -38,10 +39,17 @@ extension QuestionAPI: ServiceAPI {
                 "categoryId": categoryId,
                 "title": title,
                 "deleted": false,
-                "timeStamp": Timestamp(date: Date())
+                "timeStamp": Timestamp(date: Date()) 
             ]) { err in
                 completion(err, ref)
             }
+            
+        case .updateQuestion(let questionId, let field):
+            let ref = collection.document(questionId)
+            ref.updateData(field) { err in
+                completion(err, ref)
+            }
+            
         default:
             completion(nil, nil)
         }

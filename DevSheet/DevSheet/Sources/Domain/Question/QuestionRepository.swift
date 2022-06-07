@@ -11,6 +11,7 @@ import RxSwift
 protocol QuestionRepository {
     func fetchQuestions(categoryGroup: MainTab, categoryId: String) -> Single<[Question]>
     func addNewQuestion(categoryId: String, title: String) -> Single<String>
+    func updateQuestion(questionId: String, field: [String:Any]) -> Single<Bool>
     func fetchAllFavoriteQuestions(categoryId: String?) -> Single<[Question]>
     func saveFavoriteQuestion(question: Question) -> Single<Bool>
 }

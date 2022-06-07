@@ -133,6 +133,9 @@ extension AnswerDetailViewController {
             .filterNil()
             .subscribe(onNext: { [weak self] answer in
                 self?.answerContentTextView.text = answer.content
+                if answer.title.isNotEmpty {
+                    self?.questionTitleTextView.text = answer.title
+                }
             })
             .disposed(by: disposeBag)
         

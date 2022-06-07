@@ -42,8 +42,13 @@ extension QuestionListReactor {
             guard !self.currentState.isLoading else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
-            let setQuestions = self.questionUseCase
-                .fetchAllQuestions(categoryGroup: categoryGroup, categoryId: categoryId)
+            var fetchQuestions: Single<[Question]>
+            if categoryGroup == .favorite {
+                fetchQuestions = questionUseCase.fetchAllFavoriteQuestions(categoryId: categoryId)
+            } else {
+                fetchQuestions = questionUseCase.fetchAllQuestions(categoryId: categoryId)
+            }
+            let setQuestions = fetchQuestions
                 .asObservable()
                 .catchAndReturn([])
                 .map { questionList -> Mutation in

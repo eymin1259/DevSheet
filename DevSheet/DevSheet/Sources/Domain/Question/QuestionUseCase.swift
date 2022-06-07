@@ -9,7 +9,8 @@ import Foundation
 import RxSwift
 
 protocol QuestionUseCase {
-    func fetchAllQuestions(categoryGroup: MainTab, categoryId: String) -> Single<[Question]>
+    func fetchAllQuestions(categoryId: String) -> Single<[Question]>
+    func fetchAllFavoriteQuestions(categoryId: String)  -> Single<[Question]>
     func addNewQuestion(categoryId: String, title: String) -> Single<String>
     func updateQuestion(questionId: String, field: [String: Any]) -> Single<Bool>
     func saveFavoriteQuestion(question: Question) -> Single<Bool>
@@ -26,23 +27,23 @@ final class QuestionUseCaseImpl: QuestionUseCase {
     }
     
     // MARK: methods
-    func fetchAllQuestions(categoryGroup: MainTab, categoryId: String) -> Single<[Question]> {
-        if categoryGroup == .favorite {
-            return questionRepository.fetchAllFavoriteQuestions(categoryId: categoryId)
-                .flatMap { [unowned self] favQuestions -> Single<[Question]> in
-                    let favQuestionIdList = favQuestions.map { favQuestion -> String in
-                        return favQuestion.id
-                    }
-                    return questionRepository.fetchQuestions(
-                        categoryId: categoryId,
-                        questionIdList: favQuestionIdList
-                    )
+    func fetchAllQuestions(categoryId: String) -> Single<[Question]> {
+        return questionRepository.fetchAllQuestions(
+            categoryId: categoryId
+        )
+    }
+    
+    func fetchAllFavoriteQuestions(categoryId: String) -> Single<[Question]> {
+        return questionRepository.fetchAllFavoriteQuestions(categoryId: categoryId)
+            .flatMap { [unowned self] favQuestions -> Single<[Question]> in
+                let favQuestionIdList = favQuestions.map { favQuestion -> String in
+                    return favQuestion.id
                 }
-        } else {
-            return questionRepository.fetchAllQuestions(
-                categoryId: categoryId
-            )
-        }
+                return questionRepository.fetchQuestions(
+                    categoryId: categoryId,
+                    questionIdList: favQuestionIdList
+                )
+            }
     }
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {

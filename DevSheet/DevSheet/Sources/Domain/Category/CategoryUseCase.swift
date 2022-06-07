@@ -25,7 +25,11 @@ final class  CategoryUseCaseImpl: CategoryUseCase {
     
     // MARK: methods
     func fetchAllCategories(group: MainTab) -> Single<[Category]> {
-        return categoryRepository.fetchAllCategories(group: group)
+        if group == .favorite {
+            return categoryRepository.fetchAllFavoriteCategories()
+        } else {
+            return categoryRepository.fetchAllCategories(group: group)
+        }
     }
     
     func saveFavoriteCategory(category: Category) -> Single<Bool> {

@@ -57,9 +57,15 @@ extension EditSheetReactor {
             let setEditMode = Observable<Mutation>.just(.setEditMode(mode))
             let setCategoryId = Observable<Mutation>.just(.setCategoryId(categoryId))
             let setQuestion =  Observable<Mutation>.just(.setQuestion(question))
-            let setQuestionText = Observable<Mutation>.just(.setQuestionText(mode == .ADD ? nil : question?.title))
-            let setAnswerText = Observable<Mutation>.just(.setAnswerText(mode == .ADD ? nil : answer))
-            return .concat([setCategoryId, setEditMode, setQuestion, setQuestionText, setAnswerText])
+            let setQuestionText = Observable<Mutation>.just(
+                .setQuestionText(mode == .ADD ? nil : question?.title)
+            )
+            let setAnswerText = Observable<Mutation>.just(
+                .setAnswerText(mode == .ADD ? nil : answer)
+            )
+            return .concat([
+                setCategoryId, setEditMode, setQuestion, setQuestionText, setAnswerText
+            ])
             
         case .inputQuestion(let questionText):
             return Observable<Mutation>.just(.setQuestionText(questionText))
@@ -94,7 +100,9 @@ extension EditSheetReactor {
                     return EditSheetReactor.Mutation.setSaveResult(result)
                 }
                 .catch { err in
-                    return Observable<EditSheetReactor.Mutation>.just(.setErrorMessage(err.localizedDescription))
+                    return Observable<EditSheetReactor.Mutation>.just(
+                        .setErrorMessage(err.localizedDescription)
+                    )
                 }
             return .concat([startLoading, setSheet, endLoading])
         }

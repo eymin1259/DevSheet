@@ -9,8 +9,17 @@ import Foundation
 import RxSwift
 
 protocol SheetUseCase {
-    func addNewSheet(categoryId: String, questionText: String?, answerText: String?) -> Single<Bool>
-    func updateSheet(question: Question, questionText: String?, answerText: String?) -> Single<Bool>
+    func addNewSheet(
+        categoryId: String,
+        questionText: String?,
+        answerText: String?
+    ) -> Single<Bool>
+    
+    func updateSheet(
+        question: Question,
+        questionText: String?,
+        answerText: String?
+    ) -> Single<Bool>
 }
 
 final class SheetUseCaseImpl: SheetUseCase {
@@ -43,12 +52,20 @@ final class SheetUseCaseImpl: SheetUseCase {
                 title: questionText
             )
             .flatMap { questionId in
-                self.answerUseCase.addNewAnswer(questionId: questionId, title: questionText, content: answerText)
+                self.answerUseCase.addNewAnswer(
+                    questionId: questionId,
+                    title: questionText,
+                    content: answerText
+                )
             }
             .map { _ in true }
     }
     
-    func updateSheet(question: Question, questionText: String?, answerText: String?) -> Single<Bool> {
+    func updateSheet(
+        question: Question,
+        questionText: String?,
+        answerText: String?
+    ) -> Single<Bool> {
         guard let questionText = questionText else { return .error(SheetError.emptyQuestion) }
         guard !questionText.isEmpty else { return .error(SheetError.emptyQuestion) }
         guard let answerText = answerText else { return .error(SheetError.emptyAnswer) }

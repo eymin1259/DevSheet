@@ -16,7 +16,7 @@ protocol SQLiteService {
     func read(
         query: SQLiteQuery,
         rowHandler: @escaping(OpaquePointer) -> Void,
-        errorHandler: @escaping(Error)->Void
+        errorHandler: @escaping(Error) -> Void
     )
 }
 
@@ -26,13 +26,12 @@ final class SQLiteServiceImpl: SQLiteService {
     ) -> Single<Bool> {
         BeaverLog.debug("SQLiteService create : ", context: query)
         return Single<Bool>.create { single in
-            do{
+            do {
                 let db = try WrappedSQLite()
-                try db.install(query:query.getQuery())
+                try db.install(query: query.getQuery())
                 try db.execute()
                 single(.success(true))
-            }
-            catch {
+            } catch {
                 single(.failure(error))
             }
             return Disposables.create()
@@ -42,15 +41,14 @@ final class SQLiteServiceImpl: SQLiteService {
     func read(
         query: SQLiteQuery,
         rowHandler: @escaping(OpaquePointer) -> Void,
-        errorHandler: @escaping(Error)->Void
+        errorHandler: @escaping(Error) -> Void
     ) {
         BeaverLog.debug("SQLiteService read : ", context: query)
-        do{
+        do {
             let db = try WrappedSQLite()
-            try db.install(query:query.getQuery())
+            try db.install(query: query.getQuery())
             try db.execute(rowHandler: rowHandler)
-        }
-        catch {
+        } catch {
             errorHandler(error)
         }
     }

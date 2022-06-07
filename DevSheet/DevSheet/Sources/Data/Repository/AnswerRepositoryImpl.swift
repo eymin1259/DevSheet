@@ -32,10 +32,17 @@ final class AnswerRepositoryImpl: AnswerRepository {
             }
     }
     
-    func addNewAnswer(questionId: String, title: String, content: String, creator: String) -> Single<String> {
+    func addNewAnswer(
+        questionId: String, title: String, content: String, creator: String
+    ) -> Single<String> {
         return firebaseService
             .post(
-                AnswerAPI.addNewAnswer(questionId: questionId, title: title, content: content, creator: creator)
+                AnswerAPI.addNewAnswer(
+                    questionId: questionId,
+                    title: title,
+                    content: content,
+                    creator: creator
+                )
             )
             .map { $0.documentID }
     }

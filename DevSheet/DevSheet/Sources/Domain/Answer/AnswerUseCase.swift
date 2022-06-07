@@ -10,7 +10,9 @@ import RxSwift
 
 protocol AnswerUseCase {
     func fetchAnswer(questionId: String) -> Single<Answer>
-    func addNewAnswer(questionId: String, title: String, content:String) -> Single<String> // answerId
+    func addNewAnswer(
+        questionId: String, title: String, content: String
+    ) -> Single<String>
 }
 
 final class AnswerUseCaseImpl: AnswerUseCase {
@@ -30,6 +32,11 @@ final class AnswerUseCaseImpl: AnswerUseCase {
     
     func addNewAnswer(questionId: String, title: String, content: String) -> Single<String> {
         let uuid = UIDevice.current.identifierForVendor?.uuidString ?? "unknown uuid"
-        return answerRepository.addNewAnswer(questionId: questionId, title: title, content: content, creator: uuid)
+        return answerRepository.addNewAnswer(
+            questionId: questionId,
+            title: title,
+            content: content,
+            creator: uuid
+        )
     }
 }

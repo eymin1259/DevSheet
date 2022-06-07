@@ -17,6 +17,7 @@ extension FirebaseError: LocalizedError {
         switch self {
         case .noData:
             return "Firebase no data error"
+            
         case .unknown:
             return "Firebase unknown error"
         }

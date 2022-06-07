@@ -70,7 +70,7 @@ final class QuestionRepositoryImpl: QuestionRepository {
             .map { $0.documentID }
     }
     
-    func updateQuestion(questionId: String, field: [String:Any]) -> Single<Bool> {
+    func updateQuestion(questionId: String, field: [String: Any]) -> Single<Bool> {
         return firebaseService
             .post(
                 QuestionAPI.updateQuestion(questionId: questionId, field: field)
@@ -83,7 +83,9 @@ final class QuestionRepositoryImpl: QuestionRepository {
     func fetchAllFavoriteQuestions(categoryId: String?) -> Single<[Question]> {
         return Single<[Question]>.create { [unowned self] single in
             var result = [Question]()
-            sqliteService.read(query: QuestionQuery.selectAllFavoriteQuestions(categoryId: categoryId)) { row in
+            sqliteService.read(
+                query: QuestionQuery.selectAllFavoriteQuestions(categoryId: categoryId)
+            ) { row in
                 let id = String(cString: sqlite3_column_text(row, 0))
                 let title = String(cString: sqlite3_column_text(row, 1))
                 let categoryId = String(cString: sqlite3_column_text(row, 2))

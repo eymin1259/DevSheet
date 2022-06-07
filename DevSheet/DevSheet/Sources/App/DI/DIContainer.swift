@@ -174,7 +174,9 @@ extension Container {
             let vc = CategoryListViewController(
                 reactor: reactor,
                 mainTab: mainTab,
-                questionListVCFactory: self.questionListViewControllerFactory(categoryGroup:category:)
+                questionListVCFactory: self.questionListViewControllerFactory(
+                    categoryGroup:category:
+                )
             )
             return vc
         }.inObjectScope(.transient)
@@ -188,24 +190,33 @@ extension Container {
                 categoryGroup: categoryGroup,
                 category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(category:question:),
-                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
+                editSheetFactory: self.editSheetViewControllerFactory(
+                    editMode:categoryId:question:answerText:
+                )
             )
             return vc
         }.inObjectScope(.transient)
         
-        register(AnswerDetailViewController.self) { [unowned self]  (r: Resolver, category: Category, question: Question) in
+        register(AnswerDetailViewController.self) { [unowned self] (r: Resolver,
+                                                                    category: Category,
+                                                                    question: Question) in
             let reactor = r.resolve(AnswerDetailReactor.self)!
             let vc = AnswerDetailViewController(
                 reactor: reactor,
                 category: category,
                 question: question,
-                editSheetFactory: self.editSheetViewControllerFactory(editMode:categoryId:question:answerText:)
+                editSheetFactory: self.editSheetViewControllerFactory(
+                    editMode:categoryId:question:answerText:
+                )
             )
             return vc
         }.inObjectScope(.transient)
         
-        register(EditSheetViewController.self) {
-            (r: Resolver, editMode: SheetEditMode, categoryId: String, question: Question?, answerText: String?) in
+        register(EditSheetViewController.self) { (r: Resolver,
+                                                  editMode: SheetEditMode,
+                                                  categoryId: String,
+                                                  question: Question?,
+                                                  answerText: String?) in
             let reactor = r.resolve(EditSheetReactor.self)!
             let vc = EditSheetViewController(
                 reactor: reactor,
@@ -243,12 +254,21 @@ extension Container {
         return createdVC
     }
     
-    private func questionListViewControllerFactory(categoryGroup: MainTab, category: Category) -> UIViewController {
-        let questionVC = resolve(QuestionListViewController.self, arguments: categoryGroup, category)!
-        return questionVC
-    }
+    private func questionListViewControllerFactory(
+        categoryGroup: MainTab,
+        category: Category
+    ) -> UIViewController {
+            let questionVC = resolve(
+                QuestionListViewController.self,
+                arguments: categoryGroup, category
+            )!
+            return questionVC
+        }
     
-    private func answerDetailViewControllerFactory(category: Category, question: Question) -> UIViewController {
+    private func answerDetailViewControllerFactory(
+        category: Category,
+        question: Question
+    ) -> UIViewController {
         let answerVC = resolve(AnswerDetailViewController.self, arguments: category, question)!
         return answerVC
     }

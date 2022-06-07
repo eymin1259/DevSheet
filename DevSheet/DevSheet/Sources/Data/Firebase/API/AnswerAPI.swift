@@ -10,7 +10,7 @@ import Firebase
 
 enum AnswerAPI {
     case gethAnswer(questionId: String)
-    case addNewAnswer(questionId: String, title: String, content:String, creator: String)
+    case addNewAnswer(questionId: String, title: String, content: String, creator: String)
 }
 
 extension AnswerAPI: ServiceAPI {

@@ -49,10 +49,6 @@ final class CategoryRepositoryImpl: CategoryRepository {
     
     func fetchAllFavoriteCategories() -> Single<[Category]> {
         return Single<[Category]>.create { [unowned self] single in
-//            guard let self = self else {
-//                single(.failure(NSError(domain: "RepoRefError", code: -1, userInfo: nil)))
-//                return Disposables.create()
-//            }
             var result = [Category]()
             sqliteService.read(query: CategoryQuery.selectAllFavoriteCategories) { row in
                 let id = String(cString: sqlite3_column_text(row, 0))

@@ -143,7 +143,9 @@ class BaseViewController: UIViewController {
     }
     
     func showActionSheet(title: String?, message: String?, actions: [UIAlertAction]) {
-        let actionSheet =  UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let actionSheet =  UIAlertController(
+            title: title, message: message, preferredStyle: .actionSheet
+        )
         actions.forEach { action in
             actionSheet.addAction(action)
         }

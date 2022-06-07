@@ -27,10 +27,20 @@ final class QuestionUseCaseImpl: QuestionUseCase {
     
     // MARK: methods
     func fetchQuestions(categoryGroup: MainTab, categoryId: String) -> Single<[Question]> {
-        return questionRepository.fetchQuestions(
-            categoryGroup: categoryGroup,
-            categoryId: categoryId
-        )
+        if categoryGroup == .favorite {
+            return questionRepository.fetchAllFavoriteQuestions(categoryId: categoryId)
+                .flatMap { [unowned self] favQuestions -> Single<[Question]> in
+                    let favQuestionIdList = favQuestions.map { favQuestion -> String in
+                        return favQuestion.id
+                    }
+                    
+                    return questionRepository.fetchQuestions(categoryId: categoryId, questionIdList: favQuestionIdList)
+                }
+        } else {
+            return questionRepository.fetchAllQuestions(
+                categoryId: categoryId
+            )
+        }
     }
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {

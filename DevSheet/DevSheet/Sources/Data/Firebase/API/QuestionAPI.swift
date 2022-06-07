@@ -9,9 +9,9 @@ import Foundation
 import Firebase
 
 enum QuestionAPI {
-    case getQuestions(categoryId: String)
+    case getAllQuestions(categoryId: String)
     case addNewQuestion(categoryId: String, title: String)
-    case updateQuestion(questionId: String, field: [String:Any])
+    case updateQuestion(questionId: String, field: [String: Any])
 }
 
 extension QuestionAPI: ServiceAPI {
@@ -22,7 +22,7 @@ extension QuestionAPI: ServiceAPI {
     
     func get() -> Query? {
         switch self {
-        case .getQuestions(let categoryId):
+        case .getAllQuestions(let categoryId):
             return collection
                 .whereField("categoryId", isEqualTo: categoryId)
                 .whereField("deleted", isEqualTo: false)

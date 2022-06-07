@@ -26,25 +26,40 @@ final class QuestionRepositoryImpl: QuestionRepository {
     }
     
     // MARK: methods
-    func fetchQuestions(categoryGroup:MainTab, categoryId: String) -> Single<[Question]> {
-        if categoryGroup == .favorite {
-            return fetchAllFavoriteQuestions(categoryId: categoryId)
-        } else {
-            return firebaseService
-                .get(
-                    QuestionAPI.getQuestions(categoryId: categoryId)
-                )
-                .map { snapshot in
-                    var ret = [Question]()
-                    for doc in snapshot.documents {
+    func fetchAllQuestions(categoryId: String) -> Single<[Question]> {
+        return firebaseService
+            .get(
+                QuestionAPI.getAllQuestions(categoryId: categoryId)
+            )
+            .map { snapshot in
+                var ret = [Question]()
+                for doc in snapshot.documents {
+                    let id = doc.documentID
+                    let data = doc.data()
+                    let question = QuestionDTO(id: id, dictionary: data).toDomain()
+                    ret.append(question)
+                }
+                return ret
+            }
+    }
+    
+    func fetchQuestions(categoryId: String, questionIdList: [String]) -> Single<[Question]> {
+        return  firebaseService
+            .get(
+                QuestionAPI.getAllQuestions(categoryId: categoryId)
+            )
+            .map { snapshot in
+                var ret = [Question]()
+                for doc in snapshot.documents {
+                    if questionIdList.contains(doc.documentID) {
                         let id = doc.documentID
                         let data = doc.data()
                         let question = QuestionDTO(id: id, dictionary: data).toDomain()
                         ret.append(question)
                     }
-                    return ret
                 }
-        }
+                return ret
+            }
     }
     
     func addNewQuestion(categoryId: String, title: String) -> Single<String> {

@@ -90,6 +90,10 @@ final class AnswerDetailViewController: BaseViewController, View {
             guard let self = self else { return }
             self.reactor?.action.onNext(.addFavorite(self.category, self.question))
         }
+        if let currentTab = navigationController?.tabBarController?.selectedIndex,
+           currentTab == MainTab.favorite.rawValue {
+            return [cancelAction, editAction]
+        }
         return [cancelAction, editAction, favoriteAction]
     }
     

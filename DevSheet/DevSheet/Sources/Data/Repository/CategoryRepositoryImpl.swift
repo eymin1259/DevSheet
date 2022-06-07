@@ -26,7 +26,7 @@ final class CategoryRepositoryImpl: CategoryRepository {
     }
     
     // MARK: methods
-    func fetchCategories(group: MainTab) -> Single<[Category]> {
+    func fetchAllCategories(group: MainTab) -> Single<[Category]> {
         if group == .favorite {
             return fetchAllFavoriteCategories()
         } else { // .cs or .develop

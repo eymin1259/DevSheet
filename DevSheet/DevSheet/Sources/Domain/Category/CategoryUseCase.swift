@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol CategoryUseCase {
-    func fetchCategories(group: MainTab) -> Single<[Category]>
+    func fetchAllCategories(group: MainTab) -> Single<[Category]>
     func saveFavoriteCategory(category: Category) -> Single<Bool>
 }
 
@@ -24,8 +24,8 @@ final class  CategoryUseCaseImpl: CategoryUseCase {
     }
     
     // MARK: methods
-    func fetchCategories(group: MainTab) -> Single<[Category]> {
-        return categoryRepository.fetchCategories(group: group)
+    func fetchAllCategories(group: MainTab) -> Single<[Category]> {
+        return categoryRepository.fetchAllCategories(group: group)
     }
     
     func saveFavoriteCategory(category: Category) -> Single<Bool> {

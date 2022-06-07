@@ -43,7 +43,7 @@ extension QuestionListReactor {
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             let setQuestions = self.questionUseCase
-                .fetchQuestions(categoryGroup: categoryGroup, categoryId: categoryId)
+                .fetchAllQuestions(categoryGroup: categoryGroup, categoryId: categoryId)
                 .asObservable()
                 .catchAndReturn([])
                 .map { questionList -> Mutation in

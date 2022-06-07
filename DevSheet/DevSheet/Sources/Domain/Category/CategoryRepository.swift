@@ -9,7 +9,7 @@ import Foundation
 import  RxSwift
 
 protocol CategoryRepository {
-    func fetchCategories(group: MainTab) -> Single<[Category]>
+    func fetchAllCategories(group: MainTab) -> Single<[Category]>
     func fetchAllFavoriteCategories() -> Single<[Category]>
     func saveFavoriteCategory(category: Category) -> Single<Bool>
 }

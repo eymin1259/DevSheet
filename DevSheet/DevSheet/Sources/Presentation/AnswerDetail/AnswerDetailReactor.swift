@@ -54,7 +54,7 @@ extension AnswerDetailReactor {
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             let setAnswer = self.answerUseCase
-                .fetchAnswer(questionId: questionId)
+                .fetchAllAnswers(questionId: questionId)
                 .asObservable()
                 .catchAndReturn(.getEmptyAnswer())
                 .map { answer -> Mutation in

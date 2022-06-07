@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol AnswerRepository {
-    func fetchAnswer(questionId: String) -> Single<Answer>
+    func fetchAllAnswers(questionId: String) -> Single<Answer>
     func addNewAnswer(
         questionId: String, title: String, content: String, creator: String
     ) -> Single<String>

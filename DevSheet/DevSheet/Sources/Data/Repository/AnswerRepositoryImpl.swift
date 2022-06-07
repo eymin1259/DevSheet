@@ -20,7 +20,7 @@ final class AnswerRepositoryImpl: AnswerRepository {
     }
     
     // MARK: methods
-    func fetchAnswer(questionId: String) -> Single<Answer> {
+    func fetchAllAnswers(questionId: String) -> Single<Answer> {
         return firebaseService
             .get(
                 AnswerAPI.gethAnswer(questionId: questionId)

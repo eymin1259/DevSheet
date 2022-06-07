@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 protocol AnswerUseCase {
-    func fetchAnswer(questionId: String) -> Single<Answer>
+    func fetchAllAnswers(questionId: String) -> Single<Answer>
     func addNewAnswer(
         questionId: String, title: String, content: String
     ) -> Single<String>
@@ -26,8 +26,8 @@ final class AnswerUseCaseImpl: AnswerUseCase {
     }
     
     // MARK: methods
-    func fetchAnswer(questionId: String) -> Single<Answer> {
-        return answerRepository.fetchAnswer(questionId: questionId)
+    func fetchAllAnswers(questionId: String) -> Single<Answer> {
+        return answerRepository.fetchAllAnswers(questionId: questionId)
     }
     
     func addNewAnswer(questionId: String, title: String, content: String) -> Single<String> {

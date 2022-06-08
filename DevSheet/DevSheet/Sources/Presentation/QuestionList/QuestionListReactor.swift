@@ -13,15 +13,18 @@ final class QuestionListReactor: Reactor {
     // MARK: properties
     enum Action {
         case viewDidAppear(MainTab, String) // categoryId: String
+        case tapRandomBtn
     }
     
     enum Mutation {
         case setQuestions([Question])
+        case setRandomQUestion(Question?)
         case setLoading(Bool)
     }
     
     struct State {
         var questionSections: [QuestionListSection] = [.init(questionList: [])]
+        var randomQuestion: Question?
         var isLoading: Bool = false
     }
     
@@ -55,6 +58,12 @@ extension QuestionListReactor {
                     return .setQuestions(questionList)
                 }
             return .concat([startLoading, setQuestions, endLoading])
+            
+        case .tapRandomBtn:
+            let questionCount = self.currentState.questionSections.first?.items.count ?? 0
+            let randomIdx = Int.random(in: 0..<questionCount)
+            let randomQuestion = self.currentState.questionSections.first?.items[randomIdx]
+            return Observable<Mutation>.just(.setRandomQUestion(randomQuestion))
         }
     }
     
@@ -63,9 +72,16 @@ extension QuestionListReactor {
         var newState = state
         switch mutation {
         case .setQuestions(let list):
+            newState.randomQuestion = nil
             newState.questionSections = [.init(questionList: list)]
             return newState
+            
+        case .setRandomQUestion(let question):
+            newState.randomQuestion = question
+            return newState
+            
         case .setLoading(let loading):
+            newState.randomQuestion = nil
             newState.isLoading = loading
             return newState
         }

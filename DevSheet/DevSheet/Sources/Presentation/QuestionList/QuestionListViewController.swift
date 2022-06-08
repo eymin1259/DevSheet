@@ -50,6 +50,18 @@ final class QuestionListViewController: BaseViewController, View {
         return btn
     }()
     
+    private let pickRandomSheetBtn: UIButton = {
+        var btn = UIButton()
+        btn.frame = CGRect(
+            origin: .zero,
+            size: .init(width: 30, height: 30)
+        )
+        btn.setTitle("랜덤", for: .normal)
+        btn.setTitleColor(.orange, for: .normal)
+        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        return btn
+    }()
+    
     // MARK: initialize
     init(
         reactor: Reactor,
@@ -83,7 +95,11 @@ final class QuestionListViewController: BaseViewController, View {
         self.view.backgroundColor = .white
         self.navigationItem.title = self.category.name
         navigationItem.backBarButtonItem = backBarBtn
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addNewSheetBtn)
+        if navigationController?.tabBarController?.selectedIndex == MainTab.favorite.rawValue {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: pickRandomSheetBtn)
+        } else {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addNewSheetBtn)
+        }
         // tablewView
         self.view.addSubview(questionTableView)
         questionTableView.snp.makeConstraints {
@@ -146,6 +162,11 @@ extension QuestionListViewController {
                 self.presentEditSheet()
             }.disposed(by: self.disposeBag)
         
+        pickRandomSheetBtn.rx.tap
+            .map { _ in Reactor.Action.tapRandomBtn }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         Observable
             .zip(
                 questionTableView.rx.itemSelected,
@@ -165,6 +186,16 @@ extension QuestionListViewController {
         reactor.state
             .map { $0.questionSections }
             .bind(to: questionTableView.rx.items(dataSource: tableViewDataSource))
-            .disposed(by: disposeBag)        
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.randomQuestion }
+            .filterNil()
+            .subscribe(onNext: { [weak self] question in
+                guard let self = self else {return}
+                let answerVC = self.answerDetailFactory(self.category, question)
+                self.navigationController?.pushViewController(answerVC, animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 }

@@ -82,17 +82,17 @@ extension AnswerDetailReactor {
         var newState = state
         switch mutation {
         case .setLatestAnswer(let answer):
+            newState.addFavoriteResult = nil
             newState.latestAnswer = answer
             return newState
             
         case .setAddFavoriteResult(let result):
-            print("debug :  reduce  setAddFavoriteResult -> \(result)")
             newState.addFavoriteResult = result
             return newState
             
         case .setLoading(let loading):
-            newState.isLoading = loading
             newState.addFavoriteResult = nil
+            newState.isLoading = loading
             return newState
         }
     }

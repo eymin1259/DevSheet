@@ -16,7 +16,6 @@ final class CategoryListViewController: BaseViewController, View {
 
     // MARK: properties
     typealias Reactor = CategoryListReactor
-    private var categoryGroup: MainTab
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<CategoryListSection>
     private var questionListVCFactory: (MainTab, Category) -> UIViewController
     
@@ -37,11 +36,9 @@ final class CategoryListViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        mainTab group: MainTab,
         questionListVCFactory: @escaping (MainTab, Category) -> UIViewController
     ) {
         tableViewDataSource = Self.dataSourceFactory()
-        self.categoryGroup = group
         self.questionListVCFactory = questionListVCFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
@@ -61,7 +58,7 @@ final class CategoryListViewController: BaseViewController, View {
     private func setupUI() {
         // ViewController
         self.view.backgroundColor = .systemGray6
-        self.navigationItem.title = self.categoryGroup.description
+        self.navigationItem.title = self.reactor?.initialState.categoryGroup.description
         self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationController?.navigationBar.isTranslucent = false
@@ -105,9 +102,7 @@ extension CategoryListViewController {
     
     private func bindAction(reactor: CategoryListReactor) {
         self.rx.viewDidAppear
-            .map { [unowned self] _ in
-                Reactor.Action.viewDidAppear(self.categoryGroup)
-            }
+            .map { _ in Reactor.Action.viewDidAppear }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
@@ -118,8 +113,9 @@ extension CategoryListViewController {
             )
             .bind { [weak self] indexPath, model in
                 guard let self = self else {return}
+                guard let categoryGroup = self.reactor?.currentState.categoryGroup else {return}
                 self.categoryTableView.deselectRow(at: indexPath, animated: true)
-                let questionListVC = self.questionListVCFactory(self.categoryGroup, model)
+                let questionListVC = self.questionListVCFactory(categoryGroup, model)
                 self.navigationController?.pushViewController(questionListVC, animated: true)
             }
             .disposed(by: disposeBag)

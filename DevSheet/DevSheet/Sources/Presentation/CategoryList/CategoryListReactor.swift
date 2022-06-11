@@ -12,7 +12,7 @@ final class CategoryListReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidAppear(MainTab)
+        case viewDidAppear
     }
     
     enum Mutation {
@@ -21,15 +21,20 @@ final class CategoryListReactor: Reactor {
     }
     
     struct State {
+        var categoryGroup: MainTab
         var categorySections: [CategoryListSection] = [.init(categoryList: [])]
         var isLoading: Bool = false
     }
     
-    let initialState: State = .init()
+    let initialState: State
     var categoryUseCase: CategoryUseCase
     
     // MARK: initialize
-    init(categoryUseCase: CategoryUseCase) {
+    init(
+        categoryGroup: MainTab,
+        categoryUseCase: CategoryUseCase
+    ) {
+        self.initialState = .init(categoryGroup: categoryGroup)
         self.categoryUseCase = categoryUseCase
     }
 }
@@ -38,15 +43,16 @@ extension CategoryListReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidAppear(let group):
+        case .viewDidAppear:
             guard !self.currentState.isLoading else { return .empty() }
+            let categoryGroup = self.currentState.categoryGroup
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             var fetchCategories: Single<[Category]>
-            if group == .favorite {
+            if categoryGroup == .favorite {
                 fetchCategories = self.categoryUseCase.fetchAllFavoriteCategories()
             } else {
-                fetchCategories = self.categoryUseCase.fetchAllCategories(group: group)
+                fetchCategories = self.categoryUseCase.fetchAllCategories(group: categoryGroup)
             }
             let setCategories = fetchCategories
                 .asObservable()

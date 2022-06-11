@@ -16,9 +16,7 @@ final class AnswerDetailViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = AnswerDetailReactor
-    private var category: Category
-    private var question: Question
-    private var editSheetFactory: (SheetEditMode, String, Question?, String?) -> UIViewController
+    private var editSheetFactory: (SheetEditMode, String, Question?, String) -> UIViewController
     
     // MARK: UI
     private let dividerView: UIView = {
@@ -43,12 +41,8 @@ final class AnswerDetailViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        category: Category,
-        question: Question,
-        editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
+        editSheetFactory: @escaping (SheetEditMode, String, Question?, String) -> UIViewController
     ) {
-        self.category = category
-        self.question = question
         self.editSheetFactory = editSheetFactory
         super.init(nibName: nil, bundle: nil)
         self.reactor = reactor
@@ -72,7 +66,7 @@ final class AnswerDetailViewController: BaseViewController, View {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: menuBtn)
         self.addNavigationLineView()
         // questionTitle
-        self.questionTitleTextView.text = self.question.title
+        self.questionTitleTextView.text = self.reactor?.initialState.question.title
         self.addQuestionTitleTextView()
         // TitleContentdivider
         self.addTitleContentdividerView()
@@ -83,12 +77,10 @@ final class AnswerDetailViewController: BaseViewController, View {
     func createActions() -> [UIAlertAction] {
         let cancelAction = UIAlertAction(title: "취소", style: .cancel) { _ in }
         let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            self.presentEditSheet()
+            self?.presentEditSheet()
         }
         let favoriteAction = UIAlertAction(title: "즐겨찾기 추가", style: .default) { [weak self] _ in
-            guard let self = self else { return }
-            self.reactor?.action.onNext(.addFavorite(self.category, self.question))
+            self?.reactor?.action.onNext(.addFavorite)
         }
         if let currentTab = navigationController?.tabBarController?.selectedIndex,
            currentTab == MainTab.favorite.rawValue {
@@ -98,10 +90,11 @@ final class AnswerDetailViewController: BaseViewController, View {
     }
     
     func presentEditSheet() {
+        guard let reactor = self.reactor else { return }
         let editSheetVC = self.editSheetFactory(
             SheetEditMode.UPDATE,
-            self.question.categoryId,
-            self.question,
+            reactor.currentState.category.id,
+            reactor.currentState.question,
             self.answerContentTextView.text
         )
         self.present(editSheetVC, animated: true, completion: nil)
@@ -117,9 +110,7 @@ extension AnswerDetailViewController {
     
     private func bindAction(reactor: AnswerDetailReactor) {
         self.rx.viewDidAppear
-            .map { [unowned self] _ in
-                Reactor.Action.viewDidAppear(self.question.id)
-            }
+            .map { _ in Reactor.Action.viewDidAppear }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         

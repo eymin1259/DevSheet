@@ -12,8 +12,8 @@ final class AnswerDetailReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidAppear(String) // questionId
-        case addFavorite(Category, Question)
+        case viewDidAppear
+        case addFavorite
     }
     
     enum Mutation {
@@ -23,22 +23,30 @@ final class AnswerDetailReactor: Reactor {
     }
     
     struct State {
+        var category: Category
+        var question: Question
         var latestAnswer: Answer?
         var addFavoriteResult: Bool?
         var isLoading: Bool = false
     }
     
-    let initialState: State = .init()
+    let initialState: State
     var categoryUseCase: CategoryUseCase
     var questionUseCase: QuestionUseCase
     var answerUseCase: AnswerUseCase
     
     // MARK: initialize
     init(
+        category: Category,
+        question: Question,
         categoryUseCase: CategoryUseCase,
         questionUseCase: QuestionUseCase,
         answerUseCase: AnswerUseCase
     ) {
+        self.initialState = .init(
+            category: category,
+            question: question
+        )
         self.categoryUseCase = categoryUseCase
         self.questionUseCase = questionUseCase
         self.answerUseCase = answerUseCase
@@ -49,8 +57,9 @@ extension AnswerDetailReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidAppear(let questionId):
+        case .viewDidAppear:
             guard !self.currentState.isLoading else { return .empty() }
+            let questionId = self.currentState.question.id
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             let setAnswer = self.answerUseCase
@@ -62,7 +71,9 @@ extension AnswerDetailReactor {
                 }
             return .concat([startLoading, setAnswer, endLoading])
             
-        case .addFavorite(let category, let question):
+        case .addFavorite:
+            let category = self.currentState.category
+            let question = self.currentState.question
             let setAddFavoriteResult = categoryUseCase.saveFavoriteCategory(category: category)
                 .flatMap { result -> Single<Bool> in
                     if result {

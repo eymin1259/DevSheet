@@ -12,7 +12,7 @@ final class QuestionListReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidAppear(MainTab, String) // categoryId: String
+        case viewDidAppear
         case tapRandomBtn
     }
     
@@ -23,16 +23,26 @@ final class QuestionListReactor: Reactor {
     }
     
     struct State {
+        var categoryGroup: MainTab
+        var category: Category
         var questionSections: [QuestionListSection] = [.init(questionList: [])]
         var randomQuestion: Question?
         var isLoading: Bool = false
     }
     
-    let initialState: State = .init()
+    let initialState: State
     var questionUseCase: QuestionUseCase
     
     // MARK: initialize
-    init(questionUseCase: QuestionUseCase) {
+    init(
+        categoryGroup: MainTab,
+        category: Category,
+        questionUseCase: QuestionUseCase
+    ) {
+        self.initialState = .init(
+            categoryGroup: categoryGroup,
+            category: category
+        )
         self.questionUseCase = questionUseCase
     }
 }
@@ -41,8 +51,10 @@ extension QuestionListReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidAppear(let categoryGroup, let categoryId):
+        case .viewDidAppear:
             guard !self.currentState.isLoading else { return .empty() }
+            let categoryGroup = self.currentState.categoryGroup
+            let categoryId = self.currentState.category.id
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             var fetchQuestions: Single<[Question]>

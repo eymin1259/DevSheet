@@ -111,33 +111,57 @@ extension Container {
             return reactor
         }
         
-        register(CategoryListReactor.self) { r in
+        register(CategoryListReactor.self) { (r: Resolver,
+                                              categoryGroup: MainTab) in
             let useCase = r.resolve(CategoryUseCase.self)!
-            let reactor = CategoryListReactor(categoryUseCase: useCase)
-            return reactor
-        }.inObjectScope(.transient)
-        
-        register(QuestionListReactor.self) { r in
-            let useCase = r.resolve(QuestionUseCase.self)!
-            let reactor = QuestionListReactor(questionUseCase: useCase)
-            return reactor
-        }.inObjectScope(.transient)
-        
-        register(AnswerDetailReactor.self) { r in
-            let category = r.resolve(CategoryUseCase.self)!
-            let question = r.resolve(QuestionUseCase.self)!
-            let answer = r.resolve(AnswerUseCase.self)!
-            let reactor = AnswerDetailReactor(
-                categoryUseCase: category,
-                questionUseCase: question,
-                answerUseCase: answer
+            let reactor = CategoryListReactor(
+                categoryGroup: categoryGroup,
+                categoryUseCase: useCase
             )
             return reactor
         }.inObjectScope(.transient)
         
-        register(EditSheetReactor.self) { r in
+        register(QuestionListReactor.self) { (r: Resolver,
+                                              categoryGroup: MainTab,
+                                              category: Category) in
+            let useCase = r.resolve(QuestionUseCase.self)!
+            let reactor = QuestionListReactor(
+                categoryGroup: categoryGroup,
+                category: category,
+                questionUseCase: useCase
+            )
+            return reactor
+        }.inObjectScope(.transient)
+        
+        register(AnswerDetailReactor.self) { (r: Resolver,
+                                              category: Category,
+                                              question: Question) in
+            let categoryUseCase = r.resolve(CategoryUseCase.self)!
+            let questionUseCase = r.resolve(QuestionUseCase.self)!
+            let answerUseCase = r.resolve(AnswerUseCase.self)!
+            let reactor = AnswerDetailReactor(
+                category: category,
+                question: question,
+                categoryUseCase: categoryUseCase,
+                questionUseCase: questionUseCase,
+                answerUseCase: answerUseCase
+            )
+            return reactor
+        }.inObjectScope(.transient)
+        
+        register(EditSheetReactor.self) { (r: Resolver,
+                                           editMode: SheetEditMode,
+                                           categoryId: String,
+                                           question: Question?,
+                                           answerText: String) in
             let usecase = r.resolve(SheetUseCase.self)!
-            let reactor = EditSheetReactor(sheetUseCase: usecase)
+            let reactor = EditSheetReactor(
+                editMode: editMode,
+                categoryId: categoryId,
+                question: question,
+                answerText: answerText,
+                sheetUseCase: usecase
+            )
             return reactor
         }.inObjectScope(.transient)
     }
@@ -170,10 +194,12 @@ extension Container {
         register(
             CategoryListViewController.self
         ) { [unowned self] (r: Resolver, mainTab: MainTab) in
-            let reactor = r.resolve(CategoryListReactor.self)!
+            let reactor = r.resolve(
+                CategoryListReactor.self,
+                argument: mainTab
+            )!
             let vc = CategoryListViewController(
                 reactor: reactor,
-                mainTab: mainTab,
                 questionListVCFactory: self.questionListViewControllerFactory(
                     categoryGroup:category:
                 )
@@ -184,11 +210,12 @@ extension Container {
         register(
             QuestionListViewController.self
         ) { [unowned self] (r: Resolver, categoryGroup: MainTab, category: Category) in
-            let reactor = r.resolve(QuestionListReactor.self)!
+            let reactor = r.resolve(
+                QuestionListReactor.self,
+                arguments: categoryGroup, category
+            )!
             let vc = QuestionListViewController(
                 reactor: reactor,
-                categoryGroup: categoryGroup,
-                category: category,
                 answerDetailFactory: self.answerDetailViewControllerFactory(category:question:),
                 editSheetFactory: self.editSheetViewControllerFactory(
                     editMode:categoryId:question:answerText:
@@ -200,11 +227,12 @@ extension Container {
         register(AnswerDetailViewController.self) { [unowned self] (r: Resolver,
                                                                     category: Category,
                                                                     question: Question) in
-            let reactor = r.resolve(AnswerDetailReactor.self)!
+            let reactor = r.resolve(
+                AnswerDetailReactor.self,
+                arguments: category, question
+            )!
             let vc = AnswerDetailViewController(
                 reactor: reactor,
-                category: category,
-                question: question,
                 editSheetFactory: self.editSheetViewControllerFactory(
                     editMode:categoryId:question:answerText:
                 )
@@ -216,15 +244,12 @@ extension Container {
                                                   editMode: SheetEditMode,
                                                   categoryId: String,
                                                   question: Question?,
-                                                  answerText: String?) in
-            let reactor = r.resolve(EditSheetReactor.self)!
-            let vc = EditSheetViewController(
-                reactor: reactor,
-                editMode: editMode,
-                categoryId: categoryId,
-                question: question,
-                defaultAnswerText: answerText
-            )
+                                                  answerText: String) in
+            let reactor = r.resolve(
+                EditSheetReactor.self,
+                arguments: editMode, categoryId, question, answerText
+            )!
+            let vc = EditSheetViewController(reactor: reactor)
             return vc
         }.inObjectScope(.transient)
     }
@@ -277,7 +302,7 @@ extension Container {
         editMode: SheetEditMode,
         categoryId: String,
         question: Question?,
-        answerText: String?
+        answerText: String
     ) -> UIViewController {
         let rootVC = resolve(
             EditSheetViewController.self,

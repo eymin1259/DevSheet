@@ -17,11 +17,9 @@ final class QuestionListViewController: BaseViewController, View {
     
     // MARK: properties
     typealias Reactor = QuestionListReactor
-    private var categoryGroup: MainTab
-    private var category: Category
     private var tableViewDataSource: RxTableViewSectionedReloadDataSource<QuestionListSection>
     private var answerDetailFactory: (Category, Question) -> UIViewController
-    private var editSheetFactory: (SheetEditMode, String, Question?, String?) -> UIViewController
+    private var editSheetFactory: (SheetEditMode, String, Question?, String) -> UIViewController
     
     // MARK: UI
     private let questionTableView: UITableView = {
@@ -65,13 +63,9 @@ final class QuestionListViewController: BaseViewController, View {
     // MARK: initialize
     init(
         reactor: Reactor,
-        categoryGroup: MainTab,
-        category: Category,
         answerDetailFactory: @escaping (Category, Question) -> UIViewController,
-        editSheetFactory: @escaping (SheetEditMode, String, Question?, String?) -> UIViewController
+        editSheetFactory: @escaping (SheetEditMode, String, Question?, String) -> UIViewController
     ) {
-        self.categoryGroup = categoryGroup
-        self.category = category
         self.tableViewDataSource = Self.tableViewDataSourceFactory()
         self.answerDetailFactory = answerDetailFactory
         self.editSheetFactory = editSheetFactory
@@ -93,13 +87,9 @@ final class QuestionListViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
-        self.navigationItem.title = self.category.name
+        self.navigationItem.title = self.reactor?.initialState.category.name
         navigationItem.backBarButtonItem = backBarBtn
-        if navigationController?.tabBarController?.selectedIndex == MainTab.favorite.rawValue {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: pickRandomSheetBtn)
-        } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: addNewSheetBtn)
-        }
+        self.navigationItem.rightBarButtonItem = createUIBarButtonItem()
         // tablewView
         self.view.addSubview(questionTableView)
         questionTableView.snp.makeConstraints {
@@ -113,9 +103,10 @@ final class QuestionListViewController: BaseViewController, View {
     }
     
     func presentEditSheet() {
+        guard let categoryId = self.reactor?.currentState.category.id else { return }
         let editSheetVC = self.editSheetFactory(
             SheetEditMode.ADD,
-            self.category.id,
+            categoryId,
             nil,
             SheetEditMode.ADD.defaultAnswer
         )
@@ -136,6 +127,14 @@ final class QuestionListViewController: BaseViewController, View {
             return cell
         }
     }
+    
+    private func createUIBarButtonItem() -> UIBarButtonItem {
+        if navigationController?.tabBarController?.selectedIndex == MainTab.favorite.rawValue {
+            return UIBarButtonItem(customView: pickRandomSheetBtn)
+        } else {
+            return UIBarButtonItem(customView: addNewSheetBtn)
+        }
+    }
 }
 
 // MARK: Reactor Bind
@@ -147,12 +146,7 @@ extension QuestionListViewController {
     
     private func bindAction(reactor: QuestionListReactor) {
         self.rx.viewDidAppear
-            .map { [unowned self] _ in
-                Reactor.Action.viewDidAppear(
-                    self.categoryGroup,
-                    self.category.id
-                )
-            }
+            .map { _ in Reactor.Action.viewDidAppear }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
@@ -174,8 +168,9 @@ extension QuestionListViewController {
             )
             .bind { [weak self] indexPath, model in
                 guard let self = self else {return}
+                guard let category = self.reactor?.currentState.category else {return}
                 self.questionTableView.deselectRow(at: indexPath, animated: true)
-                let answerVC = self.answerDetailFactory(self.category, model)
+                let answerVC = self.answerDetailFactory(category, model)
                 self.navigationController?.pushViewController(answerVC, animated: true)
             }
             .disposed(by: disposeBag)
@@ -193,7 +188,8 @@ extension QuestionListViewController {
             .filterNil()
             .subscribe(onNext: { [weak self] question in
                 guard let self = self else {return}
-                let answerVC = self.answerDetailFactory(self.category, question)
+                guard let category = self.reactor?.currentState.category else {return}
+                let answerVC = self.answerDetailFactory(category, question)
                 self.navigationController?.pushViewController(answerVC, animated: true)
             })
             .disposed(by: disposeBag)

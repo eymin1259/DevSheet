@@ -12,16 +12,13 @@ final class EditSheetReactor: Reactor {
 
     // MARK: properties
     enum Action {
-        case viewDidLoad(SheetEditMode, String, Question?, String?) 
+        case viewDidLoad
         case inputQuestion(String)
         case inputAnswer(String)
         case tapSaveBtn
     }
     
     enum Mutation {
-        case setEditMode(SheetEditMode)
-        case setCategoryId(String)
-        case setQuestion(Question?)
         case setQuestionText(String?)
         case setAnswerText(String?)
         case setSaveResult(Bool)
@@ -30,8 +27,8 @@ final class EditSheetReactor: Reactor {
     }
     
     struct State {
-        var editMode: SheetEditMode?
-        var categoryId: String?
+        var editMode: SheetEditMode
+        var categoryId: String
         var question: Question?
         var questionText: String?
         var answerText: String?
@@ -40,11 +37,23 @@ final class EditSheetReactor: Reactor {
         var isLoading: Bool = false
     }
     
-    let initialState: State = .init()
+    let initialState: State
     var sheetUseCase: SheetUseCase
     
     // MARK: initialize
-    init(sheetUseCase: SheetUseCase) {
+    init(
+        editMode: SheetEditMode,
+        categoryId: String,
+        question: Question?,
+        answerText: String,
+        sheetUseCase: SheetUseCase
+    ) {
+        self.initialState = .init(
+            editMode: editMode,
+            categoryId: categoryId,
+            question: question,
+            answerText: answerText
+        )
         self.sheetUseCase = sheetUseCase
     }
 }
@@ -53,18 +62,19 @@ extension EditSheetReactor {
     // MARK: Mutate
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .viewDidLoad(let mode, let categoryId, let question, let answer):
-            let setEditMode = Observable<Mutation>.just(.setEditMode(mode))
-            let setCategoryId = Observable<Mutation>.just(.setCategoryId(categoryId))
-            let setQuestion =  Observable<Mutation>.just(.setQuestion(question))
+        case .viewDidLoad:
             let setQuestionText = Observable<Mutation>.just(
-                .setQuestionText(mode == .ADD ? nil : question?.title)
+                .setQuestionText(
+                    self.currentState.editMode == .ADD ? nil : self.initialState.question?.title
+                )
             )
             let setAnswerText = Observable<Mutation>.just(
-                .setAnswerText(mode == .ADD ? nil : answer)
+                .setAnswerText(
+                    self.currentState.editMode == .ADD ? nil : self.initialState.answerText
+                )
             )
             return .concat([
-                setCategoryId, setEditMode, setQuestion, setQuestionText, setAnswerText
+                setQuestionText, setAnswerText
             ])
             
         case .inputQuestion(let questionText):
@@ -75,19 +85,17 @@ extension EditSheetReactor {
             
         case .tapSaveBtn:
             guard !self.currentState.isLoading else { return .empty() }
-            guard let editMode = self.currentState.editMode else { return .empty() }
             let startLoading = Observable<Mutation>.just(.setLoading(true))
             let endLoading = Observable<Mutation>.just(.setLoading(false))
             var editSheet: Single<Bool>
-            if editMode == .ADD {
-                guard let categoryId = self.currentState.categoryId else { return .empty() }
+            if self.currentState.editMode == .ADD {
                 editSheet = sheetUseCase.addNewSheet(
-                    categoryId: categoryId,
+                    categoryId: self.currentState.categoryId,
                     questionText: self.currentState.questionText,
                     answerText: self.currentState.answerText
                 )
             } else { // .UPDATE
-                guard let question = self.currentState.question else { return .empty() }
+                guard let question =  self.currentState.question else { return .empty() }
                 editSheet = sheetUseCase.updateSheet(
                     question: question,
                     questionText: self.currentState.questionText,
@@ -112,18 +120,6 @@ extension EditSheetReactor {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         switch mutation {
-        case .setEditMode(let mode):
-            newState.editMode = mode
-            return newState
-            
-        case .setCategoryId(let categoryId):
-            newState.categoryId = categoryId
-            return newState
-            
-        case .setQuestion(let question):
-            newState.question = question
-            return newState
-            
         case .setQuestionText(let questionText):
             var textChecked = questionText
             if textChecked == SheetEditMode.UPDATE.defaultQuestoin ||

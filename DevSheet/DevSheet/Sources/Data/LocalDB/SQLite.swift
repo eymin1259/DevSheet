@@ -1,5 +1,5 @@
 //
-//  WrappedSQLite.swift
+//  SQLite.swift
 //  DevSheet
 //
 //  Created by yongmin lee on 6/6/22.
@@ -8,7 +8,7 @@
 import Foundation
 import SQLite3
 
-class WrappedSQLite {
+class SQLite {
     
     // MARK: properties
     enum SQLError: Error {

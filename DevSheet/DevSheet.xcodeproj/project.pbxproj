@@ -82,7 +82,7 @@
 		A1B5F0D828350E5C0098DF44 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */; };
 		A1B5F0DA283510A10098DF44 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B5F0D9283510A10098DF44 /* FirebaseService.swift */; };
 		A1EFB674284E211D004E5C6C /* SQLiteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB673284E211D004E5C6C /* SQLiteService.swift */; };
-		A1EFB677284E2180004E5C6C /* WrappedSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB676284E2180004E5C6C /* WrappedSQLite.swift */; };
+		A1EFB677284E2180004E5C6C /* SQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB676284E2180004E5C6C /* SQLite.swift */; };
 		A1EFB67A284E2479004E5C6C /* SQLiteQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB679284E2479004E5C6C /* SQLiteQuery.swift */; };
 		A1EFB67C284E2527004E5C6C /* CategoryQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB67B284E2527004E5C6C /* CategoryQuery.swift */; };
 		A1EFB67E284E268A004E5C6C /* QuestionQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EFB67D284E268A004E5C6C /* QuestionQuery.swift */; };
@@ -181,7 +181,7 @@
 		A1B5F0D728350E5C0098DF44 /* SplashReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; };
 		A1B5F0D9283510A10098DF44 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		A1EFB673284E211D004E5C6C /* SQLiteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteService.swift; sourceTree = "<group>"; };
-		A1EFB676284E2180004E5C6C /* WrappedSQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappedSQLite.swift; sourceTree = "<group>"; };
+		A1EFB676284E2180004E5C6C /* SQLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLite.swift; sourceTree = "<group>"; };
 		A1EFB679284E2479004E5C6C /* SQLiteQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SQLiteQuery.swift; path = DevSheet/Sources/Common/Util/SQLiteQuery.swift; sourceTree = SOURCE_ROOT; };
 		A1EFB67B284E2527004E5C6C /* CategoryQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CategoryQuery.swift; path = DevSheet/Sources/Common/Util/CategoryQuery.swift; sourceTree = SOURCE_ROOT; };
 		A1EFB67D284E268A004E5C6C /* QuestionQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = QuestionQuery.swift; path = DevSheet/Sources/Common/Util/QuestionQuery.swift; sourceTree = SOURCE_ROOT; };
@@ -291,7 +291,6 @@
 		A1634A44283D030100403498 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				A1EFB675284E2154004E5C6C /* Util */,
 				A1634A45283D030A00403498 /* Extension */,
 			);
 			path = Common;
@@ -548,18 +547,11 @@
 		A1EFB672284E20AE004E5C6C /* LocalDB */ = {
 			isa = PBXGroup;
 			children = (
+				A1EFB676284E2180004E5C6C /* SQLite.swift */,
 				A1EFB673284E211D004E5C6C /* SQLiteService.swift */,
 				A1EFB678284E225F004E5C6C /* Query */,
 			);
 			path = LocalDB;
-			sourceTree = "<group>";
-		};
-		A1EFB675284E2154004E5C6C /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				A1EFB676284E2180004E5C6C /* WrappedSQLite.swift */,
-			);
-			path = Util;
 			sourceTree = "<group>";
 		};
 		A1EFB678284E225F004E5C6C /* Query */ = {
@@ -931,7 +923,7 @@
 				A151BECC284273B7002780F5 /* QuestionRepositoryImpl.swift in Sources */,
 				A1634A41283B9E9400403498 /* Version.swift in Sources */,
 				A151BECA2842739A002780F5 /* QuestionRepository.swift in Sources */,
-				A1EFB677284E2180004E5C6C /* WrappedSQLite.swift in Sources */,
+				A1EFB677284E2180004E5C6C /* SQLite.swift in Sources */,
 				A1B5F0D22833DA790098DF44 /* VersionUseCase.swift in Sources */,
 				A1B5F0D02833DA630098DF44 /* VersionRepository.swift in Sources */,
 				A151BEC12842735E002780F5 /* QuestionListCell.swift in Sources */,

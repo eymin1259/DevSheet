@@ -27,7 +27,7 @@ final class SQLiteServiceImpl: SQLiteService {
         BeaverLog.debug("SQLiteService create : ", context: query)
         return Single<Bool>.create { single in
             do {
-                let db = try WrappedSQLite()
+                let db = try SQLite()
                 try db.install(query: query.getQuery())
                 try db.execute()
                 single(.success(true))
@@ -45,7 +45,7 @@ final class SQLiteServiceImpl: SQLiteService {
     ) {
         BeaverLog.debug("SQLiteService read : ", context: query)
         do {
-            let db = try WrappedSQLite()
+            let db = try SQLite()
             try db.install(query: query.getQuery())
             try db.execute(rowHandler: rowHandler)
         } catch {

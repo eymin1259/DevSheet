@@ -24,7 +24,8 @@ final class CategoryListViewController: BaseViewController, View {
         var tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.rowHeight = 50.0
+        tableView.rowHeight = UITableView.automaticDimension // dynamic height
+        tableView.estimatedRowHeight = 50.0
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(
             CategoryListCell.self,

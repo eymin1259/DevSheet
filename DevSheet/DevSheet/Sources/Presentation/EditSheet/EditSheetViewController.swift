@@ -32,11 +32,12 @@ final class EditSheetViewController: BaseViewController, View {
         var btn = UIButton()
         btn.frame = CGRect(
             origin: .zero,
-            size: .init(width: 30, height: 30)
+            size: .init(width: 60, height: 30)
         )
         btn.setTitle("완료", for: .normal)
         btn.setTitleColor(.orange, for: .normal)
-        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        btn.titleLabel?.adjustsFontForContentSizeCategory = true
         return btn
     }()
     
@@ -66,7 +67,8 @@ final class EditSheetViewController: BaseViewController, View {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveBtn)
         self.addNavigationLineView()
         // questionTitle
-        self.questionTitleTextView.text = self.reactor?.initialState.question?.title ??  SheetEditMode.ADD.defaultQuestoin
+        let initialQuestion = self.reactor?.initialState.question?.title ?? SheetEditMode.ADD.defaultQuestoin
+        self.questionTitleTextView.text = initialQuestion
         self.questionTitleTextView.textColor = .placeholderText
         self.questionTitleTextView.isEditable = true
         self.addQuestionTitleTextView()
@@ -186,7 +188,8 @@ extension EditSheetViewController {
         questionTitleTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if questionTitleTextView.text.isEmpty {
-                    questionTitleTextView.text = self.reactor?.initialState.question?.title ?? SheetEditMode.ADD.defaultQuestoin
+                    let placeHolderText = self.reactor?.initialState.question?.title ?? SheetEditMode.ADD.defaultQuestoin
+                    questionTitleTextView.text = placeHolderText
                     questionTitleTextView.textColor = .placeholderText
                 }
             }.disposed(by: self.disposeBag)

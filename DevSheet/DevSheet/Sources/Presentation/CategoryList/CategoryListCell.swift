@@ -16,7 +16,10 @@ final class CategoryListCell: BaseTableViewCell {
     // MARK: UI
     private let categoryNameLabel: UILabel = {
        var lbl = UILabel()
-        lbl.font = .systemFont(ofSize: 15)
+        lbl.font = UIFont.preferredFont(forTextStyle: .body)
+        lbl.adjustsFontForContentSizeCategory = true
+        lbl.numberOfLines = 0
+        lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -38,7 +41,9 @@ final class CategoryListCell: BaseTableViewCell {
         contentView.addSubview(categoryNameLabel)
         categoryNameLabel.snp.makeConstraints {
             $0.left.equalToSuperview().inset(20)
-            $0.centerY.equalToSuperview()
+            $0.right.equalTo(nextBtn.snp.left).inset(20)
+            $0.top.equalToSuperview().inset(10)
+            $0.bottom.equalToSuperview().inset(10)
         }
     }
     

@@ -16,7 +16,8 @@ final class QuestionListCell: BaseTableViewCell {
     // MARK: UI
     private let questionTitleLbl: UILabel = {
        var lbl = UILabel()
-        lbl.font = .systemFont(ofSize: 15)
+        lbl.font = UIFont.preferredFont(forTextStyle: .body)
+        lbl.adjustsFontForContentSizeCategory = true
         lbl.numberOfLines = 0
         lbl.lineBreakMode = .byWordWrapping
         lbl.translatesAutoresizingMaskIntoConstraints = false

@@ -26,9 +26,9 @@ final class QuestionListViewController: BaseViewController, View {
         var tableView = UITableView()
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.rowHeight = UITableView.automaticDimension // dynamic height
         tableView.estimatedRowHeight = 50.0
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(
             QuestionListCell.self,
             forCellReuseIdentifier: QuestionListCell.ID
@@ -40,11 +40,12 @@ final class QuestionListViewController: BaseViewController, View {
         var btn = UIButton()
         btn.frame = CGRect(
             origin: .zero,
-            size: .init(width: 30, height: 30)
+            size: .init(width: 60, height: 30)
         )
         btn.setTitle("추가", for: .normal)
         btn.setTitleColor(.orange, for: .normal)
-        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        btn.titleLabel?.adjustsFontForContentSizeCategory = true
         return btn
     }()
     
@@ -52,11 +53,12 @@ final class QuestionListViewController: BaseViewController, View {
         var btn = UIButton()
         btn.frame = CGRect(
             origin: .zero,
-            size: .init(width: 30, height: 30)
+            size: .init(width: 60, height: 30)
         )
         btn.setTitle("랜덤", for: .normal)
         btn.setTitleColor(.orange, for: .normal)
-        btn.titleLabel?.font = .boldSystemFont(ofSize: 16)
+        btn.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        btn.titleLabel?.adjustsFontForContentSizeCategory = true
         return btn
     }()
     

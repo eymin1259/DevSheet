@@ -43,7 +43,8 @@ class BaseViewController: UIViewController {
         var textView = UITextView()
         textView.autocorrectionType = .no
         textView.isScrollEnabled = false
-        textView.font = .boldSystemFont(ofSize: 20)
+        textView.font = UIFont.preferredFont(forTextStyle: .title1)
+        textView.adjustsFontForContentSizeCategory = true
         textView.textColor = .label
         textView.isUserInteractionEnabled = true
         textView.isEditable = false
@@ -62,7 +63,8 @@ class BaseViewController: UIViewController {
         var textView = UITextView()
         textView.autocorrectionType = .no
         textView.isScrollEnabled = true
-        textView.font = .systemFont(ofSize: 15)
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.adjustsFontForContentSizeCategory = true
         textView.textColor = .darkGray
         textView.isUserInteractionEnabled = true
         textView.isEditable = false

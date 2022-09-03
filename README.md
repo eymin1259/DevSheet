@@ -9,9 +9,6 @@
 - FireBase
 - Swinject
 - SwiftLint 
-- Quick
-- Nimble
-
 
 ## [ Develop Environment ]
 - iOS Deployment Target : 14.1

@@ -80,14 +80,17 @@ final class AnswerDetailViewController: BaseViewController, View {
         let editAction = UIAlertAction(title: "수정하기", style: .default) { [weak self] _ in
             self?.presentEditSheet()
         }
-        let favoriteAction = UIAlertAction(title: "즐겨찾기 추가", style: .default) { [weak self] _ in
+        let addFavoriteAction = UIAlertAction(title: "즐겨찾기 추가", style: .default) { [weak self] _ in
             self?.reactor?.action.onNext(.addFavorite)
+        }
+        let removeFavoriteAction = UIAlertAction(title: "즐겨찾기 삭제", style: .default) { [weak self] _ in
+            self?.reactor?.action.onNext(.removeFavorite)
         }
         if let currentTab = navigationController?.tabBarController?.selectedIndex,
            currentTab == MainTab.favorite.rawValue {
-            return [cancelAction, editAction]
+            return [cancelAction, editAction, removeFavoriteAction]
         }
-        return [cancelAction, editAction, favoriteAction]
+        return [cancelAction, editAction, addFavoriteAction]
     }
     
     func presentEditSheet() {
@@ -153,6 +156,18 @@ extension AnswerDetailViewController {
             .subscribe(onNext: { [weak self] result in
                 if result == true {
                     self?.showshowSucceedHud(message: "추가되었습니다.", completion: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map { $0.removeFavoriteResult }
+            .filterNil()
+            .subscribe(onNext: { [weak self] result in
+                if result == true {
+                    self?.showshowSucceedHud(message: "삭제되었습니다.", completion: {
+                        self?.navigationController?.popViewController(animated: true)
+                    })
                 }
             })
             .disposed(by: disposeBag)

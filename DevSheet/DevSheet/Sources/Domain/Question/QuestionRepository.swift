@@ -15,4 +15,5 @@ protocol QuestionRepository {
     func updateQuestion(questionId: String, field: [String: Any]) -> Single<Bool>
     func fetchAllFavoriteQuestions(categoryId: String?) -> Single<[Question]>
     func saveFavoriteQuestion(question: Question) -> Single<Bool>
+    func removeFavoriteQuestion(question: Question) -> Single<Bool>
 }

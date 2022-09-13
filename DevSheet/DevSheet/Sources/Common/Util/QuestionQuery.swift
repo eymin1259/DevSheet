@@ -11,6 +11,7 @@ enum QuestionQuery {
     case createQuestionTable
     case selectAllFavoriteQuestions(categoryId: String?)
     case insertQuestion(QuestionDTO)
+    case deleteQuestion(questionId : String)
 }
 
 extension QuestionQuery: SQLiteQuery {
@@ -30,6 +31,9 @@ extension QuestionQuery: SQLiteQuery {
         case .insertQuestion(let questionDTO):
             let deletedInt = questionDTO.deleted ? 1 : 0
             return "INSERT INTO Questions (id, title, categoryId, timeStamp, deleted) VALUES ('\(questionDTO.id)', '\(questionDTO.title)', '\(questionDTO.categoryId)', '\(questionDTO.timeStamp)', '\(deletedInt)');"
+            
+        case .deleteQuestion(let questionId):
+            return "DELETE FROM Questions WHERE id = '\(questionId)';"
         }
     }
 }

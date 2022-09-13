@@ -119,4 +119,8 @@ final class QuestionRepositoryImpl: QuestionRepository {
         return sqliteService.create(query: QuestionQuery.insertQuestion(questionDTO))
     }
     
+    func removeFavoriteQuestion(question: Question) -> Single<Bool> {
+        let questionId = question.id
+        return sqliteService.create(query: QuestionQuery.deleteQuestion(questionId: questionId))
+    }
 }

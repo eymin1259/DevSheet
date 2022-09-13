@@ -14,11 +14,13 @@ final class AnswerDetailReactor: Reactor {
     enum Action {
         case viewDidAppear
         case addFavorite
+        case removeFavorite
     }
     
     enum Mutation {
         case setLatestAnswer(Answer)
         case setAddFavoriteResult(Bool)
+        case setRemoveFavoriteResult(Bool)
         case setLoading(Bool)
     }
     
@@ -27,6 +29,7 @@ final class AnswerDetailReactor: Reactor {
         var question: Question
         var latestAnswer: Answer?
         var addFavoriteResult: Bool?
+        var removeFavoriteResult: Bool?
         var isLoading: Bool = false
     }
     
@@ -85,6 +88,13 @@ extension AnswerDetailReactor {
                 .asObservable()
                 .map(AnswerDetailReactor.Mutation.setAddFavoriteResult)
             return setAddFavoriteResult
+            
+        case .removeFavorite:
+            let question = self.currentState.question
+            let setRemoveFavoriteResult = self.questionUseCase.removeFavoriteQuestion(question: question)
+                .asObservable()
+                .map(AnswerDetailReactor.Mutation.setRemoveFavoriteResult)
+            return setRemoveFavoriteResult
         }
     }
     
@@ -99,6 +109,10 @@ extension AnswerDetailReactor {
             
         case .setAddFavoriteResult(let result):
             newState.addFavoriteResult = result
+            return newState
+            
+        case .setRemoveFavoriteResult(let result):
+            newState.removeFavoriteResult = result
             return newState
             
         case .setLoading(let loading):

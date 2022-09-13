@@ -14,6 +14,7 @@ protocol QuestionUseCase {
     func addNewQuestion(categoryId: String, title: String) -> Single<String>
     func updateQuestion(questionId: String, field: [String: Any]) -> Single<Bool>
     func saveFavoriteQuestion(question: Question) -> Single<Bool>
+    func removeFavoriteQuestion(question: Question) -> Single<Bool>
 }
 
 final class QuestionUseCaseImpl: QuestionUseCase {
@@ -66,5 +67,9 @@ final class QuestionUseCaseImpl: QuestionUseCase {
                     return Single<Bool>.just(true)
                 }
             }
+    }
+    
+    func removeFavoriteQuestion(question: Question) -> Single<Bool> {
+        return questionRepository.removeFavoriteQuestion(question: question)
     }
 }

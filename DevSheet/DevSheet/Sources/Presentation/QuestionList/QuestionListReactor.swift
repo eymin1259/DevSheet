@@ -72,10 +72,14 @@ extension QuestionListReactor {
             return .concat([startLoading, setQuestions, endLoading])
             
         case .tapRandomBtn:
-            let questionCount = self.currentState.questionSections.first?.items.count ?? 0
-            let randomIdx = Int.random(in: 0..<questionCount)
-            let randomQuestion = self.currentState.questionSections.first?.items[randomIdx]
-            return Observable<Mutation>.just(.setRandomQUestion(randomQuestion))
+            if let questionCount = self.currentState.questionSections.first?.items.count,
+               questionCount > 0 {
+                let randomIdx = Int.random(in: 0..<questionCount)
+                let randomQuestion = self.currentState.questionSections.first?.items[randomIdx]
+                return Observable<Mutation>.just(.setRandomQUestion(randomQuestion))
+            } else {
+                return .empty()
+            }
         }
     }
     

@@ -61,10 +61,12 @@ final class CategoryListViewController: BaseViewController, View {
         self.view.backgroundColor = .systemGray6
         self.navigationItem.title = self.reactor?.initialState.categoryGroup.description
         self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
         self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.tintColor = .orange
         navigationItem.backBarButtonItem = backBarBtn
+        
         // tablewView
         self.view.addSubview(categoryTableView)
         categoryTableView.snp.makeConstraints {

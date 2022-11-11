@@ -89,6 +89,11 @@ final class QuestionListViewController: BaseViewController, View {
     private func setupUI() {
         // viewcontroller
         self.view.backgroundColor = .white
+        self.navigationController?.topViewController?.extendedLayoutIncludesOpaqueBars = true
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationItem.largeTitleDisplayMode = .never
+        
         self.navigationItem.title = self.reactor?.initialState.category.name
         navigationItem.backBarButtonItem = backBarBtn
         self.navigationItem.rightBarButtonItem = createUIBarButtonItem()

@@ -27,22 +27,40 @@ extension MainTab {
     var activeIcon: UIImage? {
         switch self {
         case .cs:
-            return UIImage(named: "icon_cs_active")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_cs_active")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         case .develop:
-            return UIImage(named: "icon_develop_active")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_develop_active")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         case .favorite:
-            return UIImage(named: "icon_favorite_active")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_favorite_active")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         }
     }
     
     var icon: UIImage? {
         switch self {
         case .cs:
-            return UIImage(named: "icon_cs")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_cs")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         case .develop:
-            return UIImage(named: "icon_develop")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_develop")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         case .favorite:
-            return UIImage(named: "icon_favorite")?.withRenderingMode(.alwaysTemplate)
+            return UIImage(named: "icon_favorite")?.withTintColor(
+                .orange,
+                renderingMode: .alwaysOriginal
+            )
         }
     }
 }

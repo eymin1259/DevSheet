@@ -91,7 +91,10 @@ extension AnswerDetailReactor {
             
         case .removeFavorite:
             let question = self.currentState.question
-            let setRemoveFavoriteResult = self.questionUseCase.removeFavoriteQuestion(question: question)
+            let setRemoveFavoriteResult = self.questionUseCase
+                .removeFavoriteQuestion(
+                    question: question
+                )
                 .asObservable()
                 .map(AnswerDetailReactor.Mutation.setRemoveFavoriteResult)
             return setRemoveFavoriteResult

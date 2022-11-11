@@ -83,7 +83,10 @@ final class AnswerDetailViewController: BaseViewController, View {
         let addFavoriteAction = UIAlertAction(title: "즐겨찾기 추가", style: .default) { [weak self] _ in
             self?.reactor?.action.onNext(.addFavorite)
         }
-        let removeFavoriteAction = UIAlertAction(title: "즐겨찾기 삭제", style: .default) { [weak self] _ in
+        let removeFavoriteAction = UIAlertAction(
+            title: "즐겨찾기 삭제",
+            style: .default
+        ) { [weak self] _ in
             self?.reactor?.action.onNext(.removeFavorite)
         }
         if let currentTab = navigationController?.tabBarController?.selectedIndex,

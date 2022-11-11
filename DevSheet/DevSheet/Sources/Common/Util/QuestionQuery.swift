@@ -11,7 +11,7 @@ enum QuestionQuery {
     case createQuestionTable
     case selectAllFavoriteQuestions(categoryId: String?)
     case insertQuestion(QuestionDTO)
-    case deleteQuestion(questionId : String)
+    case deleteQuestion(questionId: String)
 }
 
 extension QuestionQuery: SQLiteQuery {

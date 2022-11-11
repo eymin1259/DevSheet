@@ -67,7 +67,8 @@ final class EditSheetViewController: BaseViewController, View {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: saveBtn)
         self.addNavigationLineView()
         // questionTitle
-        let initialQuestion = self.reactor?.initialState.question?.title ?? SheetEditMode.ADD.defaultQuestoin
+        let initialQuestion = self.reactor?.initialState.question?.title ??
+        SheetEditMode.ADD.defaultQuestoin
         self.questionTitleTextView.text = initialQuestion
         self.questionTitleTextView.textColor = .placeholderText
         self.questionTitleTextView.isEditable = true
@@ -188,7 +189,8 @@ extension EditSheetViewController {
         questionTitleTextView.rx.didEndEditing
             .subscribe { [unowned self] _ in
                 if questionTitleTextView.text.isEmpty {
-                    let placeHolderText = self.reactor?.initialState.question?.title ?? SheetEditMode.ADD.defaultQuestoin
+                    let placeHolderText = self.reactor?.initialState.question?.title ??
+                    SheetEditMode.ADD.defaultQuestoin
                     questionTitleTextView.text = placeHolderText
                     questionTitleTextView.textColor = .placeholderText
                 }

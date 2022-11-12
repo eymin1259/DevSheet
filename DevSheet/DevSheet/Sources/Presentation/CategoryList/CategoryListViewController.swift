@@ -27,6 +27,7 @@ final class CategoryListViewController: BaseViewController, View {
         tableView.rowHeight = UITableView.automaticDimension // dynamic height
         tableView.estimatedRowHeight = 50.0
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.bounces = false
         tableView.register(
             CategoryListCell.self,
             forCellReuseIdentifier: CategoryListCell.ID
